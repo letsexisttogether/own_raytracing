@@ -1,23 +1,33 @@
-#include "Geometry\Source\Ray.hpp"
-#include "Geometry\Source\Plane.hpp"
+#pragma once
+
+#include "Geometry\Ray.hpp"
+#include "Geometry\Plane.hpp"
 #include <cmath>
 
 class IntersectedWithPlane
 {
 public:
 
-    bool IntersectedWithRay(const Plane& plane, const Ray& ray)
+    bool IntersectedWithRay(const Plane& plane, const Ray& ray, float *t) 
     {
+        if (!t)
+        {
+            float tempVal = 3.f;
+            t = &tempVal;
+        }
+
         Vector3d normal = plane.GetNormal();
         Vector3d direction = ray.GetDirection();
         Vector3d origin = ray.GetOrigin();
         Vector3d center = plane.GetOrigin();
 
-        // РџРµСЂРµРІС–СЂРєР° РЅР° РїРµРЅРґРµРЅРґРёРєСѓР»СЏСЂРЅС–СЃС‚СЊ РІРµРєС‚РѕСЂС–РІ
+        // Перевірка на пендендикулярність векторів
         float dot = normal.Dot(direction);
         if (fabs(dot) < 0.0001f) return false;
 
-        // Р·РЅР°С…РѕРґРёРјРѕ РїР°СЂР°РјРµС‚СЂ t С‚Р° РІРёР·РЅР°С‡Р°С”РјРѕ, РґРµ РїРµСЂРµС‚РёРЅР°С”С‚СЊСЃСЏ РїСЂСЏРјР° Р· РїР»РѕС‰РёРЅРѕСЋ
-        return normal.Dot(origin - center) / dot >= 0;
+        // знаходимо параметр t та визначаємо, де перетинається пряма з площиною
+        *t = normal.Dot(origin - center) / dot;
+
+        return *t >= 0;
     }
 };
