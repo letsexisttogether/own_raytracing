@@ -35,11 +35,11 @@ public:
 		{
 			for (int j = 0; j < W; j++)
 			{				 
-				Vector3d thrownVector = { Vector3d(i, j, m_Distance) - m_Camera };
-				Vector3d normalizedthrownVector = { thrownVector.GetX() / thrownVector.GetLength(), thrownVector.GetY() / thrownVector.GetLength(),
-				thrownVector.GetZ() / thrownVector.GetLength()};
-				if (m_IWS.IntersectedWithRay(sphere, { m_Camera, normalizedthrownVector }))
-					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(normalizedthrownVector * -1.f));
+				Vector3d thrownVector = { Vector3d(i, j, m_Distance) - m_Camera };				
+				thrownVector.Normalize();
+
+				if (m_IWS.IntersectedWithRay(sphere, { m_Camera, thrownVector }))
+					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(thrownVector * -1.f));
 				else screen.m_Screen[i][j] = ' ';
 			}
 		}		

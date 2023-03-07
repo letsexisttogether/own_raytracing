@@ -1,6 +1,7 @@
 #include "..\Vector3d.hpp"
 
 #include <cmath>
+#include <exception>
 
 
 Vector3d::Vector3d(float x, float y, float z)
@@ -44,6 +45,20 @@ Vector3d Vector3d::Cross(const Vector3d& vec3d) const noexcept
 		m_Z * vec3d.m_X - m_X * vec3d.m_Z,
 		m_X * vec3d.m_Y - m_Y * vec3d.m_X
 	};
+}
+
+void Vector3d::Normalize()
+{
+	if (!m_X && !m_Y && !m_Z)
+	{
+		throw std::exception{ "Cannot normalize a null vector" };
+	}
+
+	float length = GetLength();
+
+	m_X /= length;
+	m_Y /= length;
+	m_Z /= length;
 }
 
 float Vector3d::GetCosBetween(const Vector3d& vec) const noexcept
