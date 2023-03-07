@@ -24,7 +24,7 @@
     <ClInclude Include="Geometry\Ray.hpp" />
     <ClInclude Include="Geometry\Sphere.hpp" />
     <ClInclude Include="Geometry\Vector3d.hpp" />
-    <ClInclude Include="IntersectedWitDisk.hpp" />
+    <ClInclude Include="IntersectedWithDisk.hpp" />
     <ClInclude Include="IntersectedWithPlane.hpp" />
     <ClInclude Include="IntersectedWithSphere.hpp" />
     <ClInclude Include="Screen.h" />

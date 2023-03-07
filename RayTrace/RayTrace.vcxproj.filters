@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IntersectedWitDisk.hpp">
+    <ClInclude Include="IntersectedWithDisk.hpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="IntersectedWithPlane.hpp">

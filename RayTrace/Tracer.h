@@ -1,8 +1,9 @@
 #pragma once
 #include "Geometry/Vector3d.hpp"
 #include "IntersectedWithSphere.hpp"
+#include "IntersectedWithPlane.hpp"
+#include "IntersectedWithDisk.hpp"
 #include "Geometry/Sphere.hpp"
-#include "Geometry/Ray.hpp"
 #include "Screen.h"
 #include <iostream>
 
@@ -13,6 +14,8 @@ private:
 	Vector3d m_LightSource;
 	float m_Distance;
 	IntersectedWithSphere m_IWS;
+	IntersectedWithPlane m_IWP;
+	IntersectedWithDisk m_IWD;
 public:
 
 	RayTracer() = delete;
@@ -20,7 +23,7 @@ public:
 
 	char LightTracing(float DotResult)
 	{
-		std::cout << DotResult << std::endl;
+		//std::cout << DotResult << std::endl;
 		if (DotResult < 0) return ' ';
 		else if (DotResult >= 0 && DotResult < 0.2) return '.';
 		else if (DotResult >= 0.2 && DotResult < 0.5) return '*';
@@ -35,13 +38,45 @@ public:
 		{
 			for (int j = 0; j < W; j++)
 			{				 
-				Vector3d thrownVector = { Vector3d(i, j, m_Distance) - m_Camera };				
-				thrownVector.Normalize();
-
-				if (m_IWS.IntersectedWithRay(sphere, { m_Camera, thrownVector }))
-					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(thrownVector * -1.f));
+				Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
+				if (m_IWS.IntersectedWithRay(sphere, { m_Camera, thrownVector.Normalize() }))
+					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(thrownVector.Normalize() * -1.f));
 				else screen.m_Screen[i][j] = ' ';
 			}
 		}		
+	}
+
+	template <int H, int W>
+	void Tracing(Screen<H, W>& screen, Plane& plane)
+	{
+		for (int i = 0; i < H; i++)
+		{
+			for (int j = 0; j < W; j++)
+			{
+				Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
+				thrownVector.Normalize();
+
+				if (m_IWP.IntersectedWithRay(plane, { m_Camera, thrownVector }))
+					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(thrownVector * -1.f));
+				else screen.m_Screen[i][j] = ' ';
+			}
+		}
+	}
+
+	template <int H, int W>
+	void Tracing(Screen<H, W>& screen, Disk& disk)
+	{
+		for (int i = 0; i < H; i++)
+		{
+			for (int j = 0; j < W; j++)
+			{
+				Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
+				thrownVector.Normalize();
+
+				if (m_IWD.IntersectedWithRay(disk, { m_Camera, thrownVector }))
+					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(thrownVector * -1.f));
+				else screen.m_Screen[i][j] = ' ';
+			}
+		}
 	}
 };

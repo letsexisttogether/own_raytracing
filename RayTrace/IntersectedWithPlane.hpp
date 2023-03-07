@@ -8,7 +8,7 @@ class IntersectedWithPlane
 {
 public:
 
-    bool IntersectedWithRay(const Plane& plane, const Ray& ray, float *t) 
+    bool IntersectedWithRay(const Plane& plane, const Ray& ray, float *t = nullptr) 
     {
         if (!t)
         {
