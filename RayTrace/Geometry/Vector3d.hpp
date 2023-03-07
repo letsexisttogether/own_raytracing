@@ -30,7 +30,7 @@ public:
 	float Dot(const Vector3d& vec3d) const noexcept;
 	Vector3d Cross(const Vector3d& vec3d) const noexcept;
 
-	void Normalize() noexcept(false);
+	Vector3d Normalize() const noexcept(false);
 
 	float GetCosBetween(const Vector3d& vec) const noexcept;
 

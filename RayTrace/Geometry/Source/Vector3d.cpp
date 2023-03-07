@@ -47,7 +47,7 @@ Vector3d Vector3d::Cross(const Vector3d& vec3d) const noexcept
 	};
 }
 
-void Vector3d::Normalize()
+Vector3d Vector3d::Normalize() const noexcept(false)
 {
 	if (!m_X && !m_Y && !m_Z)
 	{
@@ -56,10 +56,9 @@ void Vector3d::Normalize()
 
 	float length = GetLength();
 
-	m_X /= length;
-	m_Y /= length;
-	m_Z /= length;
+	return Vector3d{ m_X / length, m_Y / length, m_Z / length };
 }
+
 
 float Vector3d::GetCosBetween(const Vector3d& vec) const noexcept
 {
