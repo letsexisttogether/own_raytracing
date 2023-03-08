@@ -1,0 +1,21 @@
+#pragma once
+
+#include "Plane.hpp"
+
+class Disk : public Intersectable
+{
+public:
+	Disk() = delete;
+	Disk(const Plane& plane, const float radius);
+	
+	~Disk() = default;
+
+	inline const Plane& GetPlane() const noexcept { return m_Plane; }
+	inline const float GetRadius() const noexcept { return m_Radius; }
+
+	bool IntersectedWithRay(Ray& ray, float* parametr = nullptr) const override;
+
+private:
+	Plane m_Plane;
+	float m_Radius;
+};
