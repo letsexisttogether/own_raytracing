@@ -4,7 +4,7 @@ Sphere::Sphere(const Vector3d& origin, const float radius)
 	: m_Origin{ origin }, m_Radius{ radius }
 {}
 
-std::optional<Vector3d> Sphere::IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept
+std::optional<Vector3d> Sphere::IntersectedWithRay(const Ray& ray, float* parametr) const noexcept
 {
 	Vector3d original = ray.GetOrigin();
 	Vector3d center = this->GetOrigin();

@@ -29,7 +29,7 @@ void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
 
 			Ray thrownRay{ m_Camera.GetLocation(), thrownVector};
 
-			const bool doesIntersect = intersectable.IntersectedWithRay(thrownRay);
+			const bool doesIntersect = (intersectable.IntersectedWithRay(thrownRay).has_value());
 
 			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
 		}

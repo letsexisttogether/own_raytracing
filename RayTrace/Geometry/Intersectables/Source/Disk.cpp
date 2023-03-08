@@ -4,12 +4,10 @@ Disk::Disk(const Plane& plane, const float radius)
 	: m_Plane{ plane }, m_Radius{ radius }
 {}
 
-std::optional<Vector3d> Disk::IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept
+std::optional<Vector3d> Disk::IntersectedWithRay(const Ray& ray, float* parametr) const noexcept
 {
     float t;
 
-    /*if (!I_WP.IntersectedWithRay(disk.GetPlane(), ray, &t))
-        return false;*/
     if (!this->GetPlane().IntersectedWithRay(ray, &t)) return std::nullopt;
 
     Vector3d normal = this->GetPlane().GetNormal();
