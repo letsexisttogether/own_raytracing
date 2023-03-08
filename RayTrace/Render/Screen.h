@@ -37,7 +37,7 @@ public:
 
 	char& GetPixel(uint16_t height, uint16_t width) noexcept(false)
 	{
-		if (height >= m_Height || m_Width >= m_Width)
+		if (height >= m_Height || width >= m_Width)
 		{
 			throw std::exception("Such a pixel is out of the screen");
 		}
@@ -54,7 +54,7 @@ public:
 			{
 				std::cout << m_Pixels[i][j];
 			}
-			std::cout << std::endl;
+			std::cout << '\n';
 		}
 	};
 };
