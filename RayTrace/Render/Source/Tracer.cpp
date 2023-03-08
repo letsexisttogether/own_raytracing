@@ -35,6 +35,8 @@ void RayTracer::Tracing(const Sphere& sphere) noexcept(false)
 
 		}
 	}
+
+	m_Screen.Print();
 }
 
 void RayTracer::Tracing(const Plane& plane) noexcept(false)
@@ -50,6 +52,8 @@ void RayTracer::Tracing(const Plane& plane) noexcept(false)
 			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
 		}
 	}
+
+	m_Screen.Print();
 }
 
 void RayTracer::Tracing(const Disk& disk) noexcept(false)
@@ -65,5 +69,7 @@ void RayTracer::Tracing(const Disk& disk) noexcept(false)
 			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
 		}
 	}
+
+	m_Screen.Print();
 }
 

@@ -26,7 +26,7 @@ public:
         if (fabs(dot) < 0.0001f) return false;
 
         // знаходимо параметр t та визначаємо, де перетинається пряма з площиною
-        *t = normal.Dot(origin - center) / dot;
+        *t = normal.Dot(center - origin) / dot;
 
         return *t >= 0;
     }
