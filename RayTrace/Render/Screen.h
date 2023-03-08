@@ -32,6 +32,10 @@ public:
 		delete[] m_Pixels;
 	}
 
+	inline uint16_t GetHeigth() const noexcept { return m_Height; }
+	inline uint16_t GetWidth() const noexcept { return m_Width; }
+
+
 	char& GetPixel(uint16_t height, uint16_t width) const noexcept(false)
 	{
 		if (height >= m_Height || m_Width >= m_Width)
@@ -41,6 +45,7 @@ public:
 
 		return m_Pixels[height][width];
 	}
+	
 
 public:
 	void Print() const noexcept
