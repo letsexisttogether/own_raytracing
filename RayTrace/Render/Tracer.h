@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include "Geometry/Intersectables/Sphere.hpp"
+#include "Geometry/Intersectables/Plane.hpp"
+#include "Geometry/Intersectables/Disk.hpp"
 #include "Screen.h"
 
 class RayTracer

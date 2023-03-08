@@ -30,3 +30,8 @@ std::optional<Vector3d> Disk::IntersectedWithRay(const Ray& ray, float* parametr
     }
     return std::nullopt;
 }
+
+Vector3d Disk::GetNormal(Vector3d intersectionPoint) const noexcept
+{
+    return this->GetPlane().GetOrigin();
+}

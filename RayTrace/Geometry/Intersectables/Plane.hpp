@@ -16,6 +16,8 @@ public:
 
 	std::optional<Vector3d> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;
 
+	virtual Vector3d GetNormal(Vector3d intersectionPoint) const noexcept;
+
 private:
 	Vector3d m_Origin;
 	Vector3d m_Normal;

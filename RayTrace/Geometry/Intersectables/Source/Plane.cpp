@@ -31,3 +31,8 @@ std::optional<Vector3d> Plane::IntersectedWithRay(const Ray & ray, float* parame
     return { origin + (direction * (*parametr)) };
 }
 
+Vector3d Plane::GetNormal(Vector3d intersectionPoint) const noexcept
+{
+    return this->m_Normal;
+}
+

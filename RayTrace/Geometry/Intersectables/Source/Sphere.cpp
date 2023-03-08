@@ -27,6 +27,11 @@ std::optional<Vector3d> Sphere::IntersectedWithRay(const Ray& ray, float* parame
 	float firstIntersecionPoint = (-b + sqrtf(discriminant)) / (2.f * a);
 	float secondIntersecionPoint = (-b - sqrtf(discriminant)) / (2.f * a);
 
-	return { std::max(firstIntersecionPoint, secondIntersecionPoint) };
+	return { std::min(firstIntersecionPoint, secondIntersecionPoint) };
+}
+
+Vector3d Sphere::GetNormal(Vector3d intersectionPoint) const noexcept
+{
+	return intersectionPoint - this->m_Origin;
 }
 
