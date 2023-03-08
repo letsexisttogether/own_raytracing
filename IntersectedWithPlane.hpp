@@ -21,12 +21,10 @@ public:
         Vector3d origin = ray.GetOrigin();
         Vector3d center = plane.GetOrigin();
 
-        // ѕерев≥рка на пендендикул€рн≥сть вектор≥в
         float dot = normal.Dot(direction);
         if (fabs(dot) < 0.0001f) return false;
 
-        // знаходимо параметр t та визначаЇмо, де перетинаЇтьс€ пр€ма з площиною
-        *t = normal.Dot(origin - center) / dot;
+        *t = normal.Dot(center - origin) / dot;
 
         return *t >= 0;
     }
