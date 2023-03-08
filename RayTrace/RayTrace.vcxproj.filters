@@ -24,10 +24,10 @@
     <ClInclude Include="IntersectedWithSphere.hpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Screen.h">
+    <ClInclude Include="Render\Screen.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Tracer.h">
+    <ClInclude Include="Render\Tracer.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\Disk.hpp">

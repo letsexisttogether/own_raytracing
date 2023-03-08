@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Geometry\Ray.hpp"
-#include "Geometry\Plane.hpp"
+#include "Geometry/Ray.hpp"
+#include "Geometry/Plane.hpp"
 #include <cmath>
 
 class IntersectedWithPlane

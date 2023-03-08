@@ -1,11 +1,11 @@
 #pragma once
+#include <iostream>
 #include "Geometry/Vector3d.hpp"
+#include "Geometry/Sphere.hpp"
 #include "IntersectedWithSphere.hpp"
 #include "IntersectedWithPlane.hpp"
 #include "IntersectedWithDisk.hpp"
-#include "Geometry/Sphere.hpp"
 #include "Screen.h"
-#include <iostream>
 
 class RayTracer
 {
@@ -23,7 +23,7 @@ public:
 
 	char LightTracing(float DotResult)
 	{
-		//std::cout << DotResult << std::endl;
+		// std::cout << DotResult << std::endl;
 		if (DotResult < 0) return ' ';
 		else if (DotResult >= 0 && DotResult < 0.2) return '.';
 		else if (DotResult >= 0.2 && DotResult < 0.5) return '*';

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Geometry\Sphere.hpp"
-#include "Geometry\Ray.hpp"
+#include "Geometry/Sphere.hpp"
+#include "Geometry/Ray.hpp"
 
 class IntersectedWithSphere
 {
