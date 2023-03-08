@@ -1,9 +1,7 @@
 #include "../Tracer.h"
 
-RayTracer::RayTracer(const Screen& screen, const Camera& camera,
-	const Vector3d& lightSrc, const float distance)
-	: m_Screen{ screen }, m_Camera(camera),
-	m_LightVector(lightSrc * -1.f), m_Distance{ distance }
+RayTracer::RayTracer(const Screen& screen, const Camera& camera, const Vector3d& lightSrc)
+	: m_Screen{ screen }, m_Camera(camera), m_LightVector(lightSrc * -1.f)
 {}
 
 char RayTracer::LightTracing(float dotResult)
@@ -14,24 +12,6 @@ char RayTracer::LightTracing(float dotResult)
 	else if (dotResult >= 0.5 && dotResult < 0.8) return 'O';
 	else if (dotResult >= 0.8) return '#';
 }
-
-//void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
-//{
-//	for (int i = 0; i < m_Screen.GetHeigth(); i++)
-//	{
-//		for (int j = 0; j < m_Screen.GetWidth(); j++)
-//		{
-//			Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
-//
-//			Ray thrownRay{ m_Camera, thrownVector };
-//
-//			const bool doesIntersect = intersectable.IntersectedWithRay(thrownRay);
-//
-//			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
-//		}
-//	}
-//	m_Screen.Print();
-//}
 
 void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
 {

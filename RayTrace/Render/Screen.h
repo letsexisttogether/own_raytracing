@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <exception>
-#include "Geometry/Vector3d.hpp"
+
 #include "Camera.h"
 
 class Screen
