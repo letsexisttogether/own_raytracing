@@ -15,7 +15,7 @@ public:
 
 	inline float GetRadius() const noexcept { return m_Radius; }
 
-	bool IntersectedWithRay(Ray& ray, float* parametr = nullptr) const override;
+	std::optional<Vector3d> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;
 
 private:
 	Vector3d m_Origin;

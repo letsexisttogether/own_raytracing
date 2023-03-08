@@ -4,14 +4,13 @@ Disk::Disk(const Plane& plane, const float radius)
 	: m_Plane{ plane }, m_Radius{ radius }
 {}
 
-bool Disk::IntersectedWithRay(Ray& ray, float* parametr) const
+std::optional<Vector3d> Disk::IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept
 {
     float t;
 
     /*if (!I_WP.IntersectedWithRay(disk.GetPlane(), ray, &t))
         return false;*/
-    if (!this->GetPlane().IntersectedWithRay(ray, &t))
-        return false;
+    if (!this->GetPlane().IntersectedWithRay(ray, &t)) return std::nullopt;
 
     Vector3d normal = this->GetPlane().GetNormal();
     Vector3d direction = ray.GetDirection();
@@ -20,11 +19,16 @@ bool Disk::IntersectedWithRay(Ray& ray, float* parametr) const
     float radius = this->GetRadius();
 
     // Обчислюємо точку перетину
-    Vector3d point = origin + direction * t;
+    Vector3d intersectionPoint = origin + direction * t;
 
     // Обчислюємо відстань від point до центру диска
-    float distance = (point - center).GetLength();
+    float distance = (intersectionPoint - center).GetLength();
 
     // Перевіряємо, чи належить точка диску
-    return distance <= radius;
+
+    if (distance <= radius)
+    {
+        return { intersectionPoint };
+    }
+    return std::nullopt;
 }

@@ -4,7 +4,7 @@ Sphere::Sphere(const Vector3d& origin, const float radius)
 	: m_Origin{ origin }, m_Radius{ radius }
 {}
 
-bool Sphere::IntersectedWithRay(Ray& ray, float* parametr) const
+std::optional<Vector3d> Sphere::IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept
 {
 	Vector3d original = ray.GetOrigin();
 	Vector3d center = this->GetOrigin();
@@ -16,7 +16,17 @@ bool Sphere::IntersectedWithRay(Ray& ray, float* parametr) const
 	float a = direction.Dot(direction);
 	float b = 2 * direction.Dot(k);
 	float c = k.Dot(k) - radius * radius;
+	
+	const float discriminant = b * b - 4 * a * c;
 
-	return (b * b - 4 * a * c) >= 0;
+	if (discriminant < 0)
+	{
+		return std::nullopt;
+	}
+	
+	float firstIntersecionPoint = (-b + sqrtf(discriminant)) / (2.f * a);
+	float secondIntersecionPoint = (-b - sqrtf(discriminant)) / (2.f * a);
+
+	return { std::max(firstIntersecionPoint, secondIntersecionPoint) };
 }
 

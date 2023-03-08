@@ -7,7 +7,7 @@ Plane::Plane(const Vector3d& origin, const Vector3d& normal)
 	: m_Origin{ origin }, m_Normal{ normal }
 {}
 
-bool Plane::IntersectedWithRay(Ray& ray, float* parametr) const
+std::optional<Vector3d> Plane::IntersectedWithRay(const Ray & ray, float* parametr) const noexcept
 {
     if (!parametr)
     {
@@ -22,10 +22,12 @@ bool Plane::IntersectedWithRay(Ray& ray, float* parametr) const
 
     // ѕерев≥рка на пендендикул€рн≥сть вектор≥в
     float dot = normal.Dot(direction);
-    if (fabs(dot) < 0.0001f) return false;
+    if (fabs(dot) < 0.0001f) return std::nullopt;
 
-    // знаходимо параметр t та визначаЇмо, де перетинаЇтьс€ пр€ма з площиною
+    // знаходимо parametr та визначаЇмо, де перетинаЇтьс€ пр€ма з площиною
     *parametr = normal.Dot(center - origin) / dot;
+    if (*parametr < 0.f) return std::nullopt;
 
-    return *parametr >= 0;
+    return { origin + (direction * (*parametr)) };
 }
+

@@ -13,7 +13,7 @@ public:
 	inline const Plane& GetPlane() const noexcept { return m_Plane; }
 	inline const float GetRadius() const noexcept { return m_Radius; }
 
-	bool IntersectedWithRay(Ray& ray, float* parametr = nullptr) const override;
+	std::optional<Vector3d> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;
 
 private:
 	Plane m_Plane;
