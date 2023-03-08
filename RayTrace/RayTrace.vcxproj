@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Geometry\Disk.hpp" />
     <ClInclude Include="Geometry\Plane.hpp" />
     <ClInclude Include="Geometry\Ray.hpp" />

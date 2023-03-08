@@ -10,19 +10,20 @@
 class RayTracer
 {
 private:
-	Vector3d m_Camera;
-	Vector3d m_LightSource;
-
+	//Vector3d m_Camera;
+	Camera m_Camera;
 	Screen m_Screen;
-	float m_Distance;
+	Vector3d m_LightVector;
+	
+	float m_Distance; //не потрібно, є у класі екрану, потім виправити конструктор
 
-	IntersectedWithSphere m_IWS;
+	/*IntersectedWithSphere m_IWS;
 	IntersectedWithPlane m_IWP;
-	IntersectedWithDisk m_IWD;
+	IntersectedWithDisk m_IWD;*/
 
 public:
 	RayTracer() = delete;
-	RayTracer(const Screen& screen, const Vector3d& camera,
+	RayTracer(const Screen& screen, const Camera& camera,
 		const Vector3d& lightSrc, const float distance);
 
 	char LightTracing(float dotResult);

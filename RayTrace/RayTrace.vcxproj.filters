@@ -48,6 +48,9 @@
     <ClInclude Include="Intersectable.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
