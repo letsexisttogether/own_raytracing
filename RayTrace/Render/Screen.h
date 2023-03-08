@@ -11,7 +11,7 @@ private:
 
 public:
 	Screen() = delete;
-	Screen(uint16_t height, uint32_t width)
+	Screen(uint16_t height, uint16_t width)
 		: m_Height{ height }, m_Width{ width }
 	{
 		m_Pixels = new char*[m_Height];
@@ -35,26 +35,24 @@ public:
 	inline uint16_t GetHeigth() const noexcept { return m_Height; }
 	inline uint16_t GetWidth() const noexcept { return m_Width; }
 
-
-	char& GetPixel(uint16_t height, uint16_t width) const noexcept(false)
+	char& GetPixel(uint16_t height, uint16_t width) noexcept(false)
 	{
 		if (height >= m_Height || m_Width >= m_Width)
 		{
-			throw std::exception("Such a pixel is out of the scree");
+			throw std::exception("Such a pixel is out of the screen");
 		}
 
 		return m_Pixels[height][width];
 	}
-	
 
 public:
 	void Print() const noexcept
 	{
-		for (int i = H - 1; i >= 0; i--)
+		for (int i = m_Height - 1; i >= 0; i--)
 		{
-			for (int j = W - 1; j >= 0; j--)
+			for (int j = m_Width - 1; j >= 0; j--)
 			{
-				std::cout << m_Screen[i][j];
+				std::cout << m_Pixels[i][j];
 			}
 			std::cout << std::endl;
 		}
