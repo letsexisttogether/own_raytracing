@@ -6,7 +6,6 @@ RayTracer::RayTracer(const Screen& screen, const Camera& camera, const Vector3d&
 
 char RayTracer::LightTracing(float dotResult)
 {
-	//std::cout << dotResult << std::endl;
 	if (dotResult < 0) return ' ';
 	else if (dotResult >= 0 && dotResult < 0.2) return '.';
 	else if (dotResult >= 0.2 && dotResult < 0.5) return '*';
