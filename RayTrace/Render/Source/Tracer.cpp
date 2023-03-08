@@ -25,14 +25,7 @@ void RayTracer::Tracing(const Sphere& sphere) noexcept(false)
 
 			const bool doesIntersect = m_IWS.IntersectedWithRay(sphere, { m_Camera, thrownVector });
 
-
-			if (doesIntersect)
-			{
-				m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
-
-				std::cout << 'W';
-			}
-
+			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
 		}
 	}
 

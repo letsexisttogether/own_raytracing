@@ -13,6 +13,8 @@ void Screen::Print() const noexcept
 		{
 			std::cout << m_Pixels[i][j];
 		}
-		std::cout << std::endl;
+		std::cout << '\n';
 	}
+
+	std::cout << std::endl;
 };
