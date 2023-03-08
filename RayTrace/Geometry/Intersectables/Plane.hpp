@@ -11,7 +11,7 @@ public:
 
 	~Plane() = default;
 
-	inline const Vector3d& GetOrigin() const noexcept { return m_Origin; }
+	inline const Vector3d& GetOrigin() const noexcept override { return m_Origin; }
 	inline const Vector3d& GetNormal() const noexcept { return m_Normal; }
 
 	std::optional<Vector3d> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;

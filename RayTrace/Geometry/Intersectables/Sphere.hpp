@@ -11,7 +11,9 @@ public:
 
 	~Sphere() = default;
 
-	inline const Vector3d& GetOrigin() const noexcept { return m_Origin; }
+	inline const Vector3d& GetOrigin() const noexcept override { return m_Origin; }
+
+	//virtual Vector3d GetOrigin() const noexcept = 0;
 
 	inline float GetRadius() const noexcept { return m_Radius; }
 

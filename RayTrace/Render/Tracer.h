@@ -18,6 +18,8 @@ public:
 
 	char LightTracing(float dotResult);
 
+	inline const Camera& GetCamera() noexcept { return m_Camera; }
+
 	//void Tracing(const Sphere& sphere) noexcept(false);
 
 	//void Tracing(const Plane& plane) noexcept(false);

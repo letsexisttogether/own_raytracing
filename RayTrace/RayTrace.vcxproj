@@ -28,6 +28,7 @@
     <ClInclude Include="Geometry\Intersectables\Intersectable.h" />
     <ClInclude Include="Render\Screen.h" />
     <ClInclude Include="Render\Tracer.h" />
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Geometry\Intersectables\Source\Disk.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Render\Source\Screen.cpp" />
     <ClCompile Include="Render\Source\Tracer.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

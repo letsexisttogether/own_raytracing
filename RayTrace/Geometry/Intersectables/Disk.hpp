@@ -12,6 +12,7 @@ public:
 
 	inline const Plane& GetPlane() const noexcept { return m_Plane; }
 	inline const float GetRadius() const noexcept { return m_Radius; }
+	inline const Vector3d& GetOrigin() const noexcept override { return this->m_Plane.GetOrigin(); }
 
 	std::optional<Vector3d> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;
 
