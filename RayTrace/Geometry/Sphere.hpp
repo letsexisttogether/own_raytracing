@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Ray.hpp"
+#include "Intersectable.h"
 
-class Sphere
+class Sphere : public Intersectable
 {
 public:
 	Sphere() = delete;
@@ -13,6 +14,8 @@ public:
 	inline const Vector3d& GetOrigin() const noexcept { return m_Origin; }
 
 	inline float GetRadius() const noexcept { return m_Radius; }
+
+	bool IntersectedWithRay(Ray& ray, float* parametr = nullptr) const override;
 
 private:
 	Vector3d m_Origin;

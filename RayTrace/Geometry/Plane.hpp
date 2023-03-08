@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Vector3d.hpp"
+#include "Intersectable.h"
 
-class Plane
+class Plane : public Intersectable
 {
 public:
 	Plane() = delete;
@@ -12,6 +13,8 @@ public:
 
 	inline const Vector3d& GetOrigin() const noexcept { return m_Origin; }
 	inline const Vector3d& GetNormal() const noexcept { return m_Normal; }
+
+	bool IntersectedWithRay(Ray& ray, float* parametr = nullptr) const override;
 
 private:
 	Vector3d m_Origin;

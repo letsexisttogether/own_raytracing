@@ -15,54 +15,74 @@ char RayTracer::LightTracing(float dotResult)
 	else if (dotResult >= 0.8) return '#';
 }
 
-void RayTracer::Tracing(const Sphere& sphere) noexcept(false)
+void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
 {
 	for (int i = 0; i < m_Screen.GetHeigth(); i++)
 	{
 		for (int j = 0; j < m_Screen.GetWidth(); j++)
 		{
 			Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
-
-			const bool doesIntersect = m_IWS.IntersectedWithRay(sphere, { m_Camera, thrownVector });
-
-			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
-		}
-	}
-
-	m_Screen.Print();
-}
-
-void RayTracer::Tracing(const Plane& plane) noexcept(false)
-{
-	for (int i = 0; i < m_Screen.GetHeigth(); i++)
-	{
-		for (int j = 0; j < m_Screen.GetWidth(); j++)
-		{
-			Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
-
-			const bool doesIntersect = m_IWP.IntersectedWithRay(plane, { m_Camera, thrownVector });
+			Ray thrownRay{ m_Camera, thrownVector };
+			//const bool doesIntersect = m_IWS.IntersectedWithRay(sphere, { m_Camera, thrownVector });
+			const bool doesIntersect = intersectable.IntersectedWithRay(thrownRay);
 
 			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
 		}
 	}
-
 	m_Screen.Print();
 }
 
-void RayTracer::Tracing(const Disk& disk) noexcept(false)
-{
-	for (int i = 0; i < m_Screen.GetHeigth(); i++)
-	{
-		for (int j = 0; j < m_Screen.GetWidth(); j++)
-		{
-			Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
-
-			const bool doesIntersect = m_IWD.IntersectedWithRay(disk, { m_Camera, thrownVector });
-
-			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
-		}
-	}
-
-	m_Screen.Print();
-}
+//void RayTracer::Tracing(const Sphere& sphere) noexcept(false)
+//{
+//	for (int i = 0; i < m_Screen.GetHeigth(); i++)
+//	{
+//		for (int j = 0; j < m_Screen.GetWidth(); j++)
+//		{
+//			Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
+//			Ray thrownRay{ m_Camera, thrownVector };
+//			//const bool doesIntersect = m_IWS.IntersectedWithRay(sphere, { m_Camera, thrownVector });
+//			const bool doesIntersect = sphere.IntersectedWithRay(thrownRay);
+//
+//			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
+//		}
+//	}
+//
+//	m_Screen.Print();
+//}
+//
+//void RayTracer::Tracing(const Plane& plane) noexcept(false)
+//{
+//	for (int i = 0; i < m_Screen.GetHeigth(); i++)
+//	{
+//		for (int j = 0; j < m_Screen.GetWidth(); j++)
+//		{
+//			Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
+//			Ray thrownRay{ m_Camera, thrownVector };
+//			const bool doesIntersect = plane.IntersectedWithRay(thrownRay);
+//			//const bool doesIntersect = m_IWP.IntersectedWithRay(plane, { m_Camera, thrownVector });
+//
+//			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
+//		}
+//	}
+//
+//	m_Screen.Print();
+//}
+//
+//void RayTracer::Tracing(const Disk& disk) noexcept(false)
+//{
+//	for (int i = 0; i < m_Screen.GetHeigth(); i++)
+//	{
+//		for (int j = 0; j < m_Screen.GetWidth(); j++)
+//		{
+//			Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
+//			Ray thrownRay{ m_Camera, thrownVector };
+//			const bool doesIntersect = disk.IntersectedWithRay(thrownRay);
+//			//const bool doesIntersect = m_IWD.IntersectedWithRay(disk, thrownRay);
+//
+//			m_Screen.GetPixel(i, j) = ((doesIntersect) ? ('#') : (' '));
+//		}
+//	}
+//
+//	m_Screen.Print();
+//}
 

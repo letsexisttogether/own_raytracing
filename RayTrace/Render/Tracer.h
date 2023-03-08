@@ -27,9 +27,12 @@ public:
 
 	char LightTracing(float dotResult);
 
-	void Tracing(const Sphere& sphere) noexcept(false);
+	//void Tracing(const Sphere& sphere) noexcept(false);
 
-	void Tracing(const Plane& plane) noexcept(false);
+	//void Tracing(const Plane& plane) noexcept(false);
 
-	void Tracing(const Disk& disk) noexcept(false);
+	//void Tracing(const Disk& disk) noexcept(false);
+
+	void Tracing(const Intersectable& intersectable) noexcept(false);
+
 };
