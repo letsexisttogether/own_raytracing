@@ -14,9 +14,7 @@ public:
 	Screen() = delete;
 	Screen(const Screen&) = default;
 
-	Screen(uint16_t height, uint16_t width)
-		: m_Height{ height }, m_Width{ width }, m_Pixels{ m_Height, std::vector<char>(m_Width, ' ') }
-	{}
+	Screen(uint16_t height, uint16_t width);
 
 	~Screen() = default;
 
@@ -25,15 +23,5 @@ public:
 
 	inline char& GetPixel(uint16_t height, uint16_t width) noexcept(false) { return m_Pixels.at(height).at(width); }
 
-	void Print() const noexcept
-	{
-		for (int i = m_Height - 1; i >= 0; i--)
-		{
-			for (int j = m_Width - 1; j >= 0; j--)
-			{
-				std::cout << m_Pixels[i][j];
-			}
-			std::cout << '\n';
-		}
-	};
+	void Print() const noexcept;
 };
