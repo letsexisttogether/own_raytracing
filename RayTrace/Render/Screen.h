@@ -6,16 +6,16 @@
 class Screen
 {
 private:
-	std::vector<std::vector<char>> m_Pixels;
 	uint16_t m_Height;
 	uint16_t m_Width;
+	std::vector<std::vector<char>> m_Pixels;
 
 public:
 	Screen() = delete;
-	Screen(const Screen& screen) = default;
+	Screen(const Screen&) = default;
 
 	Screen(uint16_t height, uint16_t width)
-		: m_Height{ height }, m_Width{ width }
+		: m_Height{ height }, m_Width{ width }, m_Pixels{ m_Height, std::vector<char>(m_Width, ' ') }
 	{}
 
 	~Screen() = default;
@@ -23,10 +23,7 @@ public:
 	inline uint16_t GetHeigth() const noexcept { return m_Height; }
 	inline uint16_t GetWidth() const noexcept { return m_Width; }
 
-	char& GetPixel(uint16_t height, uint16_t width) noexcept(false)
-	{
-		return m_Pixels.at(height).at(width);
-	}
+	inline char& GetPixel(uint16_t height, uint16_t width) noexcept(false) { return m_Pixels.at(height).at(width); }
 
 	void Print() const noexcept
 	{

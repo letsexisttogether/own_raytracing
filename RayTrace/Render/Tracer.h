@@ -12,14 +12,16 @@ class RayTracer
 private:
 	Vector3d m_Camera;
 	Vector3d m_LightSource;
+	Screen m_Screen;
 	float m_Distance;
 	IntersectedWithSphere m_IWS;
 	IntersectedWithPlane m_IWP;
 	IntersectedWithDisk m_IWD;
-public:
 
+public:
 	RayTracer() = delete;
-	RayTracer(Vector3d Camera, Vector3d LightSrc, float Distance) : m_Camera(Camera), m_LightSource(LightSrc * -1.f), m_Distance(Distance) {};
+	RayTracer(Screen screen, Vector3d Camera, Vector3d LightSrc, float Distance) 
+		: m_Screen{ screen }, m_Camera(Camera), m_LightSource(LightSrc * -1.f), m_Distance(Distance) {};
 
 	char LightTracing(float DotResult)
 	{
@@ -31,51 +33,48 @@ public:
 		else if (DotResult >= 0.8) return '#';
 	}
 
-	template <int H, int W>
-	void Tracing(Screen<H, W>& screen, Sphere& sphere)
+	void Tracing(Sphere& sphere)
 	{
-		for (int i = 0; i < H; i++)
+		for (int i = 0; i < m_Screen.GetHeigth(); i++)
 		{
-			for (int j = 0; j < W; j++)
+			for (int j = 0; j < m_Screen.GetWidth(); j++)
 			{				 
 				Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
 				if (m_IWS.IntersectedWithRay(sphere, { m_Camera, thrownVector.Normalize() }))
-					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(thrownVector.Normalize() * -1.f));
-				else screen.m_Screen[i][j] = ' ';
+					m_Screen.GetPixel(i, j) = LightTracing(m_LightSource.Dot(thrownVector.Normalize() * -1.f));
+				else m_Screen.GetPixel(i, j) = ' ';
 			}
 		}		
 	}
 
-	template <int H, int W>
-	void Tracing(Screen<H, W>& screen, Plane& plane)
+	void Tracing(Plane& plane)
 	{
-		for (int i = 0; i < H; i++)
+		for (int i = 0; i < m_Screen.GetHeigth(); i++)
 		{
-			for (int j = 0; j < W; j++)
+			for (int j = 0; j < m_Screen.GetWidth(); j++)
 			{
 				Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
 				thrownVector.Normalize();
 
 				if (m_IWP.IntersectedWithRay(plane, { m_Camera, thrownVector }))
-					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(thrownVector * -1.f));
-				else screen.m_Screen[i][j] = ' ';
+					m_Screen.GetPixel(i, j) = LightTracing(m_LightSource.Dot(thrownVector * -1.f));
+				else m_Screen.GetPixel(i, j) = ' ';
 			}
 		}
 	}
 
-	template <int H, int W>
-	void Tracing(Screen<H, W>& screen, Disk& disk)
+	void Tracing(Disk& disk)
 	{
-		for (int i = 0; i < H; i++)
+		for (int i = 0; i < m_Screen.GetHeigth(); i++)
 		{
-			for (int j = 0; j < W; j++)
+			for (int j = 0; j < m_Screen.GetWidth(); j++)
 			{
 				Vector3d thrownVector = { Vector3d(j, i, m_Distance) - m_Camera };
 				thrownVector.Normalize();
 
 				if (m_IWD.IntersectedWithRay(disk, { m_Camera, thrownVector }))
-					screen.m_Screen[i][j] = LightTracing(m_LightSource.Dot(thrownVector * -1.f));
-				else screen.m_Screen[i][j] = ' ';
+					m_Screen.GetPixel(i, j) = LightTracing(m_LightSource.Dot(thrownVector * -1.f));
+				else m_Screen.GetPixel(i, j) = ' ';
 			}
 		}
 	}
