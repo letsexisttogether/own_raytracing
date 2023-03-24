@@ -1,3 +1,0 @@
-﻿  Tracer.cpp
-D:\Pluses\RtrFinal\own_raytracing\RayTrace\Render\Source\Tracer.cpp(14): warning C4715: RayTracer::LightTracing: значение возвращается не при всех путях выполнения
-  RayTrace.vcxproj -> D:\Pluses\RtrFinal\own_raytracing\x64\Debug\RayTrace.exe
