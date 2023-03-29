@@ -15,8 +15,6 @@ char RayTracer::LightTracing(float dotResult)
 
 void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
 {
-	std::optional<Vector3d> point;
-	float length = 99999.f;
 	for (int i = 0; i < m_Screen.GetHeigth(); i++)
 	{
 		for (int j = 0; j < m_Screen.GetWidth(); j++)
@@ -27,7 +25,7 @@ void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
 			float absoluteCoordinateI = (relativeCoordinatei * m_Screen.GetPixelSize()) + (m_Screen.GetPixelSize() / 2.f);
 			float absoluteCoordinateJ = (relativeCoordinatej * m_Screen.GetPixelSize()) + (m_Screen.GetPixelSize() / 2.f);
 
-			Vector3d thrownVector = { Vector3d(absoluteCoordinateJ, absoluteCoordinateI, m_Screen.GetDistance()) - m_Camera.GetLocation() };
+			Vector3d thrownVector = { Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, m_Screen.GetDistance() } - m_Camera.GetLocation() };
 
 			Ray thrownRay{ m_Camera.GetLocation(), thrownVector.Normalize() };
 

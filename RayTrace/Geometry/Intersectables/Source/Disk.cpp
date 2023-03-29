@@ -23,10 +23,8 @@ std::optional<Intersection> Disk::IntersectedWithRay(const Ray& ray, float* para
     float distance = (intersectionPoint - center).GetLength();
 
     // Перевіряємо, чи належить точка диску
-
     if (distance <= radius)
     {
-        //return { intersectionPoint, this->GetPlane().GetNormal()};
         return std::optional<Intersection>({ intersectionPoint, this->GetPlane().GetNormal() });
     }
     return std::nullopt;

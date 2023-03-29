@@ -24,11 +24,10 @@ std::optional<Intersection> Plane::IntersectedWithRay(const Ray & ray, float* pa
     float dot = normal.Dot(direction);
     if (fabs(dot) < 0.0001f) return std::nullopt;
 
-    // знаходимо parametr та визначаємо, де перетинається пряма з площиною
+    // Знаходимо parametr та визначаємо, де перетинається пряма з площиною
     *parametr = normal.Dot(center - origin) / dot;
     if (*parametr < 0.f) return std::nullopt;
 
-    //return { origin + (direction * (*parametr)), m_Normal };
     return std::optional<Intersection>({ origin + (direction * (*parametr)), m_Normal });
 }
 

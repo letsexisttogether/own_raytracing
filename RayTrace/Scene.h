@@ -7,13 +7,12 @@ class Scene : public Intersectable
 private:
 	RayTracer m_RayTracer;
 	std::vector<Intersectable*> m_Figures;
+
 public:
 	Scene() = delete;
 	Scene(RayTracer& tracer);
+	
 	virtual std::optional<Intersection> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;
+	
 	void AddToScene(Intersectable* figure);
-	/*void Trace();
-	void PrintScreen();
-private:
-	int FindClosestFigure();*/
 };

@@ -13,8 +13,6 @@ public:
 
 	inline const Vector3d& GetOrigin() const noexcept { return m_Origin; }
 
-	//virtual Vector3d GetOrigin() const noexcept = 0;
-
 	inline float GetRadius() const noexcept { return m_Radius; } 
 
 	std::optional<Intersection> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;

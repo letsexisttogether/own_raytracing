@@ -33,16 +33,19 @@ std::optional<Intersection> Sphere::IntersectedWithRay(const Ray& ray, float* pa
 	float firstIntersecionPoint = (-b + sqrtf(discriminant)) / (2.f * a);
 	float secondIntersecionPoint = (-b - sqrtf(discriminant)) / (2.f * a);
 
-	//*parametr = std::min(firstIntersecionPoint, secondIntersecionPoint);
 	Vector3d point1 = original + direction * (firstIntersecionPoint);
 	Vector3d point2 = original + direction * (secondIntersecionPoint);
+	
 	float distance1 = (point1 - ray.GetOrigin()).GetLength();
 	float distance2 = (point2 - ray.GetOrigin()).GetLength();
-	if(distance1 < distance2) return std::optional<Intersection>({ point1, point1 - m_Origin });
+	
+	if (distance1 < distance2)
+	{
+		return std::optional<Intersection>({ point1, point1 - m_Origin });
+	}
+	
 	return std::optional<Intersection>({ point2, point2 - m_Origin });
 
-	//return { point, point - m_Origin };
-	//return std::optional<Intersection>({ point, point - m_Origin});
 }
 
 Vector3d Sphere::GetNormal(Vector3d intersectionPoint) const noexcept
