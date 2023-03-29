@@ -28,7 +28,7 @@ public:
 	inline float GetPixelSize() const noexcept { return m_PixelSize; }
 	inline float GetDistance() const noexcept { return m_Distance; }
 
-	inline char* GetPixel(uint16_t height, uint16_t width) noexcept(false) { return &m_Pixels.at(height).at(width); }
+	inline char& GetPixel(uint16_t height, uint16_t width) noexcept(false) { return m_Pixels.at(height).at(width); }
 
 
 	void Print() const noexcept;

@@ -27,20 +27,22 @@ void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
 			float absoluteCoordinateI = (relativeCoordinatei * m_Screen.GetPixelSize()) + (m_Screen.GetPixelSize() / 2.f);
 			float absoluteCoordinateJ = (relativeCoordinatej * m_Screen.GetPixelSize()) + (m_Screen.GetPixelSize() / 2.f);
 
-			Vector3d thrownVector = { Vector3d(absoluteCoordinateI, absoluteCoordinateJ, m_Screen.GetDistance()) - m_Camera.GetLocation()};
+			Vector3d thrownVector = { Vector3d(absoluteCoordinateJ, absoluteCoordinateI, m_Screen.GetDistance()) - m_Camera.GetLocation() };
 
 			Ray thrownRay{ m_Camera.GetLocation(), thrownVector.Normalize() };
 
-			//const bool doesIntersect = (intersectable.IntersectedWithRay(thrownRay).has_value());
 			std::optional<Intersection> intersection = intersectable.IntersectedWithRay(thrownRay);
 
 			if (intersection.has_value())
 			{
 				Vector3d normal = intersection.value().Normal.Normalize();
 				char symbol = LightTracing(normal.Dot(m_LightVector));
-				*m_Screen.GetPixel(i, j) = symbol;
+				m_Screen.GetPixel(i, j) = symbol;
 			}
-			else *m_Screen.GetPixel(i, j) = ' ';
+			else
+			{
+				m_Screen.GetPixel(i, j) = ' ';
+			}
 		}
 	}
 }
