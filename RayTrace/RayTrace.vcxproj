@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileProcessing\FileReader.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Geometry\Intersectables\Disk.hpp" />
     <ClInclude Include="Geometry\Intersectables\Plane.hpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="Scene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FileProcessing\Source\FileReader.cpp" />
     <ClCompile Include="Geometry\Intersectables\Source\Disk.cpp" />
     <ClCompile Include="Geometry\Intersectables\Source\Plane.cpp" />
     <ClCompile Include="Geometry\Primitives\Source\Ray.cpp" />
