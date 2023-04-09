@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-#include "FileProcessing/FileReader.hpp"
+#include "FileProcessing/Readers/FileReader.hpp"
 
 int main()
 {
@@ -17,6 +17,8 @@ int main()
     }
 
     std::cout << "\nThe size is " << result.size() << std::endl;
+
+    std::cin.get();
 
     return 0;
 }
