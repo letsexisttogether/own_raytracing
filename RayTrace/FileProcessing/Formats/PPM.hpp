@@ -10,8 +10,8 @@ struct PPM
 	
 	std::vector<std::string> Comments;
 	
-	std::size_t Width;
-	std::size_t Height;
+	std::uint8_t Width;
+	std::uint8_t Height;
 	std::uint8_t PixelMaxValue;
 
 	std::vector<std::uint8_t> Data;
