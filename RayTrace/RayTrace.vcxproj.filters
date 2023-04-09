@@ -45,7 +45,28 @@
     <ClInclude Include="Scene.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="FileProcessing\FileReader.hpp">
+    <ClInclude Include="FileProcessing\Readers\FileReader.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Formats\PPM.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Formats\BMP.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Converters\Converter.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Converters\BMP32Converter.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Writers\Writer.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Writers\PPMWriter.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Readers\Reader.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,7 +98,19 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="FileProcessing\Source\FileReader.cpp">
+    <ClCompile Include="FileProcessing\Readers\Source\FileReader.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FileProcessing\Converters\Source\BMP32Converter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FileProcessing\Converters\PPMConverter.hpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FileProcessing\Converters\Source\PPMConverter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FileProcessing\Writers\Source\PPMWriter.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

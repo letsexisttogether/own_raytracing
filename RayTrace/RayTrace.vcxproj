@@ -19,7 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileProcessing\FileReader.hpp" />
+    <ClInclude Include="FileProcessing\Converters\Converter.hpp" />
+    <ClInclude Include="FileProcessing\Readers\FileReader.hpp" />
+    <ClInclude Include="FileProcessing\Formats\BMP.hpp" />
+    <ClInclude Include="FileProcessing\Formats\PPM.hpp" />
+    <ClInclude Include="FileProcessing\Converters\BMP32Converter.hpp" />
+    <ClInclude Include="FileProcessing\Writers\PPMWriter.hpp" />
+    <ClInclude Include="FileProcessing\Readers\Reader.hpp" />
+    <ClInclude Include="FileProcessing\Writers\Writer.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Geometry\Intersectables\Disk.hpp" />
     <ClInclude Include="Geometry\Intersectables\Plane.hpp" />
@@ -32,7 +39,11 @@
     <ClInclude Include="Scene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileProcessing\Source\FileReader.cpp" />
+    <ClCompile Include="FileProcessing\Converters\PPMConverter.hpp" />
+    <ClCompile Include="FileProcessing\Converters\Source\BMP32Converter.cpp" />
+    <ClCompile Include="FileProcessing\Readers\Source\FileReader.cpp" />
+    <ClCompile Include="FileProcessing\Converters\Source\PPMConverter.cpp" />
+    <ClCompile Include="FileProcessing\Writers\Source\PPMWriter.cpp" />
     <ClCompile Include="Geometry\Intersectables\Source\Disk.cpp" />
     <ClCompile Include="Geometry\Intersectables\Source\Plane.cpp" />
     <ClCompile Include="Geometry\Primitives\Source\Ray.cpp" />
