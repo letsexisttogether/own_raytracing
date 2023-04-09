@@ -10,5 +10,5 @@ public:
 	~PPMConverter() override = default;
 
 	PPM Convert(const PPM& ppm) const noexcept override;
-	PPM Convert(const BMP32& bmp) const noexcept override;
+	PPM Convert(const BMP& bmp) const noexcept override;
 };

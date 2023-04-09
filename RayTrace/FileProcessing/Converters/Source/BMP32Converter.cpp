@@ -1,11 +1,11 @@
 #include "../BMP32Converter.hpp"
 
-BMP32 BMP32Converter::Convert(const PPM& ppm) const noexcept
+BMP BMP32Converter::Convert(const PPM& ppm) const noexcept
 {
-	return BMP32();
+	return BMP();
 }
 
-BMP32 BMP32Converter::Convert(const BMP32& bmp) const noexcept
+BMP BMP32Converter::Convert(const BMP& bmp) const noexcept
 {
 	return bmp;
 }

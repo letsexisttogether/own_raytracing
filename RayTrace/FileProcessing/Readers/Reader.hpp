@@ -8,7 +8,7 @@ class Reader
 {
 public:
 	Reader(std::vector<std::byte>&& bytes)
-		: m_Bytes{ std::move() }
+		: m_Bytes{ std::move(bytes) }
 	{}
 
 	virtual ~Reader() {}

@@ -10,5 +10,5 @@ public:
 	virtual ~Converter() {}
 
 	virtual _FileType Convert(const PPM& ppm) const noexcept = 0;
-	virtual _FileType Convert(const BMP32& bmp) const noexcept = 0;
+	virtual _FileType Convert(const BMP& bmp) const noexcept = 0;
 };

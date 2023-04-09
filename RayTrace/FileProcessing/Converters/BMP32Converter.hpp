@@ -2,11 +2,11 @@
 
 #include "Converter.hpp"
 
-class BMP32Converter : public Converter<BMP32>
+class BMP32Converter : public Converter<BMP>
 {
 public:
 	~BMP32Converter() override = default;
 
-	BMP32 Convert(const PPM& ppm) const noexcept override;
-	BMP32 Convert(const BMP32& bmp) const noexcept override;
+	BMP Convert(const PPM& ppm) const noexcept override;
+	BMP Convert(const BMP& bmp) const noexcept override;
 };

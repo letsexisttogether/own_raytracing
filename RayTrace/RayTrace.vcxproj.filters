@@ -69,6 +69,15 @@
     <ClInclude Include="FileProcessing\Readers\Reader.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="FileProcessing\Writers\BMPWriter.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Readers\PPMReader.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="FileProcessing\Readers\BMPReader.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -111,6 +120,15 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="FileProcessing\Writers\Source\PPMWriter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FileProcessing\Writers\Source\BMPWriter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FileProcessing\Readers\Source\PPMReader.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FileProcessing\Readers\Source\BMPReader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

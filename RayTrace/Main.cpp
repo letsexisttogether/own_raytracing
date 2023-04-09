@@ -4,7 +4,7 @@
 
 #include "FileProcessing/Readers/FileReader.hpp"
 
-// Пример программы. 
+// Пример программы без фабрики.
 // 
 // FileReader reader{ "file_name.ppm" };
 // std::unique_ptr<Reader> reader{ new PPMReader{ reader.ReadFile() } };
