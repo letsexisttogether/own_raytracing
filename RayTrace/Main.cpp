@@ -3,32 +3,40 @@
 #include <string>
 
 #include "FileProcessing/Readers/FileReader.hpp"
+#include "FileProcessing/Readers/PPMReader.hpp"
+#include "FileProcessing/Writers/PPMWriter.hpp"
+#include "FileProcessing/Converters/PPMConverter.hpp"
+#include "FileProcessing/Readers/BMPReader.hpp"
+#include "FileProcessing/Writers/BMPWriter.hpp"
 
-// Пример программы без фабрики.
-// 
-// FileReader reader{ "file_name.ppm" };
-// std::unique_ptr<Reader> reader{ new PPMReader{ reader.ReadFile() } };
-// reader.ReadeHeader();
-// reader.ReadeContent();
-// PPM ppm = reader->GetPPM();
-// std::unique_ptr<Converter> converter{ new BMP32Converter{} };
-// std::unique_ptr<Writer> writer{ new BMP32Converter{ "file_name_2", converter.Convert(ppm) } };
+void PrintPPM(const PPM& ppm)
+{
+    std::cout << "PPM file includes:\n";
+
+    std::cout << "Comments:\n";
+
+    for (const auto& comment : ppm.Comments)
+    {
+        std::cout << comment << '\n';
+    }
+
+    std::cout << "Height: " << ppm.Height << "Width: " << ppm.Width << "Max per color: \n";
+}
 
 int main()
 {
-    FileReader reader{ "file.ppm" };
+    FileReader fileReader{ "file.ppm" };
 
-    const auto result = reader.ReadFile();
+    PPMReader reader{ fileReader.ReadFile() };
+    
+    reader.Read();
 
-    for (const auto byte : result)
-    {
-        const char smb = static_cast<char>(byte);
-        std::cout << smb;
-    }
+    PPM formatedStruct{ reader.GetFormatedStruct() };
 
-    std::cout << "Some commit";
-
-    std::cout << "\nThe size is " << result.size() << std::endl;
+    PPMWriter writer{ formatedStruct, "new_file.ppm" };
+    writer.();
+    
+    std::cout << "The file has been successfully written";
 
     return 0;
 }
