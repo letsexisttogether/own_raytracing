@@ -26,6 +26,8 @@ int main()
         std::cout << smb;
     }
 
+    std::cout << "Some commit";
+
     std::cout << "\nThe size is " << result.size() << std::endl;
 
     return 0;
