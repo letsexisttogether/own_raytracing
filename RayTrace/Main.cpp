@@ -30,11 +30,11 @@ int main()
     PPMReader reader{ fileReader.ReadFile() };
     
     reader.Read();
-
+    
     PPM formatedStruct{ reader.GetFormatedStruct() };
 
     PPMWriter writer{ formatedStruct, "new_file.ppm" };
-    writer.();
+    writer.Write();
     
     std::cout << "The file has been successfully written";
 
