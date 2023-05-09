@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string_view>
+#include <string>
 #include <optional>
 #include <vector>
 
@@ -15,24 +15,24 @@ public:
 
 	~CmdParser() = default;
 
-	const std::string& GetSourceName() const noexcept(false);
-	const std::string& GetSourceFormat() const noexcept(false);
+	const std::string& GetSourceName() noexcept(false);
+	const std::string& GetSourceFormat() noexcept(false);
 	
-	const std::string& GetGoalFormat() const noexcept(false);
-	const std::string& GetOutput() const noexcept(false);
+	const std::string& GetGoalFormat() noexcept(false);
+	const std::string& GetOutput() noexcept(false);
  
 	CmdParser& operator = (const CmdParser&) = delete;
 	CmdParser& operator = (CmdParser&&) = delete;
 
 private:
-	void CalculateSource() const noexcept(false);
-	void CalculateFormat() const noexcept(false);
-	void CalculateOutput() const noexcept(false);
+	void CalculateSource() noexcept(false);
+	void CalculateFormat() noexcept(false);
+	void CalculateOutput() noexcept(false);
 
 	bool IsParameterCorrect(const std::string& correct, const char* parameter)
 		const noexcept;
 
-	void CheckArgs(const std::uint32_t argsCount) const noexcept(false);
+	void CheckArgs() const noexcept(false);
 	void CheckSource() const noexcept(false);
 	void CheckGoalFormat() const noexcept(false);
 	void CheckOutput() const noexcept(false);

@@ -1,19 +1,19 @@
 #include "../CmdParser.hpp"
 
 #include <stdexcept>
-
+#include <string_view>
 
 CmdParser::CmdParser(const std::uint32_t argc, const char* const argv[])
 	: m_ArgsCount{ argc }, m_Args{ argv }
 {
-	CheckArgs(sizeof(argv));
+	CheckArgs();
 
 	CheckSource();
 	CheckGoalFormat();
 	CheckOutput();
 }
 
-const std::string& CmdParser::GetSourceName() const noexcept(false)
+const std::string& CmdParser::GetSourceName() noexcept(false)
 {
 	if (!m_SourceName)
 	{
@@ -23,7 +23,7 @@ const std::string& CmdParser::GetSourceName() const noexcept(false)
 	return m_SourceName.value();
 }
 
-const std::string& CmdParser::GetSourceFormat() const noexcept(false)
+const std::string& CmdParser::GetSourceFormat() noexcept(false)
 {
 	if (!m_SourceFormat)
 	{
@@ -33,7 +33,7 @@ const std::string& CmdParser::GetSourceFormat() const noexcept(false)
 	return m_SourceFormat.value();
 }
 
-const std::string& CmdParser::GetGoalFormat() const noexcept(false)
+const std::string& CmdParser::GetGoalFormat() noexcept(false)
 {
 	if (!m_GoalFormat)
 	{
@@ -43,7 +43,7 @@ const std::string& CmdParser::GetGoalFormat() const noexcept(false)
 	return m_GoalFormat.value();
 }
 
-const std::string& CmdParser::GetOutput() const noexcept(false)
+const std::string& CmdParser::GetOutput() noexcept(false)
 {
 	if (!m_Output)
 	{
@@ -51,6 +51,40 @@ const std::string& CmdParser::GetOutput() const noexcept(false)
 	}
 
 	return m_Output.value();
+}
+
+void CmdParser::CalculateSource() noexcept(false)
+{
+	std::string_view temp{ m_Args[1] };
+
+	m_SourceName = std::string{};
+	std::string& sourceName = m_SourceName.value();
+
+	m_SourceFormat = std::string{};
+	std::string& sourceFormat = m_SourceFormat.value();
+
+	for (auto rIter{ temp.rbegin() }; rIter != temp.rend() && *rIter != '.'; ++rIter)
+	{
+		sourceFormat.insert(sourceName.begin(), *rIter);
+	}
+	
+	for (std::uint32_t i = 0; i < temp.length() - sourceFormat.length() - 1; ++i)
+	{
+		sourceName +=  temp[i];
+	}
+
+	if (sourceName.empty() || sourceFormat.empty())
+	{
+		throw std::invalid_argument{ "The argument passed as a source is incorrect" };
+	}
+}
+
+void CmdParser::CalculateFormat() noexcept(false)
+{
+}
+
+void CmdParser::CalculateOutput() noexcept(false)
+{
 }
 
 bool CmdParser::IsParameterCorrect(const std::string& correct, const char* parameter)
@@ -67,9 +101,9 @@ bool CmdParser::IsParameterCorrect(const std::string& correct, const char* param
 	return true;
 }
 
-void CmdParser::CheckArgs(const std::uint32_t argsCount) const noexcept(false)
+void CmdParser::CheckArgs() const noexcept(false)
 {
-	if (m_ArgsCount < 3 || m_ArgsCount != argsCount)
+	if (m_ArgsCount < 3)
 	{
 		throw std::invalid_argument{ "The count of current arguments does not satisfy the needed amount" };
 	}
