@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Reader.hpp"
-#include "../Formats/PPM.hpp"
+#include "Formats/PPM.hpp"
 
 class PPMReader : public Reader<PPM>
 {

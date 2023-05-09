@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Reader.hpp"
-#include "../Formats/BMP.hpp"
+#include "Formats/BMP.hpp"
 
 class BMPReader : public Reader<BMP>
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Formats/PPM.hpp"
-#include "../Formats/BMP.hpp"
+#include "Formats/PPM.hpp"
+#include "Formats/BMP.hpp"
 
 template<class _FileType>
 class Converter

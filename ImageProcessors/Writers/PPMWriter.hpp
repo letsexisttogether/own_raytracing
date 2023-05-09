@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Writer.hpp"
-#include "../Formats/PPM.hpp"
+#include "Formats/PPM.hpp"
 
 class PPMWriter : public Writer<PPM>
 {

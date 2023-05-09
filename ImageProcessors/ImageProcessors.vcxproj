@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{71301f60-7490-4992-9756-660b21797e00}</ProjectGuid>
-    <RootNamespace>Tools</RootNamespace>
+    <ProjectGuid>{0468ee15-7e85-4833-8c54-f9abf3344fd3}</ProjectGuid>
+    <RootNamespace>ImageProcessors</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -76,8 +76,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImageProcessors;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tools;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,8 +92,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImageProcessors;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tools;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -108,8 +108,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImageProcessors;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tools;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,8 +124,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImageProcessors;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tools;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,12 +135,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CmdParser\Source\CmdParser.cpp" />
-    <ClCompile Include="FileReader\Source\FileReader.cpp" />
+    <ClCompile Include="Converters\Source\BMP32Converter.cpp" />
+    <ClCompile Include="Converters\Source\PPMConverter.cpp" />
+    <ClCompile Include="Readers\Source\BMPReader.cpp" />
+    <ClCompile Include="Readers\Source\PPMReader.cpp" />
+    <ClCompile Include="Writers\Source\BMPWriter.cpp" />
+    <ClCompile Include="Writers\Source\PPMWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CmdParser\CmdParser.hpp" />
-    <ClInclude Include="FileReader\FileReader.hpp" />
+    <ClInclude Include="Converters\BMP32Converter.hpp" />
+    <ClInclude Include="Converters\Converter.hpp" />
+    <ClInclude Include="Converters\PPMConverter.hpp" />
+    <ClInclude Include="Formats\BMP.hpp" />
+    <ClInclude Include="Formats\PPM.hpp" />
+    <ClInclude Include="Readers\BMPReader.hpp" />
+    <ClInclude Include="Readers\PPMReader.hpp" />
+    <ClInclude Include="Readers\Reader.hpp" />
+    <ClInclude Include="Writers\BMPWriter.hpp" />
+    <ClInclude Include="Writers\PPMWriter.hpp" />
+    <ClInclude Include="Writers\Writer.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

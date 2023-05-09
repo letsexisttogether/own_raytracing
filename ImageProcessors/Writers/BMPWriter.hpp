@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Writer.hpp"
-#include "../Formats/BMP.hpp"
+#include "Formats/BMP.hpp"
 
 class BMPWriter : public Writer<BMP>
 {
