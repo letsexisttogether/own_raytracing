@@ -69,14 +69,21 @@ void CmdParser::CalculateSource() noexcept(false)
 	}
 	std::reverse(sourceFormat.begin(), sourceFormat.end());
 	
-	for (std::uint32_t i = s_CorrectSource.size(); i < temp.length() - sourceFormat.length() - 1; ++i)
+	const std::int32_t sourceNameLength = temp.length() - sourceFormat.length();
+
+	if (sourceFormat.empty() || !(sourceNameLength - s_CorrectSource.size()))
 	{
-		sourceName +=  temp[i];
+		throw std::invalid_argument{ "The source format was passed incorrectly" };
+	}
+	
+	for (std::uint32_t i = s_CorrectSource.size(); i < sourceNameLength - 1; ++i)
+	{
+		sourceName += temp[i];
 	}
 
-	if (sourceName.empty() || sourceFormat.empty())
+	if (sourceName.empty())
 	{
-		throw std::invalid_argument{ "The argument passed as a source is incorrect" };
+		throw std::invalid_argument{ "The source name was passed incorrectly" };
 	}
 }
 

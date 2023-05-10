@@ -93,11 +93,28 @@ TEST(CmdParserCheck, GoalFormatFalseCheck)
     }
 }
 
-TEST(CmdParserCheck, SourcetEmptyCheck)
+TEST(CmdParserCheck, SourceNameEmptyCheck)
 {
     try
     {
-        char const* arr[3] = { "Program.exe", "--source=a", "--goal-format=" };
+        char const* arr[3] = { "Program.exe", "--source=.png", "--goal-format=" };
+        CmdParser parser{ 3,  arr };
+
+        const std::string& str = parser.GetSourceName();
+
+        FAIL() << "The exeption was not thrown";
+    }
+    catch (const std::exception& exp)
+    {
+        EXPECT_EQ(std::string{ "The source name was passed incorrectly" }, exp.what());
+    }
+}
+
+TEST(CmdParserCheck, SourceFormatEmptyCheck)
+{
+    try
+    {
+        char const* arr[3] = { "Program.exe", "--source=alex", "--goal-format=" };
         CmdParser parser{ 3,  arr };
 
         const std::string& str = parser.GetSourceFormat();
@@ -106,6 +123,6 @@ TEST(CmdParserCheck, SourcetEmptyCheck)
     }
     catch (const std::exception& exp)
     {
-        EXPECT_EQ(std::string{ "The argument passed as a source is incorrect" }, exp.what());
+        EXPECT_EQ(std::string{ "The source format was passed incorrectly" }, exp.what());
     }
 }
