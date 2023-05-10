@@ -141,7 +141,7 @@ bool CmdParser::IsParameterCorrect(const std::string& correct, const char* param
 
 void CmdParser::CheckArgs() const noexcept(false)
 {
-	if (m_ArgsCount < 3)
+	if (m_ArgsCount < 3 || m_ArgsCount > 4)
 	{
 		throw std::invalid_argument{ "The count of current arguments does not satisfy the needed amount" };
 	}
