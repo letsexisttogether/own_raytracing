@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a1b86b41-bd4e-45ac-bc2e-9a9e09114b1f}</ProjectGuid>
+    <ProjectGuid>{6e7cfb54-58a1-43a4-b923-a6cae4de4fd4}</ProjectGuid>
     <RootNamespace>Tests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -76,7 +76,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SomeThing;$(SolutionDir)Tests\GoogleTests\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,7 +94,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SomeThing;$(SolutionDir)Tests\GoogleTests\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,7 +112,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SomeThing;$(SolutionDir)Tests\GoogleTests\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,7 +130,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SomeThing;$(SolutionDir)Tests\GoogleTests\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -164,12 +168,12 @@
     <ClInclude Include="GoogleTests\include\gtest\internal\gtest-type-util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CmdParser\Check.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Math\Math.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SomeThing\SomeThing.vcxproj">
-      <Project>{c76580ec-d47c-4bcd-a312-c9c7c215e466}</Project>
+    <ProjectReference Include="..\Tools\Tools.vcxproj">
+      <Project>{71301f60-7490-4992-9756-660b21797e00}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
