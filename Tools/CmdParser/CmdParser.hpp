@@ -25,7 +25,7 @@ public:
 
 private:
 	void CalculateSource() noexcept(false);
-	void CalculateFormat() noexcept(false);
+	void CalculateGoalFormat() noexcept(false);
 	void CalculateOutput() noexcept(false);
 
 	bool IsParameterCorrect(const std::string& correct, const char* parameter)

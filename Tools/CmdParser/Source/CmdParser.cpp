@@ -37,7 +37,7 @@ const std::string& CmdParser::GetGoalFormat() noexcept(false)
 {
 	if (!m_GoalFormat)
 	{
-		CalculateFormat();
+		CalculateGoalFormat();
 	}
 
 	return m_GoalFormat.value();
@@ -87,8 +87,20 @@ void CmdParser::CalculateSource() noexcept(false)
 	}
 }
 
-void CmdParser::CalculateFormat() noexcept(false)
+void CmdParser::CalculateGoalFormat() noexcept(false)
 {
+	m_GoalFormat = std::string{};
+	std::string& goalFormat = m_GoalFormat.value();
+
+	for (const char* i = m_Args[2] + s_CorrectGoalFormat.length(); *i != '\0'; ++i)
+	{
+		goalFormat += *i;
+	}
+
+	if (goalFormat.empty())
+	{
+		throw std::invalid_argument("The goal format was passed incorrectly");
+	}
 }
 
 void CmdParser::CalculateOutput() noexcept(false)
