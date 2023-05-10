@@ -30,7 +30,7 @@ TEST(CmdParserCalculate, GoalFormatCalculate)
 
         const std::string& goalFormat = parser.GetGoalFormat();
 
-        EXPECT_EQ(goalFormat, "ppm") << "The current name is " << goalFormat;
+        EXPECT_EQ(goalFormat, "ppm");
     }
     catch (std::exception& exp)
     {
@@ -52,5 +52,39 @@ TEST(CmdParserCalculate, GoalFormatFalseCalculate)
     catch (std::exception& exp)
     {
         EXPECT_EQ(std::string{ "The goal format was passed incorrectly" }, exp.what());
+    }
+}
+
+TEST(CmdParserCalculate, OutputCalculate)
+{
+    try
+    {
+        char const* arr[4] = { "Program.exe", "--source=alex.png", "--goal-format=ppm", "--output=image"};
+        CmdParser parser{ 4,  arr };
+
+        const std::string& output = parser.GetOutput();
+
+        EXPECT_EQ(output, "image");
+    }
+    catch (std::exception& exp)
+    {
+        FAIL() << exp.what();
+    }
+}
+
+TEST(CmdParserCalculate, OutputFromSourceCalculate)
+{
+    try
+    {
+        char const* arr[3] = { "Program.exe", "--source=image.png", "--goal-format=ppm" };
+        CmdParser parser{ 3,  arr };
+
+        const std::string& output = parser.GetOutput();
+
+        EXPECT_EQ(output, "image");
+    }
+    catch (std::exception& exp)
+    {
+        FAIL() << exp.what();
     }
 }

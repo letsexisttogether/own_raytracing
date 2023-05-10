@@ -105,6 +105,24 @@ void CmdParser::CalculateGoalFormat() noexcept(false)
 
 void CmdParser::CalculateOutput() noexcept(false)
 {
+	m_Output = std::string{};
+	std::string& output = m_Output.value();
+
+	if (m_ArgsCount < 4)
+	{
+		output = GetSourceName();
+		return;
+	}
+	
+	for (const char* i = m_Args[3] + s_CorrectOutput.length(); *i != '\0'; ++i)
+	{
+		output += *i;
+	}
+
+	if (output.empty())
+	{
+		throw std::invalid_argument("The output was passed incorrectly");
+	}
 }
 
 bool CmdParser::IsParameterCorrect(const std::string& correct, const char* parameter)
