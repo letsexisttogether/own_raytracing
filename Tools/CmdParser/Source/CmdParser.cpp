@@ -65,10 +65,11 @@ void CmdParser::CalculateSource() noexcept(false)
 
 	for (auto rIter{ temp.rbegin() }; rIter != temp.rend() && *rIter != '.'; ++rIter)
 	{
-		sourceFormat.insert(sourceName.begin(), *rIter);
+		sourceFormat += *rIter;
 	}
+	std::reverse(sourceFormat.begin(), sourceFormat.end());
 	
-	for (std::uint32_t i = 0; i < temp.length() - sourceFormat.length() - 1; ++i)
+	for (std::uint32_t i = s_CorrectSource.size(); i < temp.length() - sourceFormat.length() - 1; ++i)
 	{
 		sourceName +=  temp[i];
 	}
