@@ -2,19 +2,21 @@
 
 #include "CmdParser/CmdParser.hpp"
 
-TEST(CmdParserCheck, ArgumenmtCheck)
+TEST(CmdParserCalculate, SourceCalculate)
 {
     try
     {
-        char const* arr[3] = { "Program.exe", "--source=a", "--goal-format=" };
+        char const* arr[3] = { "Program.exe", "--source=alex.png", "--goal-format=" };
         CmdParser parser{ 3,  arr };
 
-        const std::string& str = parser.GetSourceFormat();
+        const std::string& name = parser.GetSourceName();
+        const std::string& format = parser.GetSourceFormat();
 
-        FAIL() << "The exeption was not thrown";
+        EXPECT_EQ(name, "alex") << "The current name is " << name;
+        EXPECT_EQ(format, "png") << "The current format is " << format;
     }
-    catch (const std::exception& exp)
+    catch (std::exception& exp)
     {
-        EXPECT_EQ(std::string{ "The argument passed as a source is incorrect" }, exp.what());
+        FAIL() << exp.what();
     }
 }

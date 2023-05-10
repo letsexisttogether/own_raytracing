@@ -92,5 +92,12 @@
     <ClCompile Include="CmdParser\Check.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CmdParser\Calculate.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="GoogleTests\lib\GoogleTests.lib" />
+    <Library Include="GoogleTests\lib\GoogleTests-d.lib" />
   </ItemGroup>
 </Project>
