@@ -77,7 +77,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImageProcessors;$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -95,7 +95,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImageProcessors;$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -113,7 +113,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImageProcessors;$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,7 +131,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImageProcessors;$(SolutionDir)Tools;$(SolutionDir)Tests\GoogleTests\include;$(SolutionDir)Tests\GoogleTests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -168,11 +168,15 @@
     <ClInclude Include="GoogleTests\include\gtest\internal\gtest-type-util.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CmdParser\Calculate.cpp" />
-    <ClCompile Include="CmdParser\Check.cpp" />
+    <ClCompile Include="ImageProcessors\Readers\PPMReader.cpp" />
+    <ClCompile Include="Tools\CmdParser\Calculate.cpp" />
+    <ClCompile Include="Tools\CmdParser\Check.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageProcessors\ImageProcessors.vcxproj">
+      <Project>{0468ee15-7e85-4833-8c54-f9abf3344fd3}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vcxproj">
       <Project>{71301f60-7490-4992-9756-660b21797e00}</Project>
     </ProjectReference>

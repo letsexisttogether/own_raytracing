@@ -89,10 +89,13 @@
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="CmdParser\Check.cpp">
+    <ClCompile Include="Tools\CmdParser\Check.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="CmdParser\Calculate.cpp">
+    <ClCompile Include="Tools\CmdParser\Calculate.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageProcessors\Readers\PPMReader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
