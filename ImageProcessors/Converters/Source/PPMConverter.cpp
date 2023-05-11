@@ -16,11 +16,9 @@ PPM PPMConverter::Convert(const BMP& bmp) const noexcept
 
     ppm.PixelMaxValue = 255;
 
-    for (std::size_t i = 0; i < bmp.Data.size(); i += 3)
+    for (const std::uint8_t byte : bmp.Data)
     {
-        ppm.Data.push_back(static_cast<std::uint8_t>(bmp.Data[i]));
-        ppm.Data.push_back(static_cast<std::uint8_t>(bmp.Data[i + 1]));
-        ppm.Data.push_back(static_cast<std::uint8_t>(bmp.Data[i + 2]));
+        ppm.Data.push_back(byte);
     }
 
     return ppm;

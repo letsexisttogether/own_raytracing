@@ -1,20 +1,27 @@
 #include <iostream>
+
 #include <fstream>
 #include <string>
 
-#include "CmdParser/CmdParser.hpp"
+#include "FileReader/FileReader.hpp"
 
-int32_t main(std::uint32_t argc, const char* argv[])
+#include "Converters/PPMConverter.hpp"
+#include "Readers/BMPReader.hpp"
+#include "Writers/PPMWriter.hpp"
+
+int32_t main(int argc, const char* argv[])
 {
-	try
-	{
-		CmdParser parser{ argc, argv };
-	}
-	catch (const std::exception& exp)
-	{
-		std::cerr << exp.what() << std::endl;
-		return EXIT_FAILURE;
-	}
+    FileReader reader{ "shapes.bmp" };
+    
+    BMPReader bmpReader{ std::move(reader.ReadFile()) };
+    bmpReader.Read();
+    const BMP bmp{ bmpReader.GetFormatedStruct() };
+
+    PPMConverter converter{};
+    const PPM ppm = converter.Convert(bmp);
+
+    PPMWriter ppmWriter{ ppm, "new_file.ppm"};
+    ppmWriter.Write();
 
     return EXIT_SUCCESS;
 }
