@@ -8,10 +8,11 @@ int get_int_number(int& byte_number, const std::vector<std::byte>& m_Bytes)
 {
     std::string number;
 
-    while (isdigit((char)m_Bytes[byte_number]) && (char)m_Bytes[byte_number] != ' ' && 
-        (char)m_Bytes[byte_number] != '\r' && (char)m_Bytes[byte_number + 1] != '\n')
+    while (isdigit((char)m_Bytes[byte_number]))
+    {
         number += (char)m_Bytes[byte_number++];
-   
+    }
+
     byte_number++;
 
     return atoi(number.c_str());
@@ -33,7 +34,6 @@ void PPMReader::Read() noexcept(false)
     byte_number += 2;
 
     // зчитуємо коментарі, якщо вони там є
-
     while ((char)m_Bytes[byte_number] == '#')
     {
         std::string comment;
@@ -51,13 +51,17 @@ void PPMReader::Read() noexcept(false)
     m_UnformattedStruct.Height = get_int_number(byte_number, m_Bytes);
     m_UnformattedStruct.PixelMaxValue = get_int_number(byte_number, m_Bytes);
 
-    // зчитуємо пікселі зображення
-    if ((char)m_Bytes[byte_number] == '\r') byte_number += 2;
-    else if ((char)m_Bytes[byte_number] == '\n') byte_number++;
+    byte_number++;
 
-    while (size > byte_number)
+    // зчитуємо дані
+    for (std::uint32_t height = 0; height < m_UnformattedStruct.Height; ++height, byte_number--)
     {
-        m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
+        for (std::uint32_t width = 0; width < m_UnformattedStruct.Width; ++width, byte_number += 2)
+        {
+            m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
+            m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
+            m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
+        }
     }
 }
-
+ 
