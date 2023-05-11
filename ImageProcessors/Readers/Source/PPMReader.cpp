@@ -20,7 +20,6 @@ int get_int_number(int& byte_number, const std::vector<std::byte>& m_Bytes)
 
 void PPMReader::Read() noexcept(false)
 {
-
     int byte_number = 0;
     int size = m_Bytes.size();
 
@@ -34,32 +33,31 @@ void PPMReader::Read() noexcept(false)
     byte_number += 2;
 
     // зчитуємо коментарі, якщо вони там є
-    std::string comment;
-    if ((char)m_Bytes[byte_number] == '#')
-        do
+
+    while ((char)m_Bytes[byte_number] == '#')
+    {
+        std::string comment;
+        while ((char)m_Bytes[++byte_number] != '\r' && (char)m_Bytes[byte_number + 1] != '\n')
         {
-            comment.clear();
-            while ((char)m_Bytes[byte_number] != '\r' && (char)m_Bytes[byte_number + 1] != '\n')
-                comment += (char)m_Bytes[byte_number++];
-
-            byte_number++;
-            m_UnformattedStruct.Comments.push_back(comment);
-
-        } while ((char)m_Bytes[++byte_number] == '#');
-
-        // зчитуємо висоту, ширину та градацію кольорів
-        m_UnformattedStruct.Width = get_int_number(byte_number, m_Bytes);
-        m_UnformattedStruct.Height = get_int_number(byte_number, m_Bytes);
-        m_UnformattedStruct.PixelMaxValue = get_int_number(byte_number, m_Bytes);
-
-        // зчитуємо пікселі зображення
-        if ((char)m_Bytes[byte_number] == '\r') byte_number += 2;
-        else if ((char)m_Bytes[byte_number] == '\n') byte_number++;
-
-        while (size > byte_number)
-        {
-            m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
+            comment += (char)m_Bytes[byte_number];
         }
+        m_UnformattedStruct.Comments.push_back(comment);
 
+        byte_number += 2;
+    }
+
+    // зчитуємо висоту, ширину та градацію кольорів
+    m_UnformattedStruct.Width = get_int_number(byte_number, m_Bytes);
+    m_UnformattedStruct.Height = get_int_number(byte_number, m_Bytes);
+    m_UnformattedStruct.PixelMaxValue = get_int_number(byte_number, m_Bytes);
+
+    // зчитуємо пікселі зображення
+    if ((char)m_Bytes[byte_number] == '\r') byte_number += 2;
+    else if ((char)m_Bytes[byte_number] == '\n') byte_number++;
+
+    while (size > byte_number)
+    {
+        m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
+    }
 }
 

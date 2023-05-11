@@ -10,14 +10,14 @@ void PPMWriter::Write() const noexcept(false)
 {
     std::ofstream out{ m_Path };
 
-	out.write(m_FormatedStruct.Format, 2) << "\n";
+	out.write(m_FormatedStruct.Format, 2) << '\n';
 	
 	for (const auto& comment : m_FormatedStruct.Comments)
 	{
-		out << '#' << comment << "\n";
+		out << '#' << comment << '\n';
 	}
 
-	out << m_FormatedStruct.Width << ' ' << m_FormatedStruct.Height << ' ' << m_FormatedStruct.PixelMaxValue << "\n";
+	out << m_FormatedStruct.Width << ' ' << m_FormatedStruct.Height << ' ' << m_FormatedStruct.PixelMaxValue << '\n';
 	
 	for (std::size_t i = 0; i < m_FormatedStruct.Data.size() - 2; i += 3)
 	{
@@ -27,7 +27,7 @@ void PPMWriter::Write() const noexcept(false)
 
 		if (!((i / 3 + 1) % m_FormatedStruct.Width))
 		{
-			out << "\n";
+			out << '\n';
 		}
 	}
 	
