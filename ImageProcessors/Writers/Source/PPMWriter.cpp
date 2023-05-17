@@ -19,7 +19,7 @@ void PPMWriter::Write() const noexcept(false)
 
 	out << m_FormatedStruct.Width << ' ' << m_FormatedStruct.Height << ' ' << m_FormatedStruct.PixelMaxValue << '\n';
 	
-	for (std::size_t i = 0; i < m_FormatedStruct.Data.size() - 2; i += 3)
+	/*for (std::size_t i = 0; i < m_FormatedStruct.Data.size() - 2; i += 3)
 	{
 		out << static_cast<std::uint16_t>(m_FormatedStruct.Data[i]) << ' '
 			<< static_cast<std::uint16_t>(m_FormatedStruct.Data[i + 1]) << ' '
@@ -28,6 +28,22 @@ void PPMWriter::Write() const noexcept(false)
 		if (!((i / 3 + 1) % m_FormatedStruct.Width))
 		{
 			out << '\n';
+		}
+	}*/
+
+	for (std::size_t i = 0; i < m_FormatedStruct.Data.size() - 2; i += 3)
+	{
+		out << static_cast<std::uint16_t>(m_FormatedStruct.Data[i]) << ' '
+			<< static_cast<std::uint16_t>(m_FormatedStruct.Data[i + 1]) << ' '
+			<< static_cast<std::uint16_t>(m_FormatedStruct.Data[i + 2]);
+
+		if (!((i / 3 + 1) % m_FormatedStruct.Width))
+		{
+			out << '\n';
+		}
+		else
+		{
+			out << "   ";
 		}
 	}
 	

@@ -8,9 +8,7 @@ BMPWriter::BMPWriter(const BMP& bmp, const std::filesystem::path& path)
 
 void BMPWriter::Write() const noexcept(false)
 {
-	BMP bmp_new = this->m_FormatedStruct;
-
-	bmp_new.addPadding();
+	
 	std::ofstream outfile(m_Path, std::ios::binary);
 
 	outfile.write(reinterpret_cast<const char*>(&m_FormatedStruct.Header[0]), sizeof(char));
@@ -39,7 +37,7 @@ void BMPWriter::Write() const noexcept(false)
 	outfile.write(reinterpret_cast<const char*>(&m_FormatedStruct.ImportantColors), sizeof(std::uint32_t));
 
 
-	outfile.write(reinterpret_cast<const char*>(bmp_new.Data.data()), sizeof(std::byte) * bmp_new.Data.size());
+	outfile.write(reinterpret_cast<const char*>(m_FormatedStruct.Data.data()), sizeof(std::byte) * m_FormatedStruct.Data.size());
 
 	outfile.close();
 }

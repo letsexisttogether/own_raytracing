@@ -14,27 +14,27 @@
 
 int32_t main(int argc, const char* argv[])
 {
-    FileReader reader1{ "shapes.bmp" };
-    FileReader reader{ "new_test.ppm" };
+    FileReader reader1{ "peepo_cry.bmp" };
+    /*FileReader reader{ "sample.ppm" };*/
     
     BMPReader bmpReader{ std::move(reader1.ReadFile()) };
     bmpReader.Read();
     const BMP bmp{ bmpReader.GetFormatedStruct() };
 
-    PPMReader ppmReader{ std::move(reader.ReadFile()) };
+    /*PPMReader ppmReader{ std::move(reader.ReadFile()) };
     ppmReader.Read();
-    const PPM ppm{ ppmReader.GetFormatedStruct() };
+    const PPM ppm{ ppmReader.GetFormatedStruct() };*/
 
     /*PPMConverter converter{};
-    const PPM ppm = converter.Convert(bmp);*/
+    const PPM ppm2 = converter.Convert(ppm);*/
 
     BMP32Converter converter{};
-    const BMP bmp2 = converter.Convert(ppm); 
+    const BMP bmp2 = converter.Convert(bmp); 
 
-    /*PPMWriter ppmWriter{ ppm, "new_test.ppm"};
+    /*PPMWriter ppmWriter{ ppm2, "sample_new.ppm"};
     ppmWriter.Write();*/
 
-    BMPWriter bmpWriter{ bmp2, "ppm_to_bmp.bmp" };
+    BMPWriter bmpWriter{ bmp2, "peepo.bmp" };
     bmpWriter.Write();
 
     return EXIT_SUCCESS;
