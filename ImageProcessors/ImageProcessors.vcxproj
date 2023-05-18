@@ -137,6 +137,8 @@
   <ItemGroup>
     <ClCompile Include="Converters\Source\BMP32Converter.cpp" />
     <ClCompile Include="Converters\Source\PPMConverter.cpp" />
+    <ClCompile Include="Formats\Source\BMP.cpp" />
+    <ClCompile Include="Formats\Source\PPM.cpp" />
     <ClCompile Include="Readers\Source\BMPReader.cpp" />
     <ClCompile Include="Readers\Source\PPMReader.cpp" />
     <ClCompile Include="Writers\Source\BMPWriter.cpp" />
@@ -147,6 +149,7 @@
     <ClInclude Include="Converters\Converter.hpp" />
     <ClInclude Include="Converters\PPMConverter.hpp" />
     <ClInclude Include="Formats\BMP.hpp" />
+    <ClInclude Include="Formats\ImageFormat.hpp" />
     <ClInclude Include="Formats\PPM.hpp" />
     <ClInclude Include="Readers\BMPReader.hpp" />
     <ClInclude Include="Readers\PPMReader.hpp" />

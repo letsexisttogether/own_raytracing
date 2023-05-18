@@ -30,12 +30,16 @@ BMP BMP32Converter::Convert(const PPM& ppm) const noexcept
 
 	converted.FileSize = converted.PixelArrayOffset + converted.ImageSize;
 
-	for (const std::uint8_t& byte : ppm.Data)
+
+	for (const auto& byteArray : ppm.GetData())
 	{
-		converted.Data.push_back(byte);
+		for (const std::byte& byte : byteArray)
+		{
+			converted.Data.push_back(static_cast<std::uint8_t>(byte));
+		}
 	}
 
-	converted.addPadding();
+	converted.AddPadding();
 
 	/*long size = 4 * converted.Height * converted.Width;
 	for (long i = 0; i < size; i++)
@@ -50,6 +54,6 @@ BMP BMP32Converter::Convert(const BMP& bmp) const noexcept
 {
 	BMP bmp_new = bmp;
 
-	bmp_new.addPadding();
+	bmp_new.AddPadding();
 	return bmp_new;
 }

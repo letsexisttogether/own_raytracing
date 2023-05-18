@@ -51,16 +51,21 @@ void PPMReader::Read() noexcept(false)
     m_UnformattedStruct.Height = get_int_number(byte_number, m_Bytes);
     m_UnformattedStruct.PixelMaxValue = get_int_number(byte_number, m_Bytes);
 
+    m_UnformattedStruct.CheckHeader();
+
     byte_number++;
 
     // зчитуємо дані
+    m_UnformattedStruct.GetData().resize(m_UnformattedStruct.Height, std::vector<std::byte>{ m_UnformattedStruct.Width * 3 });
+
     for (std::uint32_t height = 0; height < m_UnformattedStruct.Height; ++height, byte_number--)
     {
-        for (std::uint32_t width = 0; width < m_UnformattedStruct.Width; ++width, byte_number += 2)
+        auto& currentDataArray = m_UnformattedStruct.GetData()[height];
+        for (std::uint32_t width = 0; width < currentDataArray.size(); width += 3, byte_number += 2)
         {
-            m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
-            m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
-            m_UnformattedStruct.Data.push_back(get_int_number(byte_number, m_Bytes));
+            currentDataArray[width] = (std::byte)get_int_number(byte_number, m_Bytes);
+            currentDataArray[width + 1] = (std::byte)get_int_number(byte_number, m_Bytes);
+            currentDataArray[width + 2] = (std::byte)get_int_number(byte_number, m_Bytes);
         }
     }
 }

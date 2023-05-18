@@ -5,7 +5,7 @@
 
 #include "ImageFormat.hpp"
 
-class PPM : ImageFormat 
+class PPM : public ImageFormat 
 {
 public:
 	void CheckHeader() const noexcept(false) override;
@@ -18,6 +18,4 @@ public:
 	std::uint32_t Width;
 	std::uint32_t Height;
 	std::uint32_t PixelMaxValue;
-
-	std::vector<std::uint8_t> Data;
 };

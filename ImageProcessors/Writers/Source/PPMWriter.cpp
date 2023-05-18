@@ -18,32 +18,25 @@ void PPMWriter::Write() const noexcept(false)
 	}
 
 	out << m_FormatedStruct.Width << ' ' << m_FormatedStruct.Height << ' ' << m_FormatedStruct.PixelMaxValue << '\n';
-	
-	/*for (std::size_t i = 0; i < m_FormatedStruct.Data.size() - 2; i += 3)
+
+	const auto& data = m_FormatedStruct.GetData();
+	for (std::size_t i = 0; i < data.size(); ++i)
 	{
-		out << static_cast<std::uint16_t>(m_FormatedStruct.Data[i]) << ' '
-			<< static_cast<std::uint16_t>(m_FormatedStruct.Data[i + 1]) << ' '
-			<< static_cast<std::uint16_t>(m_FormatedStruct.Data[i + 2]) << "   ";
-
-		if (!((i / 3 + 1) % m_FormatedStruct.Width))
+		const auto& currentDataArray = data[i];
+		for (std::size_t j = 0; j < currentDataArray.size() - 2; j += 3)
 		{
-			out << '\n';
-		}
-	}*/
+			out << static_cast<std::uint16_t>(currentDataArray[j]) << ' '
+				<< static_cast<std::uint16_t>(currentDataArray[j + 1]) << ' '
+				<< static_cast<std::uint16_t>(currentDataArray[j + 2]);
 
-	for (std::size_t i = 0; i < m_FormatedStruct.Data.size() - 2; i += 3)
-	{
-		out << static_cast<std::uint16_t>(m_FormatedStruct.Data[i]) << ' '
-			<< static_cast<std::uint16_t>(m_FormatedStruct.Data[i + 1]) << ' '
-			<< static_cast<std::uint16_t>(m_FormatedStruct.Data[i + 2]);
-
-		if (!((i / 3 + 1) % m_FormatedStruct.Width))
-		{
-			out << '\n';
-		}
-		else
-		{
-			out << "   ";
+			if (!((j / 3 + 1) % m_FormatedStruct.Width))
+			{
+				out << '\n';
+			}
+			else
+			{
+				out << "   ";
+			}
 		}
 	}
 	
