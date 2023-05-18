@@ -47,7 +47,7 @@ void BMPReader::Read() noexcept(false)
 		m_UnformattedStruct.Data.push_back(static_cast<std::uint8_t>(m_Bytes[i]));
 	}*/
 
-	m_UnformattedStruct.removePadding();
+	m_UnformattedStruct.RemovePadding();
 
 	//m_UnformattedStruct.FileSize = 54 + m_UnformattedStruct.ImageSize; //changed
 

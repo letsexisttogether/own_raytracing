@@ -1,11 +1,16 @@
 #pragma once
 
 #include <utility>
-#include <vector>
 #include <string>
 
-struct PPM
+#include "ImageFormat.hpp"
+
+class PPM : ImageFormat 
 {
+public:
+	void CheckHeader() const noexcept(false) override;
+
+public:
 	char Format[2];
 	
 	std::vector<std::string> Comments;
