@@ -77,7 +77,7 @@ void PPMReader::CheckHeader() const noexcept(false)
     {
         throw std::invalid_argument{ "The format you are trying to open is"
             + m_Header.Format
-            + ". However, we only support " + GetAllowedFormat() + " PPM format" };
+            + ". However, we only support " + header.Format + " PPM format"};
     }
     
     if (!m_Header.Height || !m_Header.Width)

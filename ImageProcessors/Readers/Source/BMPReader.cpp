@@ -12,7 +12,7 @@ ImageFormat BMPReader::Read() noexcept(false)
 	m_Header.Format[0] = *(unsigned char*)&m_Bytes[0];
 	m_Header.Format[1] = *(unsigned char*)&m_Bytes[1];
 
-	m_Header.FileSize = *(std::uint32_t*)&m_Bytes[2]; //changed at the end	
+	m_Header.FileSize = *(std::uint32_t*)&m_Bytes[2];
 
 	m_Header.Reserved1 = *(std::uint16_t*)&m_Bytes[6];
 	m_Header.Reserved2 = *(std::uint16_t*)&m_Bytes[8];
@@ -59,16 +59,6 @@ void BMPReader::CheckHeader() const noexcept(false)
 	{
 		throw std::invalid_argument{ "You are trying to open BMP" + std::to_string(m_Header.BitsPerPixel) 
 			+ ". However, only " + GetAllowedFormat() + " is supported" };
-	}
-
-	if (m_Header.Compression)
-	{
-		throw std::invalid_argument{ "The file has been compressed with some algorithm. Non-compression is only supported " };
-	}
-
-	if (m_Header.PixelArrayOffset != header.PixelArrayOffset || m_Header.HeaderSize != header.HeaderSize)
-	{
-		throw std::invalid_argument{ "The header is corrupted" };
 	}
 
 	if (!m_Header.Width || !m_Header.Height)
