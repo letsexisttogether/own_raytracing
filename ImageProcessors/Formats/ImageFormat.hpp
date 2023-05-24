@@ -6,13 +6,11 @@
 class ImageFormat
 {
 public:
-	virtual ~ImageFormat() = 0 {}
+	using ResolutionType = std::uint32_t;
 
-	inline std::vector<std::vector<std::byte>>& GetData() noexcept { return m_DataMatrix; }
-	inline const std::vector<std::vector<std::byte>>& GetData() const noexcept { return m_DataMatrix; }
+public:
+	ResolutionType Width;
+	ResolutionType Height;
 
-	virtual void CheckHeader() const noexcept(false) = 0;
-
-protected: 
-	std::vector<std::vector<std::byte>> m_DataMatrix{};
+	std::vector<std::byte> Data;
 };	

@@ -1,14 +1,28 @@
 #pragma once
 
 #include "Reader.hpp"
-#include "Formats/PPM.hpp"
 
-class PPMReader : public Reader<PPM>
+class PPMReader : public Reader
 {
 public:
 	PPMReader(std::vector<std::byte>&& bytes);
 
-	virtual ~PPMReader() override = default;
+	~PPMReader() override = default;
 
-	virtual void Read() noexcept(false) override;
+	ImageFormat Read() noexcept(false) override;
+
+protected:
+	void CheckHeader() const noexcept(false) override;
+
+private:
+	struct PPMHeader
+	{
+		std::string Format; 
+		ImageFormat::ResolutionType Width;
+		ImageFormat::ResolutionType Height;
+		std::uint8_t PixelMaxValue;
+	};
+
+private:
+	PPMHeader m_Header;
 };

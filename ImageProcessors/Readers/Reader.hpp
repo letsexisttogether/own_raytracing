@@ -1,23 +1,30 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include <cstddef>
 
-template<class _FileType>
+#include "Formats/ImageFormat.hpp"
+
 class Reader
 {
 public:
-	Reader(std::vector<std::byte>&& bytes)
-		: m_Bytes{ std::move(bytes) }
+	Reader(std::vector<std::byte>&& bytes, const std::string& allowedFomat)
+		: m_Bytes{ std::move(bytes) }, m_AllowedFormat{ allowedFomat }
 	{}
 
-	virtual ~Reader() {}
+	virtual ~Reader() = 0 {}
 
-	virtual void Read() noexcept(false) = 0;
-	
-	inline const _FileType GetFormatedStruct() const noexcept { return m_UnformattedStruct; }
+	virtual ImageFormat Read() noexcept(false) = 0;
+
+	inline const std::string& GetAllowedFormat() const noexcept { return m_AllowedFormat; }
 
 protected:
-	_FileType m_UnformattedStruct;
+	virtual void CheckHeader() const noexcept(false) = 0;
+
+protected:
 	std::vector<std::byte> m_Bytes;
+
+private:
+	const std::string m_AllowedFormat;
 };
