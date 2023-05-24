@@ -1,14 +1,23 @@
 #pragma once
 
 #include "Reader.hpp"
-#include "Formats/BMP.hpp"
+#include "Formats/BMPHeader.hpp"
 
-class BMPReader : public Reader<BMP>
+class BMPReader : public Reader
 {
 public:
-	BMPReader(std::vector<std::byte>&& bytes) noexcept;
+	BMPReader(std::vector<std::byte>&& bytes);
 
-	virtual ~BMPReader() override = default;
+	~BMPReader() override = default;
 
-	virtual void Read() noexcept(false) override;
+	virtual ImageFormat Read() noexcept(false) override;
+
+protected:
+	void CheckHeader() const noexcept(false) override;
+
+private:
+	void ReadDataWithoutPadding(ImageFormat& image) noexcept;
+
+private:
+    BMPHeader m_Header;
 };

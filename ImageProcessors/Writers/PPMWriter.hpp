@@ -9,5 +9,5 @@ public:
 
     ~PPMWriter() override = default;
 
-    void Write() const noexcept(false) override;
+    void Write() noexcept override;
 };

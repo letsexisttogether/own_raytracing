@@ -4,7 +4,7 @@
 #include <iostream>
 
 PPMReader::PPMReader(std::vector<std::byte>&& bytes)
-	: Reader(std::move(bytes), "P3")
+	: Reader(std::move(bytes), "PPM")
 {}
 
 int get_int_number(int& byte_number, const std::vector<std::byte>& m_Bytes)
@@ -63,7 +63,6 @@ ImageFormat PPMReader::Read() noexcept(false)
                 const auto value = static_cast<std::byte>(get_int_number(byte_number, m_Bytes));
                 image.Data.push_back(value);
             }
-            std::cout << "Width: " << width << '\n';
         } 
     }
 
@@ -72,16 +71,18 @@ ImageFormat PPMReader::Read() noexcept(false)
 
 void PPMReader::CheckHeader() const noexcept(false)
 {
-    if (GetAllowedFormat() != m_Header.Format)
+    PPMHeader header;
+
+    if (m_Header.Format != header.Format)
     {
         throw std::invalid_argument{ "The format you are trying to open is"
             + m_Header.Format
-            + ". Howeverm we only support " + GetAllowedFormat() + " PPM format" };
+            + ". However, we only support " + GetAllowedFormat() + " PPM format" };
     }
     
     if (!m_Header.Height || !m_Header.Width)
     {
-        throw std::invalid_argument{ "The resolution cannot be 0" };
+        throw std::invalid_argument{ "A resolution of an image cannot be 0" };
     }
 }
  

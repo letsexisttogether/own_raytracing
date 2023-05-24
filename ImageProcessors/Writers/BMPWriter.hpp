@@ -1,14 +1,16 @@
 #pragma once
 
 #include "Writer.hpp"
-#include "Formats/BMP.hpp"
 
-class BMPWriter : public Writer<BMP>
+class BMPWriter : public Writer
 {
 public:
-	BMPWriter(const BMP& bmp, const std::filesystem::path& path);
+	BMPWriter(const ImageFormat& bmp, const std::filesystem::path& path);
 
-	virtual ~BMPWriter() {};
+	~BMPWriter() override = default;
 
-	virtual void Write() const noexcept(false) override;
+	void Write() noexcept override;
+
+private:
+	void WriteDataWithPadding(std::ofstream& file) noexcept;
 };

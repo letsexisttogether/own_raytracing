@@ -1,55 +1,106 @@
 #include "../BMPReader.hpp"
-#include <iostream>
 
-BMPReader::BMPReader(std::vector<std::byte>&& bytes) noexcept
-	: Reader<BMP>(std::move(bytes))
+#include <iostream>
+#include <stdexcept>
+
+BMPReader::BMPReader(std::vector<std::byte>&& bytes)
+	: Reader(std::move(bytes), "BMP32")
 {}
 
-void BMPReader::Read() noexcept(false)
+ImageFormat BMPReader::Read() noexcept(false)
 {
-	m_UnformattedStruct.Header[0] = *(unsigned char*)&m_Bytes[0];
-	m_UnformattedStruct.Header[1] = *(unsigned char*)&m_Bytes[1];
+	m_Header.Format[0] = *(unsigned char*)&m_Bytes[0];
+	m_Header.Format[1] = *(unsigned char*)&m_Bytes[1];
 
-	m_UnformattedStruct.FileSize = *(std::uint32_t*)&m_Bytes[2]; //changed at the end	
+	m_Header.FileSize = *(std::uint32_t*)&m_Bytes[2]; //changed at the end	
 
-	m_UnformattedStruct.Reserved1 = *(std::uint16_t*)&m_Bytes[6];
-	m_UnformattedStruct.Reserved2 = *(std::uint16_t*)&m_Bytes[8];
+	m_Header.Reserved1 = *(std::uint16_t*)&m_Bytes[6];
+	m_Header.Reserved2 = *(std::uint16_t*)&m_Bytes[8];
 
-	//m_UnformattedStruct.PixelArrayOffset = *(std::uint32_t*)&m_Bytes[10]; //changed
-	m_UnformattedStruct.PixelArrayOffset = 54; //changed to 54
+	m_Header.PixelArrayOffset = *(std::uint32_t*)&m_Bytes[10];
+	// m_Header.PixelArrayOffset = 54;
 
-	//m_UnformattedStruct.HeaderSize = *(std::uint32_t*)&m_Bytes[14]; //changed
-	m_UnformattedStruct.HeaderSize = 40; //changed
+	m_Header.HeaderSize = *(std::uint32_t*)&m_Bytes[14]; 
+	// m_Header.HeaderSize = 40; 
 
-	m_UnformattedStruct.Width = *(std::uint32_t*)&m_Bytes[18];
-	m_UnformattedStruct.Height = *(std::uint32_t*)&m_Bytes[22];
+	m_Header.Width = *(std::uint32_t*)&m_Bytes[18];
+	m_Header.Height = *(std::uint32_t*)&m_Bytes[22];
 
-	m_UnformattedStruct.Planes = *(std::uint16_t*)&m_Bytes[26];
-	m_UnformattedStruct.BitsPerPixel = *(std::uint16_t*)&m_Bytes[28]; // =24
-	//m_UnformattedStruct.BitsPerPixel = 32; // =24
+	m_Header.Planes = *(std::uint16_t*)&m_Bytes[26];
+	m_Header.BitsPerPixel = *(std::uint16_t*)&m_Bytes[28];
 
-	//m_UnformattedStruct.Compression = *(std::uint32_t*)&m_Bytes[30];
-	m_UnformattedStruct.Compression = 0;
-	m_UnformattedStruct.ImageSize = *(std::uint32_t*)&m_Bytes[34];
-	m_UnformattedStruct.HorizontalResolution = *(std::uint32_t*)&m_Bytes[38];
-	m_UnformattedStruct.VerticalResolution = *(std::uint32_t*)&m_Bytes[42];
-	m_UnformattedStruct.ColorsUsed = *(std::uint32_t*)&m_Bytes[46];
-	m_UnformattedStruct.ImportantColors = *(std::uint32_t*)&m_Bytes[50];
+	m_Header.Compression = *(std::uint32_t*)&m_Bytes[30];
 
-	for (auto byte = m_Bytes.begin() + *(std::uint32_t*)&m_Bytes[10]; byte != m_Bytes.end(); ++byte)
+	m_Header.ImageSize = *(std::uint32_t*)&m_Bytes[34];
+	m_Header.HorizontalResolution = *(std::uint32_t*)&m_Bytes[38];
+	m_Header.VerticalResolution = *(std::uint32_t*)&m_Bytes[42];
+	m_Header.ColorsUsed = *(std::uint32_t*)&m_Bytes[46];
+	m_Header.ImportantColors = *(std::uint32_t*)&m_Bytes[50];
+
+	CheckHeader();
+
+	ImageFormat image = { m_Header.Width, m_Header.Height };
+	ReadDataWithoutPadding(image);
+
+	return image;
+}
+
+void BMPReader::CheckHeader() const noexcept(false)
+{
+	BMPHeader header;
+
+	if (m_Header.Format != header.Format)
 	{
-		m_UnformattedStruct.Data.push_back(static_cast<std::uint8_t>(*byte));
+		throw std::invalid_argument{ "You are trying to open a non-bmp file marked by .bmp extension. " 
+			"That is not allowed" };
 	}
 
-	/*long size = 4 * m_UnformattedStruct.Height * m_UnformattedStruct.Width + m_UnformattedStruct.PixelArrayOffset;
-	for (long i = m_UnformattedStruct.PixelArrayOffset; i < size; i++)
+	if (m_Header.BitsPerPixel != header.BitsPerPixel)
 	{
-		m_UnformattedStruct.Data.push_back(static_cast<std::uint8_t>(m_Bytes[i]));
-	}*/
+		throw std::invalid_argument{ "You are trying to open BMP" + std::to_string(m_Header.BitsPerPixel) 
+			+ ". However, only " + GetAllowedFormat() + " is supported" };
+	}
 
-	m_UnformattedStruct.RemovePadding();
+	if (m_Header.Compression)
+	{
+		throw std::invalid_argument{ "The file has been compressed with some algorithm. Non-compression is only supported " };
+	}
 
-	//m_UnformattedStruct.FileSize = 54 + m_UnformattedStruct.ImageSize; //changed
+	if (m_Header.PixelArrayOffset != header.PixelArrayOffset || m_Header.HeaderSize != header.HeaderSize)
+	{
+		throw std::invalid_argument{ "The header is corrupted" };
+	}
 
+	if (!m_Header.Width || !m_Header.Height)
+	{
+		throw std::invalid_argument{ "A resolution of an image cannot be 0" };
+	}
+}
 
+void BMPReader::ReadDataWithoutPadding(ImageFormat& image) noexcept
+{
+	std::int32_t padding = (4 - (image.Width * sizeof(std::uint8_t) * 4) % 4) % 4;
+	std::int32_t newWidth = image.Width * sizeof(std::uint8_t) * 4 + padding;
+
+	for (std::int32_t y = image.Height - 1, rowIndex = 0; y >= 0; --y)
+	{
+		const ImageFormat::ResolutionType tempY = y * image.Width * 4;
+		const ImageFormat::ResolutionType tempWidth = newWidth + y * image.Width * 4;
+
+		for (ImageFormat::ResolutionType i = tempY; i < tempWidth; i += 4)
+		{
+			const ImageFormat::ResolutionType realIndex = m_Header.PixelArrayOffset + i;
+
+			image.Data.push_back(m_Bytes[realIndex + 2]);
+			image.Data.push_back(m_Bytes[realIndex + 1]);
+			image.Data.push_back(m_Bytes[realIndex]);
+			rowIndex++;
+
+			if (rowIndex == image.Width)
+			{
+				i += padding;
+				rowIndex = 0;
+			}
+		}
+	}
 }

@@ -2,17 +2,21 @@
 
 #include <fstream>
 
+#include "Formats/PPMHeader.hpp"
+
 PPMWriter::PPMWriter(const ImageFormat& image, const std::filesystem::path& path)
-	: Writer{ image, path, "P3" }
+	: Writer{ image, path, "PPM" }
 {}
 
-void PPMWriter::Write() const noexcept(false)
+void PPMWriter::Write() noexcept
 {
     std::ofstream out{ m_Path };
 
-	out.write(GetAllowedFomat().c_str(), 2) << '\n';
+	PPMHeader header;
 
-	out << m_Image.Width << ' ' << m_Image.Height << ' ' << 255 << '\n';
+	out.write(header.Format.c_str(), 2) << '\n';
+
+	out << m_Image.Width << ' ' << m_Image.Height << ' ' << header.PixelMaxValue << '\n';
 
 	const auto& data = m_Image.Data;
 	for (std::size_t i = 0; i < data.size() - 2; i += 3)
