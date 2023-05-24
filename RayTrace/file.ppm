@@ -1,7 +1,0 @@
-P3
-# Image with width 3 and height 2
-# using 0 or 1 per color (red, green, blue)
-3 3 1
-1 0 0   244 12 90   1 0 1
-1 1 0   1 5 1   1 0 0
-245 1 0   1 5 1   1 0 0
