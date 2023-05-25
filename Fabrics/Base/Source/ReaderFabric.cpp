@@ -6,6 +6,8 @@ ReaderFabric::ReaderFabric(const std::filesystem::path& dllPath)
 
 Reader* ReaderFabric::GetReader(std::vector<std::byte>&& bytes) const noexcept(false)
 {
+	CheckHandler();
+
 	typedef Reader* (*CreateReaderFunc)(std::vector<std::byte>&&);
 	CreateReaderFunc createReader = reinterpret_cast<CreateReaderFunc>(GetProcAddress(m_Handler, "CreateReader"));
 
