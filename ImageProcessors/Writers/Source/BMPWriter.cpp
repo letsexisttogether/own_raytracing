@@ -67,3 +67,8 @@ void BMPWriter::WriteDataWithPadding(std::ofstream& file) noexcept
         }
     }
 }
+
+extern "C" __declspec(dllexport) Writer * CreateWriter(const ImageFormat & image, const std::filesystem::path& path)
+{
+	return new BMPWriter{ image, path };
+}

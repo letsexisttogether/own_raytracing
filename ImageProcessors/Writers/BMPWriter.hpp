@@ -2,7 +2,7 @@
 
 #include "Writer.hpp"
 
-class BMPWriter : public Writer
+class __declspec(dllexport) BMPWriter : public Writer
 {
 public:
 	BMPWriter(const ImageFormat& bmp, const std::filesystem::path& path);

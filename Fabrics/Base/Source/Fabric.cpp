@@ -8,6 +8,11 @@ Fabric::Fabric(const std::filesystem::path& dllPath)
 	CheckPath();
 }
 
+Fabric::~Fabric()
+{
+	FreeLibrary(m_Handler);
+}	
+
 void Fabric::LoadDll() noexcept(false)
 {
 	m_Handler = LoadLibraryA(m_DllPath.string().c_str());

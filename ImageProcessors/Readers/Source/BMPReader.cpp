@@ -99,3 +99,4 @@ extern "C" __declspec(dllexport) Reader* CreateReader(std::vector<std::byte>&& b
 {
 	return new BMPReader(std::move(bytes));
 }
+
