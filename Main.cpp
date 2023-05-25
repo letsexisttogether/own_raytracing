@@ -3,32 +3,43 @@
 #include "Tools/CmdParser/CmdParser.hpp"
 #include "Tools/FileReader/FileReader.hpp"
 
-#include "Fabrics/Base/ReaderFabric.hpp"
-#include "Fabrics/Base/WriterFabric.hpp"
+#include "Fabrics/FabricSelector/FabricSelector.hpp"
 
-std::int32_t main(int argc, const char* argv[])
+std::int32_t main(std::uint32_t argc, const char* argv[])
 {
+	FabricSelector selector{ "ImageProcessors" };
+	selector.FindDlls();
+
 	try
 	{
-		FileReader byteReader{ "file.ppm" };
+		CmdParser parser{ argc, argv };
 
-		ReaderFabric readerFabric{ "ImageProcessors/Reader.PPM.dll" };
+		const std::string& inFile = parser.GetSourceName() + '.' + parser.GetSourceFormat();
+		const std::string& outFile = parser.GetOutput() + '.' + parser.GetGoalFormat();
+
+		ReaderFabric& readerFabric = selector.GetReaderFabric(parser.GetSourceFormat());
 		readerFabric.LoadDll();
+
+		WriterFabric& writerFabric = selector.GetWriterFabric(parser.GetGoalFormat());
+		writerFabric.LoadDll();
+
+		FileReader byteReader{ inFile };
 
 		const auto reader = readerFabric.GetReader(byteReader.ReadFile());
 		
 		const ImageFormat image{ reader->Read() };
 
-		WriterFabric writerFabric{ "ImageProcessors/Writer.PPM.dll" };
-		writerFabric.LoadDll();
-
-		const auto writer = writerFabric.GetWriter(image, "new_file.ppm");
+		const auto writer = writerFabric.GetWriter(image, outFile);
 		writer->Write();
 	}
 	catch (const std::exception& exp)
 	{
 		std::cerr << exp.what() << std::endl;
+
+		return EXIT_FAILURE;
 	}
 
-	return 0;
+	std::cout << "The file has been succeessuly converted" << std::endl;
+
+	return EXIT_SUCCESS;
 }

@@ -8,7 +8,7 @@ class Fabric
 public:
 	Fabric(const std::filesystem::path& dllPath);
 
-	virtual ~Fabric() = 0 {}
+	virtual ~Fabric();
 
 	void LoadDll() noexcept(false);
 
