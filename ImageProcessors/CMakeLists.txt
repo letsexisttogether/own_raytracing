@@ -1,4 +1,4 @@
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/plugins)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Plugins)
 
 # Readers
 set(ReadersSource Readers/Source)
@@ -27,3 +27,7 @@ set_target_properties(Writer.PPM PROPERTIES
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+# Build targets
+add_custom_target(BuildPPM DEPENDS Reader.PPM Writer.PPM)
+add_custom_target(BuildBMP DEPENDS Reader.BMP Writer.BMP)

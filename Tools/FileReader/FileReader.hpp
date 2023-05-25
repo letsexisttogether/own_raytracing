@@ -22,7 +22,7 @@ public:
 	FileReader& operator = (FileReader&&) = default;
 
 private:
-	bool CheckFile() const noexcept;
+	void CheckFile() const noexcept(false);
 
 private:
 	std::filesystem::path m_FilePath;

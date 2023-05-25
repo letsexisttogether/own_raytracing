@@ -37,3 +37,9 @@ void PPMWriter::Write() noexcept
 	
 	out.close();
 }
+
+extern "C" __declspec(dllexport) Writer* CreateWriter(const ImageFormat& image, const std::filesystem::path& path)
+{
+	return new PPMWriter{ image, path };
+}
+ 

@@ -27,6 +27,7 @@ ImageFormat PPMReader::Read() noexcept(false)
     int size = m_Bytes.size();
 
     // Зчитатуємо формат PPM файлу
+    m_Header.Format.clear();
     while ((char)m_Bytes[byte_number] != '\r' && (char)m_Bytes[byte_number + 1] != '\n')
     {
         m_Header.Format += (char)m_Bytes[byte_number++];
@@ -75,7 +76,7 @@ void PPMReader::CheckHeader() const noexcept(false)
 
     if (m_Header.Format != header.Format)
     {
-        throw std::invalid_argument{ "The format you are trying to open is"
+        throw std::invalid_argument{ "The format you are trying to open is "
             + m_Header.Format
             + ". However, we only support " + header.Format + " PPM format"};
     }

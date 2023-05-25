@@ -2,7 +2,7 @@
 
 #include "Writer.hpp"
 
-class PPMWriter : public Writer
+class __declspec(dllexport) PPMWriter : public Writer
 {
 public:
     PPMWriter(const ImageFormat& image, const std::filesystem::path& path);

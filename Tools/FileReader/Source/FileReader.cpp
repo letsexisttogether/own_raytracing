@@ -2,20 +2,17 @@
 
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
 
 FileReader::FileReader(const std::filesystem::path& path)
 	: m_FilePath{ path }
-{}
+{
+	CheckFile();
+}
 
 std::vector<std::byte> FileReader::ReadFile() const noexcept
 {
 	std::vector<std::byte> fileContent{};
-
-	if (!CheckFile())
-	{
-		return fileContent;
-	}
-
 
 	std::ifstream infile(m_FilePath, std::ios::binary);
 
@@ -32,13 +29,10 @@ std::vector<std::byte> FileReader::ReadFile() const noexcept
 	return fileContent;
 }
 
-bool FileReader::CheckFile() const noexcept
+void FileReader::CheckFile() const noexcept(false)
 {
 	if (!std::filesystem::exists(m_FilePath))
 	{
-		std::cerr << "Path " << m_FilePath << " does not exist." << std::endl;
-		return false;
+		throw std::invalid_argument{ "The file does not exist" };
 	}
-
-	return true;
 }
