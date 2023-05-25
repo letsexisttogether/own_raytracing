@@ -71,12 +71,12 @@ void CmdParser::CalculateSource() noexcept(false)
 	
 	const std::int32_t sourceNameLength = temp.length() - sourceFormat.length();
 
-	if (sourceFormat.empty() || !(sourceNameLength - s_CorrectSource.size()))
+	if (sourceFormat.empty() || !sourceNameLength)
 	{
 		throw std::invalid_argument{ "The source format was passed incorrectly" };
 	}
 	
-	for (std::uint32_t i = s_CorrectSource.size(); i < sourceNameLength - 1; ++i)
+	for (std::int32_t i = s_CorrectSource.size(); i < sourceNameLength - 1; ++i)
 	{
 		sourceName += temp[i];
 	}
