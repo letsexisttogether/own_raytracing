@@ -94,3 +94,8 @@ void BMPReader::ReadDataWithoutPadding(ImageFormat& image) noexcept
 		}
 	}
 }
+
+extern "C" __declspec(dllexport) Reader* CreateReader(std::vector<std::byte>&& bytes)
+{
+	return new BMPReader(std::move(bytes));
+}

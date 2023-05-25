@@ -3,7 +3,7 @@
 #include "Reader.hpp"
 #include "Formats/PPMHeader.hpp"
 
-class PPMReader : public Reader
+class __declspec(dllexport) PPMReader : public Reader
 {
 public:
 	PPMReader(std::vector<std::byte>&& bytes);

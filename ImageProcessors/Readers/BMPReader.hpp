@@ -3,7 +3,7 @@
 #include "Reader.hpp"
 #include "Formats/BMPHeader.hpp"
 
-class BMPReader : public Reader
+class __declspec(dllexport) BMPReader : public Reader
 {
 public:
 	BMPReader(std::vector<std::byte>&& bytes);

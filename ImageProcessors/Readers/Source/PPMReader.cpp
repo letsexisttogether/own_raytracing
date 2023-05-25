@@ -86,3 +86,7 @@ void PPMReader::CheckHeader() const noexcept(false)
     }
 }
  
+extern "C" __declspec(dllexport) Reader* CreateReader(std::vector<std::byte>&& bytes)
+{
+    return new PPMReader(std::move(bytes));
+}
