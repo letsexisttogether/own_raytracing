@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <memory>
 
 #include "Tools/CmdParser/CmdParser.hpp"
 #include "Tools/FileReader/FileReader.hpp"
@@ -25,11 +26,11 @@ std::int32_t main(std::uint32_t argc, const char* argv[])
 
 		FileReader byteReader{ inFile };
 
-		const auto reader = readerFabric.GetReader(byteReader.ReadFile());
+		const std::unique_ptr<Reader> reader{ readerFabric.GetReader(byteReader.ReadFile()) };
 		
 		const ImageFormat image{ reader->Read() };
 
-		const auto writer = writerFabric.GetWriter(image, outFile);
+		const std::unique_ptr<Writer> writer{ writerFabric.GetWriter(image, outFile) };
 		writer->Write();
 	}
 	catch (const std::exception& exp)
