@@ -10,8 +10,8 @@ add_subdirectory(Tools)
 add_subdirectory(Fabrics)
 add_subdirectory(Graphics)
 
-
 target_link_libraries(${PROJECT_NAME} PRIVATE Tools)
 target_link_libraries(${PROJECT_NAME} PRIVATE Fabrics)
+target_link_libraries(${PROJECT_NAME} PRIVATE Graphics)
 
 add_custom_target(BuildAll DEPENDS ${PROJECT_NAME} ImageProcessors)

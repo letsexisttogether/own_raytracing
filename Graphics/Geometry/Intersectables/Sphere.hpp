@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Geometry/Primitives/Ray.hpp"
 #include "Intersectable.h"
 
 class Sphere : public Intersectable
@@ -18,7 +17,6 @@ public:
 	std::optional<Intersection> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;
 
 	virtual Vector3d GetNormal(Vector3d intersectionPoint) const noexcept;
-
 
 private:
 	Vector3d m_Origin; 

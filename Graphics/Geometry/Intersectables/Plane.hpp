@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Intersectable.h"
-#include "Geometry/Primitives/Ray.hpp"
 
 class Plane : public Intersectable
 {

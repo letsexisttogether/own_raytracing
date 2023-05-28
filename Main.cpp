@@ -6,41 +6,14 @@
 
 #include "Fabrics/FabricSelector/FabricSelector.hpp"
 
+#include "Graphics/Geometry/Intersectables/Sphere.hpp"
+
 std::int32_t main(std::uint32_t argc, const char* argv[])
 {
-	FabricSelector selector{ "ImageProcessors" };
-	selector.FindDlls();
+	Sphere sphere{ Vector3d{ 3 }, 5.f };
+	
 
-	try
-	{
-		CmdParser parser{ argc, argv };
-
-		const std::string& inFile = parser.GetSourceName() + '.' + parser.GetSourceFormat();
-		const std::string& outFile = parser.GetOutput() + '.' + parser.GetGoalFormat();
-
-		ReaderFabric& readerFabric = selector.GetReaderFabric(parser.GetSourceFormat());
-		readerFabric.LoadDll();
-
-		WriterFabric& writerFabric = selector.GetWriterFabric(parser.GetGoalFormat());
-		writerFabric.LoadDll();
-
-		FileReader byteReader{ inFile };
-
-		const std::unique_ptr<Reader> reader{ readerFabric.GetReader(byteReader.ReadFile()) };
-		
-		const ImageFormat image{ reader->Read() };
-
-		const std::unique_ptr<Writer> writer{ writerFabric.GetWriter(image, outFile) };
-		writer->Write();
-	}
-	catch (const std::exception& exp)
-	{
-		std::cerr << exp.what() << std::endl;
-
-		return EXIT_FAILURE;
-	}
-
-	std::cout << "The file has been succeessuly converted" << std::endl;
+	std::cout << sphere.GetRadius() << std::endl;
 
 	return EXIT_SUCCESS;
 }

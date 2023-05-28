@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+
 #include "Geometry/Primitives/Ray.hpp"
 
 struct Intersection

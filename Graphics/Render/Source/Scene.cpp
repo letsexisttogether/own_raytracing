@@ -1,4 +1,5 @@
-#include "Scene.h"
+#include "../Scene.h"
+
 #include <iostream>
 
 Scene::Scene(RayTracer& tracer) : m_RayTracer(tracer) {}

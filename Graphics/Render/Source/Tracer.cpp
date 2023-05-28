@@ -10,7 +10,7 @@ char RayTracer::LightTracing(float dotResult)
 	else if (dotResult > 0 && dotResult <= 0.2) return '.';
 	else if (dotResult > 0.2 && dotResult <= 0.5) return '*';
 	else if (dotResult > 0.5 && dotResult <= 0.8) return 'O';
-	else if (dotResult > 0.8) return '#';
+	return '#';
 }
 
 void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
