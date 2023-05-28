@@ -8,6 +8,8 @@ add_executable(${PROJECT_NAME} Main.cpp)
 add_subdirectory(ImageProcessors) 
 add_subdirectory(Tools) 
 add_subdirectory(Fabrics)
+add_subdirectory(Graphics)
+
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Tools)
 target_link_libraries(${PROJECT_NAME} PRIVATE Fabrics)
