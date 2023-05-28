@@ -26,7 +26,13 @@ set_target_properties(Writer.PPM PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Writers
 )
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+# Set include directories for Reader.BMP and Reader.PPM
+target_include_directories(Reader.BMP PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Reader.PPM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+# Set include directories for Writer.BMP and Writer.PPM
+target_include_directories(Writer.BMP PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Writer.PPM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Build targets
 add_custom_target(BuildPPM DEPENDS Reader.PPM Writer.PPM)
