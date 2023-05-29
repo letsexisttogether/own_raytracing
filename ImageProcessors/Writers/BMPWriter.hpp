@@ -5,12 +5,12 @@
 class __declspec(dllexport) BMPWriter : public Writer
 {
 public:
-	BMPWriter(const ImageFormat& bmp, const std::filesystem::path& path);
+	BMPWriter(const std::filesystem::path& path);
 
 	~BMPWriter() override = default;
 
-	void Write() noexcept override;
+	void Write(const ImageFormat& image) const noexcept override;
 
 private:
-	void WriteDataWithPadding(std::ofstream& file) noexcept;
+	void WriteDataWithPadding(const ImageFormat& image, std::ofstream& file) const noexcept;
 };

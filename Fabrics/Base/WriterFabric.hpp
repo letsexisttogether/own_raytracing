@@ -10,5 +10,5 @@ public:
 
 	~WriterFabric() override = default;
 
-	Writer* GetWriter(const ImageFormat& image, const std::filesystem::path& path) const noexcept(false);
+	Writer* GetWriter(const std::filesystem::path& path) const noexcept(false);
 };

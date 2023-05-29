@@ -6,11 +6,13 @@
 class ImageFormat
 {
 public:
-	using ResolutionType = std::uint32_t;
+	using ResolutionType = std::int32_t;
 
-public:
+public:	
 	ResolutionType Width;
 	ResolutionType Height;
+
+
 
 	std::vector<std::byte> Data;
 };	

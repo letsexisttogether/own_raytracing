@@ -5,9 +5,9 @@
 class __declspec(dllexport) PPMWriter : public Writer
 {
 public:
-    PPMWriter(const ImageFormat& image, const std::filesystem::path& path);
+    PPMWriter(const std::filesystem::path& path);
 
     ~PPMWriter() override = default;
 
-    void Write() noexcept override;
+    void Write(const ImageFormat& image) const noexcept override;
 };

@@ -4,11 +4,11 @@
 
 #include "Formats/BMPHeader.hpp"
 
-BMPWriter::BMPWriter(const ImageFormat& image, const std::filesystem::path& path)
-	: Writer(image, path, "BMP32")
+BMPWriter::BMPWriter(const std::filesystem::path& path)
+	: Writer{ path, "BMP32" }
 {}
 
-void BMPWriter::Write() noexcept
+void BMPWriter::Write(const ImageFormat& image) noexcept
 {
 	std::ofstream outfile(m_Path, std::ios::binary);
 
@@ -26,8 +26,8 @@ void BMPWriter::Write() noexcept
 
 	outfile.write(reinterpret_cast<const char*>(&header.HeaderSize), sizeof(std::uint32_t));
 
-	outfile.write(reinterpret_cast<const char*>(&m_Image.Width), sizeof(std::uint32_t));
-	outfile.write(reinterpret_cast<const char*>(&m_Image.Height), sizeof(std::uint32_t));
+	outfile.write(reinterpret_cast<const char*>(&image.Width), sizeof(std::uint32_t));
+	outfile.write(reinterpret_cast<const char*>(&image.Height), sizeof(std::uint32_t));
 
 	outfile.write(reinterpret_cast<const char*>(&header.Planes), sizeof(std::uint16_t));
 	outfile.write(reinterpret_cast<const char*>(&header.BitsPerPixel), sizeof(std::uint16_t));
@@ -39,27 +39,27 @@ void BMPWriter::Write() noexcept
 	outfile.write(reinterpret_cast<const char*>(&header.ColorsUsed), sizeof(std::uint32_t));
 	outfile.write(reinterpret_cast<const char*>(&header.ImportantColors), sizeof(std::uint32_t));
 
-	WriteDataWithPadding(outfile);
+	WriteDataWithPadding(image, outfile);
 
 	outfile.close();
 }
 
-void BMPWriter::WriteDataWithPadding(std::ofstream& file) noexcept
+void BMPWriter::WriteDataWithPadding(const ImageFormat& image, std::ofstream& file) const noexcept
 {
-    std::int32_t padding = (4 - m_Image.Width % 4) % 4;
-    std::int32_t newWidth = m_Image.Width * 4 + padding;
+    std::int32_t padding = (4 - image.Width % 4) % 4;
+    std::int32_t newWidth = image.Width * 4 + padding;
 
-    for (std::int32_t y = m_Image.Height - 1; y >= 0; y--)
+    for (std::int32_t y = image.Height - 1; y >= 0; y--)
     {
-		const ImageFormat::ResolutionType tempY = y * m_Image.Width * 3;
-		const ImageFormat::ResolutionType tempWidth = m_Image.Width * 3 + y * m_Image.Width * 3;
+		const ImageFormat::ResolutionType tempY = y * image.Width * 3;
+		const ImageFormat::ResolutionType tempWidth = image.Width * 3 + y * image.Width * 3;
         
 		for (std::int32_t i = tempY; i < tempWidth; i += 3)
         {
 
 			for (int32_t j = i + 2; j >= i; --j)
 			{
-				file.write(reinterpret_cast<const char*>(&m_Image.Data[j]), sizeof(std::byte));
+				file.write(reinterpret_cast<const char*>(&image.Data[j]), sizeof(std::byte));
 			}
             
 			const std::uint8_t zero = 0;
@@ -68,7 +68,7 @@ void BMPWriter::WriteDataWithPadding(std::ofstream& file) noexcept
     }
 }
 
-extern "C" __declspec(dllexport) Writer * CreateWriter(const ImageFormat & image, const std::filesystem::path& path)
+extern "C" __declspec(dllexport) Writer * CreateWriter(const std::filesystem::path& path)
 {
-	return new BMPWriter{ image, path };
+	return new BMPWriter{ path };
 }
