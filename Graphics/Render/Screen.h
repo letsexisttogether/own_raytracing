@@ -7,31 +7,27 @@
 
 class Screen
 {
-private:
-	uint16_t m_Height;
-	uint16_t m_Width;
-
-	std::vector<std::vector<char>> m_Pixels;
-
-	float m_PixelSize;
-	float m_Distance;
+public:
+	using Resolution = std::int16_t;
 
 public:
 	Screen() = delete;
 	Screen(const Screen&) = default;
 
-	Screen(uint16_t height, uint16_t width, float distance, const Camera& camera);
+	Screen(const Resolution height, const Resolution width, float distance, const Camera& camera);
 
 	~Screen() = default;
 
-	inline uint16_t GetHeigth() const noexcept { return m_Height; }
-	inline uint16_t GetWidth() const noexcept { return m_Width; }
+	inline const Resolution& GetHeigth() const noexcept { return m_Height; }
+	inline const Resolution& GetWidth() const noexcept { return m_Width; }
 	
 	inline float GetPixelSize() const noexcept { return m_PixelSize; }
 	inline float GetDistance() const noexcept { return m_Distance; }
 
-	inline char& GetPixel(uint16_t height, uint16_t width) noexcept(false) { return m_Pixels.at(height).at(width); }
+private:
+	const Resolution m_Height;
+	const Resolution m_Width;
 
-
-	void Print() const noexcept;
+	float m_PixelSize;
+	float m_Distance;
 };

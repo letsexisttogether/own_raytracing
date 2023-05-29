@@ -1,29 +1,33 @@
 #pragma once
+
 #include <iostream>
-#include "Geometry/Intersectables/Sphere.hpp"
-#include "Geometry/Intersectables/Plane.hpp"
-#include "Geometry/Intersectables/Disk.hpp"
-#include "Screen.h"
+#include <memory>
+
+#include "Geometry/Intersectables/Intersectable.h"
+#include "RenderHandler/RenderHandler.hpp"
+#include "Camera.h"
 
 
 class RayTracer
 {
-private:
-	Camera m_Camera;
-	Screen m_Screen;
-	Vector3d m_LightVector;
-	
 public:
 	RayTracer() = delete;
-	RayTracer(const Screen& screen, const Camera& camera, const Vector3d& lightSrc);
+	RayTracer(const RayTracer&) = default;
+	RayTracer(RayTracer&&) = default;
 
-	char LightTracing(float dotResult);
+	RayTracer(RenderHandler* renderHandler, const Camera& camera, const Vector3d& lightSrc);
 
-	inline const Camera& GetCamera() noexcept { return m_Camera; }
-	inline const Screen& GetScreen() noexcept { return m_Screen; }
+	~RayTracer();
 
-	void Tracing(const Intersectable& intersectable) noexcept(false);
+	inline const Camera& GetCamera() const noexcept { return m_Camera; }
+	inline const RenderHandler& GetRenderHandler() const noexcept { return *m_Handler; }
 
+	void Trace(const Intersectable& intersectable) noexcept(false);
+
+private:
+	RenderHandler* m_Handler;
+	Camera m_Camera;
+	Vector3d m_LightVector;
 };
 
 

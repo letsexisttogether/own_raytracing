@@ -1,45 +1,45 @@
 #include "../Tracer.h"
 
-RayTracer::RayTracer(const Screen& screen, const Camera& camera, const Vector3d& lightSrc)
-	: m_Screen{ screen }, m_Camera(camera), m_LightVector(lightSrc * -1.f)
+RayTracer::RayTracer(RenderHandler* renderHandler, const Camera& camera, const Vector3d& lightSrc)
+	: m_Handler{ renderHandler }, m_Camera(camera), m_LightVector(lightSrc * -1.f)
 {}
 
-char RayTracer::LightTracing(float dotResult)
+RayTracer::~RayTracer()
 {
-	if (dotResult <= 0) return ' ';
-	else if (dotResult > 0 && dotResult <= 0.2) return '.';
-	else if (dotResult > 0.2 && dotResult <= 0.5) return '*';
-	else if (dotResult > 0.5 && dotResult <= 0.8) return 'O';
-	return '#';
+	// delete m_Handler;
 }
 
-void RayTracer::Tracing(const Intersectable& intersectable) noexcept(false)
+void RayTracer::Trace(const Intersectable& intersectable) noexcept(false)
 {
-	for (int i = 0; i < m_Screen.GetHeigth(); i++)
+	const Screen& screen = m_Handler->GetScreen();
+
+	const Screen::Resolution height = screen.GetHeigth();
+	const Screen::Resolution width = screen.GetWidth();
+
+	for (Screen::Resolution i = 0; i < height; i++)
 	{
-		for (int j = 0; j < m_Screen.GetWidth(); j++)
+		for (Screen::Resolution j = 0; j < width; j++)
 		{
-			float relativeCoordinatei = i - m_Screen.GetHeigth() / 2.f;
-			float relativeCoordinatej = j - m_Screen.GetWidth() / 2.f;
+			const float relativeCoordinatei = i - height / 2.f;
+			const float relativeCoordinatej = j - width / 2.f;
 
-			float absoluteCoordinateI = (relativeCoordinatei * m_Screen.GetPixelSize()) + (m_Screen.GetPixelSize() / 2.f);
-			float absoluteCoordinateJ = (relativeCoordinatej * m_Screen.GetPixelSize()) + (m_Screen.GetPixelSize() / 2.f);
+			const float absoluteCoordinateI = (relativeCoordinatei * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
+			const float absoluteCoordinateJ = (relativeCoordinatej * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
 
-			Vector3d thrownVector = { Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, m_Screen.GetDistance() } - m_Camera.GetLocation() };
+			const Vector3d thrownVector { Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, screen.GetDistance() } - m_Camera.GetLocation() };
 
-			Ray thrownRay{ m_Camera.GetLocation(), thrownVector.Normalize() };
+			const Ray thrownRay{ m_Camera.GetLocation(), thrownVector.Normalize() };
 
-			std::optional<Intersection> intersection = intersectable.IntersectedWithRay(thrownRay);
+			std::optional<Intersection> intersection{ intersectable.IntersectedWithRay(thrownRay) };
 
 			if (intersection.has_value())
 			{
-				Vector3d normal = intersection.value().Normal.Normalize();
-				char symbol = LightTracing(normal.Dot(m_LightVector));
-				m_Screen.GetPixel(i, j) = symbol;
+				const Vector3d normal{ intersection.value().Normal.Normalize() };
+				m_Handler->HandlePixel(i, j, normal.Dot(m_LightVector));	
 			}
 			else
 			{
-				m_Screen.GetPixel(i, j) = ' ';
+				m_Handler->HandlePixel(i, j, 0.f);
 			}
 		}
 	}

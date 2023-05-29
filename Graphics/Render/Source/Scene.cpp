@@ -2,7 +2,17 @@
 
 #include <iostream>
 
-Scene::Scene(RayTracer& tracer) : m_RayTracer(tracer) {}
+Scene::Scene(const RayTracer& tracer) 
+	: m_RayTracer{ tracer } 
+{}
+
+Scene::~Scene()
+{
+	for (auto& ptr : m_Figures)
+	{
+		delete ptr;
+	}
+}
 
 std::optional<Intersection> Scene::IntersectedWithRay(const Ray& ray, float* parametr) const noexcept
 {
