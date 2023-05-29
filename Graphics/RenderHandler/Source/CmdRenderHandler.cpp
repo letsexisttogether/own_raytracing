@@ -15,7 +15,7 @@ void CmdRenderHandler::ExecuteRenderResult() const noexcept(false)
 	{
 		for (Screen::Resolution j = 0; j < m_Screen.GetWidth(); ++j)
 		{
-			std::cout << m_Pixels[i][j];
+			std::cout << m_Pixels[j][i];
 		}
 		std::cout << '\n';
 	}

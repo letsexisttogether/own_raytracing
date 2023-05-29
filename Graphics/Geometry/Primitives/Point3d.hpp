@@ -39,4 +39,5 @@ private:
 	float m_X;
 	float m_Y;
 	float m_Z;
+	float m_Additional = 1.f;
 };
