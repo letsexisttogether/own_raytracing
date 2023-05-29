@@ -7,7 +7,7 @@
 #include "Fabrics/FabricSelector/FabricSelector.hpp"
 
 #include "Graphics/Geometry/Intersectables/Sphere.hpp"
-#include "Graphics/RenderHandler/CmdRenderHandler.hpp" 
+#include "Graphics/RenderHandler/ImageRenderHandler.hpp" 
 #include "Graphics/Render/Scene.h"
 #include "Graphics/Render/Tracer.h"
 
@@ -20,21 +20,28 @@ std::int32_t main(std::uint32_t argc, const char* argv[])
 	light = light.Normalize();
 
 	Camera camera{ { 0.f, 0.f, 0.f }, { 0.f, 0.f, 1.f }, 3.1415 / 6.f };
-	Screen screen{ 100u, 100u, 10.f, camera };
+	Screen screen{ 400, 560u, 10.f, camera };
+
+	FabricSelector selector{ "ImageProcessors" };
+	selector.FindDlls();
+
+	WriterFabric& writerFabric = selector.GetWriterFabric("bmp");
+	writerFabric.LoadDll();
 
 	RayTracer RT
-	{ 
-		new CmdRenderHandler
+	{
+		new ImageRenderHandler
 		{
-			screen
-		}, 
+			screen,
+			writerFabric.GetWriter("some_file.bmp")
+		},
 		camera, 
 		light
 	};
 
 	Scene scene{ RT };
 	
-	scene.AddToScene(new Sphere(Vector3d{ 0.f, 0.f, 0.7 }, 0.15));
+	scene.AddToScene(new Sphere(Vector3d{ 0.f, 0.f, 0.7 }, 0.15f));
 	
 	RT.Trace(scene);
 	

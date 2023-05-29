@@ -12,7 +12,5 @@ public:
 	ResolutionType Width;
 	ResolutionType Height;
 
-
-
 	std::vector<std::byte> Data;
 };	
