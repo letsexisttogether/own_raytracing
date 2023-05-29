@@ -12,8 +12,8 @@ std::optional<Intersection> Disk::IntersectedWithRay(const Ray& ray, float* para
 
     Vector3d normal = this->GetPlane().GetNormal();
     Vector3d direction = ray.GetDirection();
-    Vector3d origin = ray.GetOrigin();
-    Vector3d center = this->GetPlane().GetOrigin();
+    Point3d origin = ray.GetOrigin();
+    Point3d center = this->GetPlane().GetOrigin();
     float radius = this->GetRadius();
 
     // Обчислюємо точку перетину

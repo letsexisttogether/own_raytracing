@@ -6,7 +6,7 @@
 class ImageFormat
 {
 public:
-	using ResolutionType = std::uint32_t;
+	using ResolutionType = std::int32_t;
 
 public:
 	ResolutionType Width;

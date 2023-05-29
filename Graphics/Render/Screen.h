@@ -8,7 +8,7 @@
 class Screen
 {
 public:
-	using Resolution = std::int16_t;
+	using Resolution = std::int32_t;
 
 public:
 	Screen() = delete;
