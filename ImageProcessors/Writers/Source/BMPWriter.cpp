@@ -8,7 +8,7 @@ BMPWriter::BMPWriter(const std::filesystem::path& path)
 	: Writer{ path, "BMP32" }
 {}
 
-void BMPWriter::Write(const ImageFormat& image) noexcept
+void BMPWriter::Write(const ImageFormat& image) const noexcept
 {
 	std::ofstream outfile(m_Path, std::ios::binary);
 
