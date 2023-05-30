@@ -15,6 +15,7 @@ public:
 	virtual std::optional<Intersection> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;
 	
 	void AddToScene(Intersectable* figure);
+	void AddToScene(const std::vector<Intersectable*>& figures);
 
 private:
 	RayTracer m_RayTracer;

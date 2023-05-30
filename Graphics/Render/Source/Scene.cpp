@@ -39,3 +39,11 @@ void Scene::AddToScene(Intersectable* figure)
 	m_Figures.push_back(figure);
 }
 
+void Scene::AddToScene(const std::vector<Intersectable*>& figures)
+{
+	for (const auto figure : figures)
+	{
+		AddToScene(figure);
+	}
+}
+
