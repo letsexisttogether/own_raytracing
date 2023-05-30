@@ -14,8 +14,6 @@
 
 std::int32_t main(std::uint32_t argc, const char* argv[])
 {
-	Sphere sphere{ Vector3d{ 0.f, 0.f, 50.f }, 15.f };
-
 	Vector3d light{ 0.f, 1.f, 0.f };
 	light = light.Normalize();
 
