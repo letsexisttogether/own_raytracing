@@ -1,6 +1,6 @@
 #include "../Triangle.hpp"
 
-Triangle::Triangle(const Point3d& v0, const Point3d& v1, const Point3d& v2)
+Triangle::Triangle(const Vector3d& v0, const Vector3d& v1, const Vector3d& v2)
 	: m_V0{ v0 }, m_V1(v1), m_V2(v2)
 {}
 
@@ -50,4 +50,12 @@ std::optional<Intersection> Triangle::IntersectedWithRay(const Ray & ray, float*
     }
 
     return std::nullopt;
+}
+
+
+void Triangle::ApplyTransformation(const Matrix4& TransformMatrix)
+{
+    m_V0 = Vector4{ m_V0 } * TransformMatrix;
+    m_V1 = Vector4{ m_V1 } * TransformMatrix;
+    m_V2 = Vector4{ m_V2 } * TransformMatrix;
 }

@@ -19,6 +19,10 @@ Vector3d::Vector3d(float superCoord)
 	: m_X{ superCoord }, m_Y{ superCoord }, m_Z{ superCoord }
 {}
 
+Vector3d::Vector3d(const Vector4& other) : m_X{ other.GetX() }, m_Y{ other.GetY() }, m_Z{ other.GetZ() }
+{
+}
+
 float Vector3d::GetLength() const noexcept
 {
 	return sqrt(m_X * m_X + m_Y * m_Y + m_Z * m_Z);
