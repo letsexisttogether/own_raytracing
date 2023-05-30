@@ -20,10 +20,10 @@ public:
 	inline const Vector3d& GetV1() const noexcept { return m_V1; }
 	inline const Vector3d& GetV2() const noexcept { return m_V2; }
 
-	Triangle& operator = (const Triangle&) = delete;
-	Triangle& operator = (Triangle&&) = delete;
+	Triangle& operator = (const Triangle&) = default;
+	Triangle& operator = (Triangle&&) = default;
 
-	void ApplyTransformation(const Matrix4& TransformMatrix);
+	Triangle operator * (const Matrix4& transformMatrix) noexcept;
 
 private:	
 	Vector3d m_V0;

@@ -3,7 +3,6 @@
 #include <cmath>
 #include <exception>
 
-
 Vector3d::Vector3d(const Point3d& point)
 {
 	this->m_X = point.GetX();
@@ -19,9 +18,9 @@ Vector3d::Vector3d(float superCoord)
 	: m_X{ superCoord }, m_Y{ superCoord }, m_Z{ superCoord }
 {}
 
-Vector3d::Vector3d(const Vector4& other) : m_X{ other.GetX() }, m_Y{ other.GetY() }, m_Z{ other.GetZ() }
-{
-}
+Vector3d::Vector3d(const Vector4& other)
+	: m_X{ other.GetX() }, m_Y{ other.GetY() }, m_Z{ other.GetZ() }
+{}
 
 float Vector3d::GetLength() const noexcept
 {

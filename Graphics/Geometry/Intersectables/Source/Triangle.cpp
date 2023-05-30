@@ -52,10 +52,14 @@ std::optional<Intersection> Triangle::IntersectedWithRay(const Ray & ray, float*
     return std::nullopt;
 }
 
-
-void Triangle::ApplyTransformation(const Matrix4& TransformMatrix)
+Triangle Triangle::operator * (const Matrix4& transformMatrix) noexcept
 {
-    m_V0 = Vector4{ m_V0 } * TransformMatrix;
-    m_V1 = Vector4{ m_V1 } * TransformMatrix;
-    m_V2 = Vector4{ m_V2 } * TransformMatrix;
+    Triangle triangle{ *this };
+
+    triangle.m_V0 = Vector4{ m_V0 } * transformMatrix;
+    triangle.m_V1 = Vector4{ m_V1 } * transformMatrix;
+    triangle.m_V2 = Vector4{ m_V2 } * transformMatrix;
+
+    return triangle;
 }
+

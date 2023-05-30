@@ -5,7 +5,7 @@ ObjReader::ObjReader(std::vector<std::byte>&& bytes)
 	: m_Bytes{ std::move(bytes) }
 {}
 
-std::vector<Intersectable*> ObjReader::Read() noexcept(false)
+std::vector<Intersectable*>& ObjReader::Read() noexcept(false)
 {
     std::istringstream iss(reinterpret_cast<const char*>(m_Bytes.data()));
 

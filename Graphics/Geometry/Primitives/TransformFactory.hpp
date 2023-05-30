@@ -47,7 +47,7 @@ namespace TF
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				matrix.m_Matrix[i][j] *= vector.m_Data[i];
+				matrix.m_Matrix[i][j] *= vector[i];
 			}
 		}
 		return matrix;
