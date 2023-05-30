@@ -26,7 +26,7 @@ void RayTracer::Trace(const Intersectable& intersectable) noexcept(false)
 			const float absoluteCoordinateI = (relativeCoordinatei * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
 			const float absoluteCoordinateJ = (relativeCoordinatej * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
 
-			const Vector3d thrownVector { Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, screen.GetDistance() } - m_Camera.GetLocation() };
+			const Vector3d thrownVector { Point3d{ absoluteCoordinateI, absoluteCoordinateJ, screen.GetDistance() } - m_Camera.GetLocation() };
 
 			const Ray thrownRay{ m_Camera.GetLocation(), thrownVector.Normalize() };
 

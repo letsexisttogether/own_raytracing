@@ -4,6 +4,8 @@
 #include "Tools/CmdParser/CmdParser.hpp"
 #include "Tools/FileReader/FileReader.hpp"
 
+#include "Geometry/Primitives/Matrix.hpp"
+
 #include "Fabrics/FabricSelector/FabricSelector.hpp"
 
 #include "Graphics/Geometry/Intersectables/Sphere.hpp"
@@ -42,6 +44,16 @@ std::int32_t main(std::uint32_t argc, const char* argv[])
 	scene.AddToScene(new Sphere(Vector3d{ 0.f, 0.f, 0.7 }, 0.15f));
 	
 	RT.Trace(scene);
+
+	Matrix matrix;
+
+	Vector3d vec = { 12.f, 15.f, 20.f };
+
+	matrix.AddMoving({ 1.f, 1.f, 1.f });
+
+	matrix.AddScale({ 2.f, 1.f, 1.f });
+
+	vec = matrix.GetTransformedVector(vec);
 	
 	RT.GetRenderHandler().ExecuteRenderResult();
 

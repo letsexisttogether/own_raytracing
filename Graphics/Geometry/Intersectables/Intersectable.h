@@ -6,7 +6,7 @@
 
 struct Intersection
 {
-	Vector3d IntersectionPoint;
+	Point3d IntersectionPoint;
 	Vector3d Normal;
 };
 

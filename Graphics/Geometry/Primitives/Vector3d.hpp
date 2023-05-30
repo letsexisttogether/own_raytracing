@@ -1,4 +1,7 @@
 #pragma once
+#include "Point3d.hpp"
+
+class Point3d;
 
 class Vector3d
 {
@@ -6,6 +9,8 @@ public:
 	Vector3d() = delete;
 	Vector3d(const Vector3d&) = default;
 	Vector3d(Vector3d&&) = default;
+
+	Vector3d(const Point3d& point);
 
 	Vector3d(float x, float y, float z);
 	Vector3d(float superCoord);
@@ -20,6 +25,8 @@ public:
 
 	Vector3d& operator = (const Vector3d&) = default;
 	Vector3d& operator = (Vector3d&&) = default;
+
+	Vector3d& operator = (const Point3d& other);
 
 	Vector3d operator + (const Vector3d& vec3d) const noexcept;
 	Vector3d operator - (const Vector3d& vec3d) const noexcept;

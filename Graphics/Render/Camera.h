@@ -1,17 +1,18 @@
 #pragma once
 #include "Geometry/Primitives/Vector3d.hpp"
+#include "Geometry/Primitives/Point3d.hpp"
 
 class Camera
 {
 private:
-	Vector3d m_Location;
+	Point3d m_Location;
 	Vector3d m_Direction;
 	float m_FOV;
 public:
 	Camera() = delete;
-	Camera(Vector3d Location, Vector3d Direction, float FOV) : m_Location(Location), m_Direction(Direction), m_FOV(FOV) {}
+	Camera(Point3d Location, Vector3d Direction, float FOV) : m_Location(Location), m_Direction(Direction), m_FOV(FOV) {} //point
 
-	inline Vector3d GetLocation() const noexcept { return m_Location; }
+	inline Point3d GetLocation() const noexcept { return m_Location; } //point
 
 	inline Vector3d GetDirection() const noexcept { return m_Direction; }
 

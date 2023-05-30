@@ -1,6 +1,6 @@
 #include "../Sphere.hpp"
 
-Sphere::Sphere(const Vector3d& origin, const float radius)
+Sphere::Sphere(const Point3d& origin, const float radius)
 	: m_Origin{ origin }, m_Radius{ radius }
 {}
 
@@ -13,7 +13,7 @@ std::optional<Intersection> Sphere::IntersectedWithRay(const Ray& ray, float* pa
 	}
 
 	Vector3d original = ray.GetOrigin();
-	Vector3d center = this->GetOrigin();
+	Point3d center = this->GetOrigin();
 	Vector3d direction = ray.GetDirection();
 	float radius = this->GetRadius();
 

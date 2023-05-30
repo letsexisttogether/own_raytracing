@@ -4,6 +4,13 @@
 #include <exception>
 
 
+Vector3d::Vector3d(const Point3d& point)
+{
+	this->m_X = point.GetX();
+	this->m_Y = point.GetY();
+	this->m_Z = point.GetZ();
+}
+
 Vector3d::Vector3d(float x, float y, float z)
 	: m_X{ x }, m_Y{ y }, m_Z{ z }
 {}
