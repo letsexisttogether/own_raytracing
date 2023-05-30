@@ -33,7 +33,7 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
 
             std::optional<Intersection> intersection{ scene.FindClosestIntersection(thrownRay) };
 
-            if (intersection.has_value() && !scene.CheckAnyIntersection(intersection.value()))
+            if (intersection.has_value()  && !scene.CheckAnyIntersection(intersection.value()))
             {
                 const Vector3d normal{ intersection.value().Normal.Normalize() };
 

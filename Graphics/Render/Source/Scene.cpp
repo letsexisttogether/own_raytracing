@@ -49,12 +49,13 @@ std::optional<Intersection> Scene::FindClosestIntersection(const Ray& ray) const
 
 bool Scene::CheckAnyIntersection(const Intersection& intersection) const noexcept
 {
-	const Ray rayToLight{ intersection.IntersectionPoint, m_LightVector };
+	const Ray rayToLight{ intersection.IntersectionPoint, m_LightVector * -1 };
 
 	for (auto figure : m_Figures)
 	{
-		if (figure->IntersectedWithRay(rayToLight))
+		if (auto new_intersection = figure->IntersectedWithRay(rayToLight))
 		{
+			if((new_intersection.value().IntersectionPoint - intersection.IntersectionPoint).GetLength() > 0.001)
 			return true;
 		}
 	}

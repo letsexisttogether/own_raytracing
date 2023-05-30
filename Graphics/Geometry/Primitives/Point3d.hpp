@@ -25,8 +25,6 @@ public:
 	Point3d& operator = (const Point3d&) = default;
 	Point3d& operator = (Point3d&&) = default;
 
-	
-
 	Point3d operator + (const Vector3d& vec3d) const noexcept;
 	Point3d operator - (const Vector3d& vec3d) const noexcept;
 
