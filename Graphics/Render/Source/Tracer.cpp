@@ -1,7 +1,7 @@
 #include "../Tracer.h"
 
-RayTracer::RayTracer(RenderHandler* renderHandler, const Camera& camera, const Vector3d& lightSrc)
-	: m_Handler{ renderHandler }, m_Camera(camera), m_LightVector(lightSrc * -1.f)
+RayTracer::RayTracer(RenderHandler* renderHandler)
+	: m_Handler{ renderHandler }
 {}
 
 RayTracer::~RayTracer()
@@ -9,9 +9,10 @@ RayTracer::~RayTracer()
 	// delete m_Handler;
 }
 
-void RayTracer::Trace(const Intersectable& intersectable) noexcept(false)
+void RayTracer::Trace(const Scene& scene) noexcept(false)
 {
     const Screen& screen = m_Handler->GetScreen();
+    const Camera& camera = scene.GetCamera();
 
     const Screen::Resolution height = screen.GetHeigth();
     const Screen::Resolution width = screen.GetWidth();
@@ -26,16 +27,17 @@ void RayTracer::Trace(const Intersectable& intersectable) noexcept(false)
             const float absoluteCoordinateI = (relativeCoordinatei * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
             const float absoluteCoordinateJ = (relativeCoordinatej * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
 
-            const Vector3d thrownVector{ Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, screen.GetDistance() } - m_Camera.GetLocation() };
+            const Vector3d thrownVector{ Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, screen.GetDistance() } - camera.GetLocation() };
 
-            const Ray thrownRay{ m_Camera.GetLocation(), thrownVector.Normalize() };
+            const Ray thrownRay{ camera.GetLocation(), thrownVector.Normalize() };
 
-            std::optional<Intersection> intersection{ intersectable.IntersectedWithRay(thrownRay) };
+            std::optional<Intersection> intersection{ scene.FindClosestIntersection(thrownRay) };
 
-            if (intersection.has_value())
+            if (intersection.has_value() && !scene.CheckAnyIntersection(intersection.value()))
             {
                 const Vector3d normal{ intersection.value().Normal.Normalize() };
-                m_Handler->HandlePixel(i, j, normal.Dot(m_LightVector));
+
+                m_Handler->HandlePixel(i, j, normal.Dot(scene.GetLightVector()));
             }
             else
             {

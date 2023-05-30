@@ -3,10 +3,8 @@
 #include <iostream>
 #include <memory>
 
-#include "Geometry/Intersectables/Intersectable.h"
 #include "RenderHandler/RenderHandler.hpp"
-#include "Camera.h"
-
+#include "Scene.h"
 
 class RayTracer
 {
@@ -15,19 +13,16 @@ public:
 	RayTracer(const RayTracer&) = default;
 	RayTracer(RayTracer&&) = default;
 
-	RayTracer(RenderHandler* renderHandler, const Camera& camera, const Vector3d& lightSrc);
+	RayTracer(RenderHandler* renderHandler);
 
 	~RayTracer();
 
-	inline const Camera& GetCamera() const noexcept { return m_Camera; }
 	inline const RenderHandler& GetRenderHandler() const noexcept { return *m_Handler; }
 
-	void Trace(const Intersectable& intersectable) noexcept(false);
+	void Trace(const Scene& scene) noexcept(false);
 
 private:
 	RenderHandler* m_Handler;
-	Camera m_Camera;
-	Vector3d m_LightVector;
 };
 
 

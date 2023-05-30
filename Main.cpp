@@ -18,29 +18,22 @@
 
 std::int32_t main(std::uint32_t argc, const char* argv[])
 {
-
-    FileReader reader{ "Test.obj" };
-    ObjReader objReader{ reader.ReadFile() };
-
-    Vector3d light{ 0.f, 0.f, -1.f };
+    Vector3d light{ 0.f, 1.f, 0.f };
     light = light.Normalize();
 
     Camera camera{ { 0.f, 0.f, 0.f }, { 0.f, 0.f, 1.f }, 3.1415 / 6.f };
-    Screen screen{ 10u, 10u, 1.f, camera };
+    Screen screen{ 100u, 100u, 10.f, camera };
 
     RayTracer RT
     {
-            new CmdRenderHandler
-            {
-                screen,
-            },
-            camera,
-            light
+        new CmdRenderHandler
+        {
+            screen
+        }
     };
 
-    Scene scene{ RT };
-
-    scene.AddToScene(objReader.Read());
+    Scene scene{ camera, light };
+    scene.AddToScene(new Sphere{ Vector3d{ 0.f, 0.f, 0.7f }, 0.15f });
 
     RT.Trace(scene);
 
