@@ -6,7 +6,7 @@
 class Triangle : public Intersectable
 {
 public:
-	Triangle(const Vector3d& v0, const Vector3d& v1, const Vector3d& v2);
+	Triangle(const Point3d& v0, const Point3d& v1, const Point3d& v2);
 	Triangle(const Triangle&) = default;
 	Triangle(Triangle&&) = default;
 
@@ -14,9 +14,9 @@ public:
 
 	std::optional<Intersection> IntersectedWithRay(const Ray& ray, float* parametr = nullptr) const noexcept override;
 
-	inline const Vector3d& GetV0() const noexcept { return m_V0; }
-	inline const Vector3d& GetV1() const noexcept { return m_V1; }
-	inline const Vector3d& GetV2() const noexcept { return m_V2; }
+	inline const Point3d& GetV0() const noexcept { return m_V0; }
+	inline const Point3d& GetV1() const noexcept { return m_V1; }
+	inline const Point3d& GetV2() const noexcept { return m_V2; }
 
 	Triangle& operator = (const Triangle&) = delete;
 	Triangle& operator = (Triangle&&) = delete;
