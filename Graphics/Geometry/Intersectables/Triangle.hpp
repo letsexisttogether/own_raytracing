@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "Intersectable.h"
+#include "Geometry/Primitives/Point3d.hpp"
 
 class Triangle : public Intersectable
 {
@@ -21,7 +22,7 @@ public:
 	Triangle& operator = (Triangle&&) = delete;
 
 private:	
-	const Vector3d m_V0;
-	const Vector3d m_V1;
-	const Vector3d m_V2;
+	const Point3d m_V0;
+	const Point3d m_V1;
+	const Point3d m_V2;
 };

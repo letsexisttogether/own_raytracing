@@ -1,6 +1,6 @@
 #include "../Triangle.hpp"
 
-Triangle::Triangle(const Vector3d& v0, const Vector3d& v1, const Vector3d& v2)
+Triangle::Triangle(const Point3d& v0, const Point3d& v1, const Point3d& v2)
 	: m_V0{ v0 }, m_V1(v1), m_V2(v2)
 {}
 
