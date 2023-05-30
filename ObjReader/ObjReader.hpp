@@ -1,7 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <byte>
+#include <cstddef>
+#include <sstream>
+
+#include "Geometry/Intersectables/Triangle.hpp"
 
 class ObjReader
 {
@@ -10,12 +13,17 @@ public:
 
 	~ObjReader() = default;
 
-	void Read() noexcept;
+	std::vector<Intersectable*> Read() noexcept(false);
 
-private: 
+private:
+	void Parse(std::istringstream& lineStream) noexcept(false);
 	
+	void ExtractVertices(std::istringstream& lineStream) noexcept(false);
+	void ExtractIndices(std::istringstream& lineStream) noexcept(false);
+
 
 private:
 	std::vector<std::byte> m_Bytes;
-	std::vector<float> m_Vertices;
+	std::vector<Point3d> m_Vertices;
+	std::vector<Intersectable*> m_Intersectables;
 };
