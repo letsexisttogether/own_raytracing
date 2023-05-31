@@ -21,13 +21,13 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
     {
         for (Screen::Resolution j = 0; j < width; j++)
         {
-            const float relativeCoordinatei = i - height / 2.f;
-            const float relativeCoordinatej = j - width / 2.f;
+            const float relativeCoordinatei = (i - height / 2.f) + camera.GetDirection().GetY();
+            const float relativeCoordinatej = (j - width / 2.f) + camera.GetDirection().GetX();
 
             const float absoluteCoordinateI = (relativeCoordinatei * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
             const float absoluteCoordinateJ = (relativeCoordinatej * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
 
-            const Vector3d thrownVector{ Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, screen.GetDistance() } - camera.GetLocation() };
+            const Vector3d thrownVector{ Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, screen.GetDistance() * camera.GetDirection().GetZ() } - camera.GetLocation()};
 
             const Ray thrownRay{ camera.GetLocation(), thrownVector.Normalize() };
 
