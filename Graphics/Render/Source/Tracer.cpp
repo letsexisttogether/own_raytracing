@@ -27,22 +27,28 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
             const float absoluteCoordinateI = (relativeCoordinatei * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
             const float absoluteCoordinateJ = (relativeCoordinatej * screen.GetPixelSize()) + (screen.GetPixelSize() / 2.f);
 
-            const Vector3d thrownVector{ Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, screen.GetDistance() * camera.GetDirection().GetZ() } - camera.GetLocation()};
+            const Vector3d thrownVector{ Vector3d{ absoluteCoordinateJ, absoluteCoordinateI, screen.GetDistance() * camera.GetDirection().GetZ() } - camera.GetLocation() };
 
             const Ray thrownRay{ camera.GetLocation(), thrownVector.Normalize() };
 
             std::optional<Intersection> intersection{ scene.FindClosestIntersection(thrownRay) };
 
-            if (intersection.has_value()  && !scene.CheckAnyIntersection(intersection.value()))
-            {
-                const Vector3d normal{ intersection.value().Normal.Normalize() };
+            Vector3d blendedColor{ 0.f };
 
-                m_Handler->HandlePixel(i, j, normal.Dot(scene.GetLightVector()));
-            }
-            else
+            if (intersection.has_value())
             {
-                m_Handler->HandlePixel(i, j, 0.f);
+                intersection.value().Normal = intersection.value().Normal.Normalize();
+
+                for (const auto light : scene.GetLights())
+                {
+                    blendedColor += light->HandleLight(intersection.value());
+                }
+
+                blendedColor /= static_cast<float>(scene.GetLights().size());
+                blendedColor.Clamp(0.f, 255.f);
             }
+            
+            m_Handler->HandlePixel(i, j, blendedColor);
         }
     }
 }

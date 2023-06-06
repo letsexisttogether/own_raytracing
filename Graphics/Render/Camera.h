@@ -2,6 +2,7 @@
 #include "Geometry/Primitives/Vector3d.hpp"
 #include "Geometry/Primitives/Point3d.hpp"
 #include "Geometry/Primitives/Matrix.hpp"
+#include "Light/Light.hpp"
 
 class Camera
 {
