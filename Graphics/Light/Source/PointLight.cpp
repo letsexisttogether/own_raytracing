@@ -1,5 +1,7 @@
 #include "../PointLight.hpp"
 
+#include "Render/Scene.h"
+
 PointLight::PointLight(const Vector3d& position, const Vector3d& color, float intensity)
     : Light{ color, intensity }, m_Position(position)
 {}
@@ -23,4 +25,13 @@ Vector3d PointLight::HandleLight(const Intersection& intersection) const noexcep
     const float intensity = (m_Intensity / (distance * distance)) * diffuseFactor;
 
     return m_Color * intensity;
+}
+
+bool PointLight::IsInShadow(const Intersection& intersection, const Scene& scene) const noexcept
+{
+    const Vector3d directionToLight{ m_Position - intersection.IntersectionPoint };
+
+    Ray shadowRay(intersection.IntersectionPoint, directionToLight.Normalize());
+
+    return scene.CheckAnyIntersection(shadowRay, intersection);
 }

@@ -1,5 +1,7 @@
 #include "../DirectionalLight.hpp"
 
+#include "Render/Scene.h"
+
 DirectionalLight::DirectionalLight(const Vector3d& direction, const Vector3d& color, float intensity)
     : Light{ color, intensity }, m_Direction{ direction }, m_RealColor{ m_Color * m_Intensity }
 {}
@@ -16,4 +18,11 @@ Vector3d DirectionalLight::HandleLight(const Intersection& intersection) const n
     }
 
     return m_RealColor * diffuseFactor;
+}
+
+bool DirectionalLight::IsInShadow(const Intersection& intersection, const Scene& scene) const noexcept
+{
+    Ray shadowRay(intersection.IntersectionPoint, -m_Direction);
+
+    return scene.CheckAnyIntersection(shadowRay, intersection);
 }

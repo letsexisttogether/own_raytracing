@@ -9,6 +9,8 @@ public:
 
     Vector3d HandleLight(const Intersection& intersection) const noexcept(false) override;
 
+    bool IsInShadow(const Intersection& intersection, const Scene& scene) const noexcept override;
+
 private:
     const Vector3d m_Direction;
     Vector3d m_RealColor;

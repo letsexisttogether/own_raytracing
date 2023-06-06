@@ -18,7 +18,7 @@ public:
 	void AddToScene(const std::vector<Intersectable*>& figures);
 
 	std::optional<Intersection> FindClosestIntersection(const Ray& ray) const noexcept;
-	// bool CheckAnyIntersection(const Intersection& intersection) const noexcept;
+	bool CheckAnyIntersection(const Ray& ray, const Intersection& intersection) const noexcept;
 
 	inline const Camera& GetCamera() const noexcept { return m_Camera; }
 	inline const std::vector<Light*>& GetLights() const noexcept { return m_Lights; }

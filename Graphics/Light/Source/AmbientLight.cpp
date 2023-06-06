@@ -8,3 +8,8 @@ Vector3d AmbientLight::HandleLight(const Intersection& intersection) const noexc
 {
 	return m_HandleResult;
 }
+
+bool AmbientLight::IsInShadow(const Intersection& intersection, const Scene& scene) const noexcept
+{
+	return false;
+}

@@ -28,6 +28,15 @@ public:
 
 	float GetLength() const noexcept;
 
+	float Dot(const Vector3d& vec3d) const noexcept;
+	Vector3d Cross(const Vector3d& vec3d) const noexcept;
+
+	Vector3d Normalize() const noexcept(false);
+	
+	void Clamp(const float minVal, const float maxVal) noexcept;
+
+	float GetCosBetween(const Vector3d& vec) const noexcept;
+
 	Vector3d& operator = (const Vector3d&) = default;
 	Vector3d& operator = (Vector3d&&) = default;
 
@@ -39,20 +48,13 @@ public:
 	Vector3d& operator += (const Vector3d& vec3d) noexcept;
 
 	Vector3d operator - (const Vector3d& vec3d) const noexcept;
-
+	
 	Vector3d operator * (const float value) const noexcept;
 
 	Vector3d operator / (const float value) const;
 	Vector3d& operator /= (const float value);
 
-	float Dot(const Vector3d& vec3d) const noexcept;
-	Vector3d Cross(const Vector3d& vec3d) const noexcept;
-
-	Vector3d Normalize() const noexcept(false);
-
-	void Clamp(const float minVal, const float maxVal) noexcept;
-
-	float GetCosBetween(const Vector3d& vec) const noexcept;
+	friend Vector3d operator - (const Vector3d& vec3d) noexcept;
 
 private:
 	float m_X;

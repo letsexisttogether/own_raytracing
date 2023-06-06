@@ -107,3 +107,8 @@ float Vector3d::GetCosBetween(const Vector3d& vec) const noexcept
 	float denominator = GetLength() * vec.GetLength();
 	return numerator / denominator;
 }
+
+Vector3d operator - (const Vector3d& vec3d) noexcept
+{
+	return Vector3d{ -vec3d.m_X, vec3d.m_Y, vec3d.m_Z };
+}

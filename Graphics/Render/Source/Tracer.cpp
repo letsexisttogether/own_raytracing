@@ -37,11 +37,16 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
 
             if (intersection.has_value())
             {
-                intersection.value().Normal = intersection.value().Normal.Normalize();
+                auto& value = intersection.value();
+
+                value.Normal = value.Normal.Normalize();
 
                 for (const auto light : scene.GetLights())
                 {
-                    blendedColor += light->HandleLight(intersection.value());
+                    if (!light->IsInShadow(value, scene))
+                    {
+                        blendedColor += light->HandleLight(intersection.value());
+                    }
                 }
 
                 blendedColor /= static_cast<float>(scene.GetLights().size());

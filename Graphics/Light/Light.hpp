@@ -3,6 +3,8 @@
 #include "Geometry/Primitives/Vector3d.hpp"
 #include "Geometry/Intersectables/Intersectable.h"
 
+class Scene;
+
 class Light
 {
 public:
@@ -12,6 +14,8 @@ public:
 
 	// Повертає значення кольору для точки перетину
 	virtual Vector3d HandleLight(const Intersection& intersection) const noexcept(false) = 0;
+
+	virtual bool IsInShadow(const Intersection& intersection, const Scene& scene) const noexcept = 0;
 
 	inline const Vector3d& GetColor() const noexcept { return m_Color; }
 	inline const float& GetIntensity() const noexcept { return m_Intensity; }
