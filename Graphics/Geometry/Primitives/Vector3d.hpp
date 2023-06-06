@@ -1,4 +1,7 @@
 #pragma once
+
+#include <optional>
+
 #include "Point3d.hpp"
 #include "Vector4.hpp"
 
@@ -33,14 +36,21 @@ public:
 	Vector3d(const Vector4& other);
 
 	Vector3d operator + (const Vector3d& vec3d) const noexcept;
+	Vector3d& operator += (const Vector3d& vec3d) noexcept;
+
 	Vector3d operator - (const Vector3d& vec3d) const noexcept;
 
 	Vector3d operator * (const float value) const noexcept;
+
+	Vector3d operator / (const float value) const;
+	Vector3d& operator /= (const float value);
 
 	float Dot(const Vector3d& vec3d) const noexcept;
 	Vector3d Cross(const Vector3d& vec3d) const noexcept;
 
 	Vector3d Normalize() const noexcept(false);
+
+	void Clamp(const float minVal, const float maxVal) noexcept;
 
 	float GetCosBetween(const Vector3d& vec) const noexcept;
 
@@ -48,4 +58,6 @@ private:
 	float m_X;
 	float m_Y;
 	float m_Z;
+
+	mutable std::optional<float> m_Length;
 };

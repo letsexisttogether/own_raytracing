@@ -2,13 +2,11 @@
 
 #include <cmath>
 #include <exception>
+#include <algorithm>
 
 Vector3d::Vector3d(const Point3d& point)
-{
-	this->m_X = point.GetX();
-	this->m_Y = point.GetY();
-	this->m_Z = point.GetZ();
-}
+	: m_X{ point.GetX() }, m_Y{ point.GetY() }, m_Z{ point.GetZ() }
+{}
 
 Vector3d::Vector3d(float x, float y, float z)
 	: m_X{ x }, m_Y{ y }, m_Z{ z }
@@ -24,12 +22,22 @@ Vector3d::Vector3d(const Vector4& other)
 
 float Vector3d::GetLength() const noexcept
 {
-	return sqrt(m_X * m_X + m_Y * m_Y + m_Z * m_Z);
+	if (!m_Length)
+	{
+		m_Length = sqrt(m_X * m_X + m_Y * m_Y + m_Z * m_Z);
+	}
+	return m_Length.value();
 }
 
 Vector3d Vector3d::operator + (const Vector3d& vec3d) const noexcept
 {
 	return Vector3d{ m_X + vec3d.m_X, m_Y + vec3d.m_Y, m_Z + vec3d.m_Z };
+}
+Vector3d& Vector3d::operator += (const Vector3d& vec3d) noexcept
+{
+	*this = *this + vec3d;
+
+	return *this;
 }
 
 Vector3d Vector3d::operator - (const Vector3d& vec3d) const noexcept
@@ -40,6 +48,23 @@ Vector3d Vector3d::operator - (const Vector3d& vec3d) const noexcept
 Vector3d Vector3d::operator * (const float value) const noexcept
 {
 	return Vector3d{ m_X * value, m_Y * value, m_Z * value };
+}
+
+Vector3d Vector3d::operator / (const float value) const
+{
+	if (!value)
+	{
+		throw std::exception{ "Cannot divide by 0" };
+	}
+
+	return Vector3d{ m_X / value, m_Y / value, m_Z / value };
+}
+
+Vector3d& Vector3d::operator /= (const float value)
+{
+	*this = *this / value;
+
+	return *this;
 }
 
 float Vector3d::Dot(const Vector3d& vec3d) const noexcept
@@ -64,11 +89,17 @@ Vector3d Vector3d::Normalize() const noexcept(false)
 		throw std::exception{ "Cannot normalize a null vector" };
 	}
 
-	float length = GetLength();
+	const float length = GetLength();
 
 	return Vector3d{ m_X / length, m_Y / length, m_Z / length };
 }
 
+void Vector3d::Clamp(const float minVal, const float maxVal) noexcept
+{
+	m_X = std::clamp(m_X, minVal, maxVal);
+	m_Y = std::clamp(m_Y, minVal, maxVal);
+	m_Z = std::clamp(m_Z, minVal, maxVal);
+}
 
 float Vector3d::GetCosBetween(const Vector3d& vec) const noexcept
 {
