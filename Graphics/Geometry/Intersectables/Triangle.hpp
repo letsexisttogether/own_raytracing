@@ -4,6 +4,9 @@
 #include "Geometry/Primitives/Point3d.hpp"
 #include "Geometry/Primitives/Vector3d.hpp"
 #include "Geometry/Primitives/Matrix.hpp"
+#include "AABB3.hpp"
+
+class AABB3;
 
 class Triangle : public Intersectable
 {
@@ -20,10 +23,17 @@ public:
 	inline const Vector3d& GetV1() const noexcept { return m_V1; }
 	inline const Vector3d& GetV2() const noexcept { return m_V2; }
 
+	Vector3d GetMax();
+	Vector3d GetMin();
+
 	Triangle& operator = (const Triangle&) = default;
 	Triangle& operator = (Triangle&&) = default;
 
 	Triangle operator * (const Matrix4& transformMatrix) noexcept;
+
+	AABB3 BuildBox();
+
+	Vector3d GetCenter() const;
 
 private:	
 	Vector3d m_V0;
