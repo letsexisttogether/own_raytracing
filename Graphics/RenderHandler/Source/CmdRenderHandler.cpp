@@ -4,9 +4,9 @@ CmdRenderHandler::CmdRenderHandler(const Screen& screen)
 	: RenderHandler{ screen }, m_Pixels{ m_Screen.GetHeigth(), std::vector<char>(m_Screen.GetWidth(), 0) }
 {}
 
-void CmdRenderHandler::HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const float pixelResult) noexcept(false)
+void CmdRenderHandler::HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false)
 {
-	m_Pixels.at(i).at(j) = LightTrace(pixelResult);
+	m_Pixels.at(i).at(j) = LightTrace(color.GetLength());
 }
 
 void CmdRenderHandler::ExecuteRenderResult() const noexcept(false)

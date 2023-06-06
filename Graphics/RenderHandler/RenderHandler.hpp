@@ -9,7 +9,7 @@ public:
 		: m_Screen{ screen }
 	{}
 
-	virtual void HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const float pixelResult) noexcept(false) = 0;
+	virtual void HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false) = 0;
 
 	virtual void ExecuteRenderResult() const noexcept(false) = 0;
 

@@ -10,7 +10,7 @@ public:
 
 	~ImageRenderHandler();
 
-	void HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const float pixelResult) noexcept(false) override;
+	void HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false) override;
 
 	void ExecuteRenderResult() const noexcept(false) override;
 

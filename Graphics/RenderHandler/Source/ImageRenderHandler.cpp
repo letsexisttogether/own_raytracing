@@ -11,13 +11,8 @@ ImageRenderHandler::~ImageRenderHandler()
 	delete m_Writer;
 }
 
-void ImageRenderHandler::HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const float pixelResult) noexcept(false)
+void ImageRenderHandler::HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false)
 {
-    const float finalPixel = std::max(0.f, pixelResult);
-
-    const Vector3d maxColor{ 255.f };
-    const Vector3d color{ maxColor * finalPixel };
-
     const Screen::Resolution invertedI = m_Image.Height - i - 1;
 
     const std::size_t pixelIndex = (invertedI * m_Image.Width + j) * 3;
