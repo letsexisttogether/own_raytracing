@@ -38,22 +38,25 @@ bool BVHTree::Intersected(const Ray& ray) const { return m_Box.Intersected(ray);
 
 std::optional<Intersection> BVHTree::IntersectedWithRay(const Ray& ray, float* parametr) const noexcept 
 {
-	if(!m_Box.Intersected(ray)) return std::nullopt;
+	/*if(!m_Box.Intersected(ray)) return std::nullopt;*/
 	std::optional<Intersection> res = std::nullopt;
 	std::optional<Intersection> temp = std::nullopt;
-	int k = 0;
+	//int k = 0;
 	for (auto& child : m_Children)
 	{
-		/*if (child->Intersected(ray))
+		if (child->Intersected(ray))
 		{
-			res = child->IntersectedWithRay(ray);
-			if (res.has_value()) return res;
-		}	*/	
-		temp = child->IntersectedWithRay(ray);
+			temp = child->IntersectedWithRay(ray);
+			if (temp.has_value())
+			{
+				if (!res.has_value() || temp.value().Distance < res.value().Distance) res = temp;
+			}
+		}		
+		/*temp = child->IntersectedWithRay(ray);
 		if (temp.has_value())
 		{				
 			if (!res.has_value() || temp.value().Distance < res.value().Distance) res = temp;
-		}		
+		}*/		
 	}
 	return res;
 }

@@ -51,7 +51,7 @@ std::int32_t main(std::uint32_t argc, const char* argv[])
         const auto& matrix1 = TF::CreateMovingMatrix(Vector3d{ 5.f, 0.f, 0.f });
         camera.TransformDirection(matrix1);
 
-        Screen screen{ 2000, 2000, 100.f, camera };
+        Screen screen{ 1000, 1000, 100.f, camera };
 
         //Triangle tr = { {0.f}, {0.f, 0.f, 1.f}, {0.f, 1.f, 1.f} };
         //Triangle tr1 = { {0.f}, {0.f, 0.f, 1.f}, {1.f, 1.f, 1.f} };
