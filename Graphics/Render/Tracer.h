@@ -20,7 +20,7 @@ public:
 
 	inline const RenderHandler& GetRenderHandler() const noexcept { return *m_Handler; }
 
-	void Trace(const Scene& scene, const Camera& camera, const Vector3d& lightvector) noexcept(false);
+	void Trace(const Scene& scene) noexcept(false);
 	void Trace(const BVHTree& tree, const Camera& camera, const Vector3d& lightvector) noexcept(false);
 
 private:

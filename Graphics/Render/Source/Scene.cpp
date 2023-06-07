@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+Scene::Scene(const Camera& camera, const Vector3d& lightVector)
+	: m_Camera{ camera }, m_LightVector{ lightVector }
+{}
 
 Scene::~Scene()
 {
@@ -44,23 +47,22 @@ std::optional<Intersection> Scene::FindClosestIntersection(const Ray& ray) const
 	return result;
 }
 
-//bool Scene::CheckAnyIntersection(const Intersection& intersection) const noexcept
-//{
-//	const Ray rayToLight{ intersection.IntersectionPoint, m_LightVector};
-//
-//	for (auto figure : m_Figures)
-//	{
-//		if (auto new_intersection = figure->IntersectedWithRay(rayToLight))
-//		{
-//			if ((new_intersection.value().IntersectionPoint - intersection.IntersectionPoint).GetLength() > 0.001)
-//			{
-//				return true;
-//			}
-//		}
-//	}
-//
-//	return false;
-//}
+bool Scene::CheckAnyIntersection(const Intersection& intersection) const noexcept
+{
+	const Ray rayToLight{ intersection.IntersectionPoint, m_LightVector };
 
+	for (auto figure : m_Figures)
+	{
+		if (auto new_intersection = figure->IntersectedWithRay(rayToLight))
+		{
+			if ((new_intersection.value().IntersectionPoint - intersection.IntersectionPoint).GetLength() > 0.001)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
 
 

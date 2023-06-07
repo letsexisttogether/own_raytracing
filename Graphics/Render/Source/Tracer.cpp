@@ -1,5 +1,7 @@
 #include "../Tracer.h"
 
+#include "Render/Scene.h"
+
 RayTracer::RayTracer(RenderHandler* renderHandler)
 	: m_Handler{ renderHandler }
 {}
@@ -9,10 +11,10 @@ RayTracer::~RayTracer()
 	// delete m_Handler;
 }
 
-void RayTracer::Trace(const Scene& scene, const Camera& camera, const Vector3d& lightvector) noexcept(false)
+void RayTracer::Trace(const Scene& scene) noexcept(false)
 {
     const Screen& screen = m_Handler->GetScreen();
-    //const Camera& camera = screen.GetCamera();
+    const Camera& camera = scene.GetCamera();
 
     const Screen::Resolution height = screen.GetHeigth();
     const Screen::Resolution width = screen.GetWidth();
@@ -37,7 +39,7 @@ void RayTracer::Trace(const Scene& scene, const Camera& camera, const Vector3d& 
             {
                 const Vector3d normal{ intersection.value().Normal.Normalize() };
 
-                m_Handler->HandlePixel(i, j, normal.Dot(lightvector));
+                m_Handler->HandlePixel(i, j, normal.Dot(scene.GetLightVector()));
             }
             else
             {
