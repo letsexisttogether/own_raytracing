@@ -1,5 +1,7 @@
 #include "../Tracer.h"
 
+#include "Render/Scene.h"
+
 RayTracer::RayTracer(RenderHandler* renderHandler)
 	: m_Handler{ renderHandler }
 {}
@@ -33,7 +35,13 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
 
             std::optional<Intersection> intersection{ scene.FindClosestIntersection(thrownRay) };
 
+
             Vector3d blendedColor{ 0.f };
+
+            if (intersection.has_value() /* && !scene.CheckAnyIntersection(intersection.value())*/)
+            {
+                const Vector3d normal{ intersection.value().Normal.Normalize() };
+
 
             if (intersection.has_value())
             {

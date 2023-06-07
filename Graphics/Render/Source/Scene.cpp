@@ -64,4 +64,3 @@ bool Scene::CheckAnyIntersection(const Ray& ray, const Intersection& intersectio
 }
 
 
-

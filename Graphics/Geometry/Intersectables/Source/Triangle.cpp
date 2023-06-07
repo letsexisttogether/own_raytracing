@@ -46,10 +46,22 @@ std::optional<Intersection> Triangle::IntersectedWithRay(const Ray & ray, float*
         Vector3d intersectionPoint = rayOrigin + rayDirection * t;
         Vector3d normal = edge1.Cross(edge2).Normalize();
 
-        return Intersection{ intersectionPoint, normal };
+        return Intersection{ intersectionPoint, normal, (intersectionPoint - rayOrigin).GetLength() };
     }
 
     return std::nullopt;
+}
+
+Vector3d Triangle::GetMax()
+{
+    return { std::max(std::max(m_V0.GetX(),m_V1.GetX()),m_V2.GetX()), std::max(std::max(m_V0.GetY(),m_V1.GetY()),m_V2.GetY()),
+        std::max(std::max(m_V0.GetZ(),m_V1.GetZ()),m_V2.GetZ()) };
+}
+
+Vector3d Triangle::GetMin()
+{
+    return { std::min(std::min(m_V0.GetX(),m_V1.GetX()),m_V2.GetX()), std::min(std::min(m_V0.GetY(),m_V1.GetY()),m_V2.GetY()),
+        std::min(std::min(m_V0.GetZ(),m_V1.GetZ()),m_V2.GetZ()) };
 }
 
 Triangle Triangle::operator * (const Matrix4& transformMatrix) noexcept
@@ -61,5 +73,13 @@ Triangle Triangle::operator * (const Matrix4& transformMatrix) noexcept
     triangle.m_V2 = Vector4{ m_V2 } * transformMatrix;
 
     return triangle;
+}
+
+
+AABB3 Triangle::BuildBox() { return { GetMin(), GetMax() }; }
+
+Vector3d Triangle::GetCenter() const
+{
+    return (m_V0 + m_V1 + m_V2) * (1.f / 3.f);
 }
 
