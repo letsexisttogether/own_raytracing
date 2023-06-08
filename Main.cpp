@@ -27,7 +27,11 @@ std::int32_t main()
             }
         };
 
-        std::unique_ptr<SceneFabric> soloScene
+        Camera camera = { { 0.f, 0.f, -100.f }, { 0.f, 0.f, 1.f }, 3.1415 / 6.f };
+        const auto& matrix = TF::CreateMovingMatrix(Vector3d{ 0.f, 0.f, 50.f });
+        camera.TransformLocation(matrix);
+
+        /*std::unique_ptr<SceneFabric> soloScene
         {
             new SceneLoader 
             {
@@ -46,6 +50,58 @@ std::int32_t main()
                     }
                 }
             }
+        };*/
+        
+
+        /*const auto& matrix1 = TF::CreateMovingMatrix(Vector3d{ 5.f, 0.f, 0.f });
+        camera.TransformDirection(matrix1);*/
+
+
+        //std::unique_ptr<SceneFabric> soloScene
+        //{
+        //    new SceneLoader
+        //    {
+        //        FileReader{ parser.GetSecondArgument() },
+        //        ObjReader{},
+        //        Scene
+        //        {
+        //            Screen
+        //            {
+        //                1000, 1000, 100.f,
+        //                camera
+        //                //Camera{ { 0.f, 0.f, -100.f }, { 0.f, 0.f, 1.f }, 3.1415 / 6.f }
+        //            },
+        //            std::vector<Light*>
+        //            {
+        //                new AmbientLight{ { 0.f, 255.f, 250.f }, 500.f }
+        //                //new AmbientLight{ { 100.f, 0.f, 250.f }, 500.f }
+        //            }
+        //        }
+        //    }
+        //};
+
+
+        std::unique_ptr<SceneFabric> soloScene
+        {
+            new SceneLoader
+            {
+                FileReader{ parser.GetSecondArgument() },
+                ObjReader{},
+                Scene
+                {
+                    Screen
+                    {
+                        1000, 1000, 100.f,
+                        camera
+                        //Camera{ { 0.f, 0.f, -100.f }, { 0.f, 0.f, 1.f }, 3.1415 / 6.f }
+                    },
+                    std::vector<Light*>
+                    {
+                        new AmbientLight{ { 0.f, 5.f, 0.f }, 500.f },
+                        new AmbientLight{ { 100.f, 0.f, 25.f }, 1000.f }                        
+                    }
+                    }
+                }
         };
 
         SceneFabricSelector selector
