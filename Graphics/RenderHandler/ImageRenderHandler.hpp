@@ -6,13 +6,16 @@
 class ImageRenderHandler : public RenderHandler
 {
 public:
-	ImageRenderHandler(const Screen& screen, Writer* writer);
+	ImageRenderHandler(Writer* writer);
 
 	~ImageRenderHandler();
 
-	void HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false) override;
+	void Handle(const std::vector<std::vector<Vector3d>>& colors) noexcept override;
 
 	void ExecuteRenderResult() const noexcept(false) override;
+
+private:
+	void HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false);
 
 private:
 	Writer* m_Writer;

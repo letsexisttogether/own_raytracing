@@ -2,13 +2,23 @@
 
 #include <iostream>
 
-Scene::Scene(const Camera& camera, const std::vector<Light*>& lights)
-	: m_Camera{ camera }, m_Lights{ lights }
+Scene::Scene(Scene&& scene)
+	: m_Screen{ std::move(m_Screen) },
+		m_Lights{ std::move(scene.m_Lights) }, m_Figures{ std::move(scene.m_Figures) }
+{}
+
+Scene::Scene(const Screen& screen, std::vector<Light*>&& lights)
+	: m_Screen{ screen }, m_Lights{ std::move(lights) }
 {}
 
 Scene::~Scene()
 {
 	for (auto& ptr : m_Figures)
+	{
+		delete ptr;
+	}
+
+	for (auto& ptr : m_Lights)
 	{
 		delete ptr;
 	}

@@ -16,7 +16,9 @@ public:
 
 	~FileReader() = default;
 
-	std::vector<std::byte> ReadFile() const noexcept;
+	std::vector<std::byte> ReadFile() const noexcept(false);
+
+	inline const std::filesystem::path& GetFilePath() const noexcept { return m_FilePath; }
 
 	FileReader& operator = (const FileReader&) = default;
 	FileReader& operator = (FileReader&&) = default;

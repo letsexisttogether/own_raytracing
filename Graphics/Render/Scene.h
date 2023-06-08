@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Camera.h"
+#include "Screen.h"
 #include "Geometry/Intersectables/Intersectable.h"
 #include "Light/Light.hpp"
 
@@ -10,7 +10,10 @@ class Scene
 {
 public:
 	Scene() = delete;
-	Scene(const Camera& camera, const std::vector<Light*>& lights);
+	Scene(const Scene&) = default;
+	Scene(Scene&& scene);
+
+	Scene(const Screen& screen, std::vector<Light*>&& lights);
 
 	~Scene();
 
@@ -20,11 +23,11 @@ public:
 	std::optional<Intersection> FindClosestIntersection(const Ray& ray) const noexcept;
 	bool CheckAnyIntersection(const Ray& ray, const Intersection& intersection) const noexcept;
 
-	inline const Camera& GetCamera() const noexcept { return m_Camera; }
+	inline const Screen& GetScreen() const noexcept { return m_Screen; }
 	inline const std::vector<Light*>& GetLights() const noexcept { return m_Lights; }
 
 private:
-	const Camera& m_Camera;
+	Screen m_Screen;
 	std::vector<Light*> m_Lights;
 	std::vector<Intersectable*> m_Figures;
 };

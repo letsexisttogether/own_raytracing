@@ -2,16 +2,16 @@
 
 #include "RenderHandler.hpp"
 
-class CmdRenderHandler : public RenderHandler
+class CmdRenderHandler
 {
 public:
 	CmdRenderHandler(const Screen& screen);
 
 	~CmdRenderHandler() = delete;
 
-	void HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false) override;
+	void HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false) ;
 
-	void ExecuteRenderResult() const noexcept(false) override;
+	void ExecuteRenderResult() const noexcept(false) ;
 
 private:
 	char LightTrace(const float dotResult) const noexcept;

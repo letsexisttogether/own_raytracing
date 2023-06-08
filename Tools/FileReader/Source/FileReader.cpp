@@ -6,12 +6,12 @@
 
 FileReader::FileReader(const std::filesystem::path& path)
 	: m_FilePath{ path }
+{}
+
+std::vector<std::byte> FileReader::ReadFile() const noexcept(false)
 {
 	CheckFile();
-}
 
-std::vector<std::byte> FileReader::ReadFile() const noexcept
-{
 	std::vector<std::byte> fileContent{};
 
 	std::ifstream infile(m_FilePath, std::ios::binary);

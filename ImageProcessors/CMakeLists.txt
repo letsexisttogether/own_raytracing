@@ -37,3 +37,6 @@ target_include_directories(Writer.PPM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 # Build targets
 add_custom_target(BuildPPM DEPENDS Reader.PPM Writer.PPM)
 add_custom_target(BuildBMP DEPENDS Reader.BMP Writer.BMP)
+
+# Fabrics subdir
+add_subdirectory(Fabrics) 

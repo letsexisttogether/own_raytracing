@@ -1,13 +1,8 @@
 #include "../ObjReader.hpp"
 
-
-ObjReader::ObjReader(std::vector<std::byte>&& bytes)
-	: m_Bytes{ std::move(bytes) }
-{}
-
-std::vector<Intersectable*>& ObjReader::Read() noexcept(false)
+std::vector<Intersectable*>& ObjReader::Read(const std::vector<std::byte>& bytes) noexcept(false)
 {
-    std::istringstream iss(reinterpret_cast<const char*>(m_Bytes.data()));
+    std::istringstream iss(reinterpret_cast<const char*>(bytes.data()));
 
     for (std::string line{}; std::getline(iss, line); )
     {

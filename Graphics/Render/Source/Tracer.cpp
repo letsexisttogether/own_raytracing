@@ -2,22 +2,19 @@
 
 #include "Render/Scene.h"
 
-RayTracer::RayTracer(RenderHandler* renderHandler)
-	: m_Handler{ renderHandler }
-{}
-
-RayTracer::~RayTracer()
-{
-	// delete m_Handler;
-}
-
 void RayTracer::Trace(const Scene& scene) noexcept(false)
 {
-    const Screen& screen = m_Handler->GetScreen();
-    const Camera& camera = scene.GetCamera();
+    const Screen& screen = scene.GetScreen();
+    const Camera& camera = screen.GetCamera();
 
     const Screen::Resolution height = screen.GetHeigth();
     const Screen::Resolution width = screen.GetWidth();
+
+    m_Pixels.reserve(height);
+    for (auto& vec : m_Pixels)
+    {
+        vec.reserve(width);
+    }
 
     for (Screen::Resolution i = 0; i < height; i++)
     {
@@ -35,33 +32,33 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
 
             std::optional<Intersection> intersection{ scene.FindClosestIntersection(thrownRay) };
 
-
             Vector3d blendedColor{ 0.f };
 
-            if (intersection.has_value() /* && !scene.CheckAnyIntersection(intersection.value())*/)
+            if (intersection.has_value())
             {
                 const Vector3d normal{ intersection.value().Normal.Normalize() };
 
 
-            if (intersection.has_value())
-            {
-                auto& value = intersection.value();
-
-                value.Normal = value.Normal.Normalize();
-
-                for (const auto light : scene.GetLights())
+                if (intersection.has_value())
                 {
-                    if (!light->IsInShadow(value, scene))
+                    auto& value = intersection.value();
+
+                    value.Normal = value.Normal.Normalize();
+
+                    for (const auto light : scene.GetLights())
                     {
-                        blendedColor += light->HandleLight(intersection.value());
+                        if (!light->IsInShadow(value, scene))
+                        {
+                            blendedColor += light->HandleLight(intersection.value());
+                        }
                     }
+
+                    blendedColor /= static_cast<float>(scene.GetLights().size());
+                    blendedColor.Clamp(0.f, 255.f);
                 }
 
-                blendedColor /= static_cast<float>(scene.GetLights().size());
-                blendedColor.Clamp(0.f, 255.f);
+                m_Pixels[i][j]= blendedColor;
             }
-            
-            m_Handler->HandlePixel(i, j, blendedColor);
         }
     }
 }

@@ -1,14 +1,32 @@
 #include "../ImageRenderHandler.hpp"
 
-ImageRenderHandler::ImageRenderHandler(const Screen& screen, Writer* writer)
-	: RenderHandler{ screen }, m_Writer{ writer }, m_Image{ screen.GetWidth(), screen.GetHeigth() }
-{
-    m_Image.Data = std::vector<std::byte>{ static_cast<std::size_t>(m_Image.Height * m_Image.Width * 3) };
-}
+ImageRenderHandler::ImageRenderHandler(Writer* writer)
+	: m_Writer{ writer }
+{}
 
 ImageRenderHandler::~ImageRenderHandler()
 {
 	delete m_Writer;
+}
+
+void ImageRenderHandler::Handle(const std::vector<std::vector<Vector3d>>& colors) noexcept
+{
+    m_Image.Height = colors.size();
+
+    if (!m_Image.Height)
+    {
+        return;
+    }
+
+    m_Image.Width = colors[0].size();
+
+    for (std::int32_t i = 0; i < m_Image.Height; ++i)
+    {
+        for (std::int32_t j = 0; j < m_Image.Width; ++j)
+        {
+            HandlePixel(i, j, colors[i][j]);
+        }
+    }
 }
 
 void ImageRenderHandler::HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false)

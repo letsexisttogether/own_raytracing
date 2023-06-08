@@ -21,6 +21,8 @@ public:
 
 	inline const Resolution& GetHeigth() const noexcept { return m_Height; }
 	inline const Resolution& GetWidth() const noexcept { return m_Width; }
+
+	inline const Camera& GetCamera() const noexcept { return m_Camera; }
 	
 	inline float GetPixelSize() const noexcept { return m_PixelSize; }
 	inline float GetDistance() const noexcept { return m_Distance; }
@@ -28,6 +30,8 @@ public:
 private:
 	const Resolution m_Height;
 	const Resolution m_Width;
+
+	const Camera m_Camera;
 
 	float m_PixelSize;
 	float m_Distance;

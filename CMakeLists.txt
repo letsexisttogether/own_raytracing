@@ -7,12 +7,14 @@ add_executable(${PROJECT_NAME} Main.cpp)
 
 add_subdirectory(ImageProcessors) 
 add_subdirectory(Tools) 
-add_subdirectory(Fabrics)
 add_subdirectory(Graphics)
 add_subdirectory(ObjReader)
+add_subdirectory(Fabrics)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Tools)
-target_link_libraries(${PROJECT_NAME} PRIVATE Fabrics)
+target_link_libraries(${PROJECT_NAME} PRIVATE ImageFabrics)
+target_link_libraries(${PROJECT_NAME} PRIVATE RenderHandlerFabrics)
+target_link_libraries(${PROJECT_NAME} PRIVATE SceneFabrics)
 target_link_libraries(${PROJECT_NAME} PRIVATE Graphics)
 target_link_libraries(${PROJECT_NAME} PRIVATE ObjReader)
 

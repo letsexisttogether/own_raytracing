@@ -9,11 +9,11 @@
 class ObjReader
 {
 public:
-	ObjReader(std::vector<std::byte>&& bytes);
+	ObjReader() = default;
 
 	~ObjReader() = default;
 
-	std::vector<Intersectable*>& Read() noexcept(false);
+	std::vector<Intersectable*>& Read(const std::vector<std::byte>& bytes) noexcept(false);
 
 private:
 	void Parse(std::istringstream& lineStream) noexcept(false);
@@ -22,7 +22,6 @@ private:
 	void ExtractIndices(std::istringstream& lineStream) noexcept(false);
 
 private:
-	std::vector<std::byte> m_Bytes;
 	std::vector<Point3d> m_Vertices;
 	std::vector<Intersectable*> m_Intersectables;
 };

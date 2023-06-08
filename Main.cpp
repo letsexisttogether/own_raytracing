@@ -1,106 +1,70 @@
-﻿#include <iostream>
-#include <memory>
-#include <chrono>
+﻿#include <memory>
 
-#include "Tools/CmdParser/CmdParser.hpp"
-#include "Tools/FileReader/FileReader.hpp"
+#include "ApplicationPrototype.hpp"
 
-#include "Fabrics/FabricSelector/FabricSelector.hpp"
-#include "ObjReader/ObjReader.hpp"
+#include "Light/AmbientLight.hpp"
+#include "Light/PointLight.hpp"
+#include "Light/DirectionalLight.hpp"
 
-#include "Graphics/Render/Tracer.h"
-#include "Graphics/Render/Scene.h"
+#include "Fabrics/Scene/SceneFabricSelector/SceneFabricSelector.hpp"
+#include "Fabrics/RenderHandler/Base/ImageRenderHandlerFabric.hpp"
 
-#include "Graphics/Geometry/Intersectables/Sphere.hpp"
-#include "Graphics/Geometry/Intersectables/Triangle.hpp"
-#include "Graphics/Geometry/Primitives/TransformFactory.hpp"
-
-#include "Graphics/RenderHandler/CmdRenderHandler.hpp" 
-#include "Graphics/RenderHandler/ImageRenderHandler.hpp" 
-
-#include "Geometry/Intersectables/BVH.hpp"
-
-std::int32_t main(std::uint32_t argc, const char* argv[])
+std::int32_t main()
 {
     try
     {
-        // CmdParser parser{ argc, argv };
-        // 
-        // if (parser.GetSourceFormat() != "obj")
-        // {
-        //     throw std::invalid_argument{ "The format you are trying to open is not .obj" };
-        // }
+        std::uint32_t argc = 3;
+        const char* argv[] = { "RayTracer.exe\0", "--source=Test.obj\0" , "--output=alex.bmp\0" };
 
-        FabricSelector selector{ "ImageProcessors" };
-        selector.FindDlls();
-        
-        WriterFabric& writerFabric = selector.GetWriterFabric("bmp");
-        writerFabric.LoadDll();
-        
-        FileReader reader{ "Test.obj" };
-        ObjReader objReader{ reader.ReadFile() };
-        
-        Vector3d light{ 0.f, 0.f, -1.f };
-        light = light.Normalize();
+        CmdParser parser{ argc, argv };
 
-        Camera camera{ { 0.f, 0.f, -100.f }, { 0.f, 0.f, 1.f }, 3.1415 / 6.f };
-
-        const auto& matrix = TF::CreateMovingMatrix(Vector3d{ 0.f, 5.f, 0.f });
-        camera.TransformLocation(matrix);
-        
-        const auto& matrix1 = TF::CreateMovingMatrix(Vector3d{ 5.f, 0.f, 0.f });
-        camera.TransformDirection(matrix1);
-
-        Screen screen{ 1000, 1000, 100.f, camera };
-
-        //Triangle tr = { {0.f}, {0.f, 0.f, 1.f}, {0.f, 1.f, 1.f} };
-        //Triangle tr1 = { {0.f}, {0.f, 0.f, 1.f}, {1.f, 1.f, 1.f} };
-        //AABB3 box = { tr.GetMin(), tr.GetMax() };
-        ////box += tr1.BuildBox();
-        //auto var = box.Divide();
-        //AABB3 box1 = { tr.GetMin(), tr.GetMax() };
-
-        
-        auto& content = objReader.Read();
-
-        std::vector<Triangle> triangles;
-
-        const auto& rotationMatrix = TF::CreateRotationMatrixY(-3.1415 / 2.f) * TF::CreateScalingMatrix(Vector3d{ 3.f });
-        for (auto ptr : content)
-        {
-            auto& triangle = *(dynamic_cast<Triangle*>(ptr));
-            triangle = triangle * rotationMatrix;
-            triangles.push_back(triangle);
-        }
-
-        BVHTree tree = { std::move(triangles), 0 };
-
-        RayTracer RT
-        {
-            new ImageRenderHandler
-            {
-                screen,
-                writerFabric.GetWriter("cow.bmp")
+        std::unique_ptr<RenderHandlerFabric> renderHandlerFabric
+        { 
+            new ImageRenderHandlerFabric
+            {                
+                FabricSelector{ "ImageProcessors" },
+                parser
             }
         };
 
-        Scene scene{ /*camera, light*/ };
-        scene.AddToScene(content);
-        // scene.AddToScene(new Sphere{ { 0.8f, 1.f, 0.f }, 0.5f });
+        std::unique_ptr<SceneFabric> soloScene
+        {
+            new SceneLoader 
+            {
+                FileReader{ parser.GetSecondArgument() },
+                ObjReader{},
+                Scene
+                {
+                    Screen
+                    {
+                        1000, 1000, 100.f,
+                        Camera{ { 0.f, 0.f, -100.f }, { 0.f, 0.f, 1.f }, 3.1415 / 6.f }
+                    },           
+                    std::vector<Light*>
+                    {
+                        new AmbientLight{ { 255.f, 255.f, 0.f }, 300.f }
+                    }
+                }
+            }
+        };
 
-        auto startTime = std::chrono::high_resolution_clock::now();
+        SceneFabricSelector selector
+        {
+            SceneFabricSelector::SceneFabricsMap
+            {
+                SceneFabricSelector::SceneFabricsPair
+                {
+                    parser.GetCorrectSource(),
+                    soloScene.get()
+                }
+            }
+        };
 
-        //RT.Trace(scene, camera, light);
-        RT.Trace(tree, camera, light);
+        RayTracer tracer{};
 
-        auto endTime = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime);
+        ApplicationPrototype app { parser, selector, tracer, renderHandlerFabric.get() };
 
-        std::cout << "Render time: " << duration.count() << "sec" << std::endl;
-
-        //std::cout << counter << std::endl;
-
-        RT.GetRenderHandler().ExecuteRenderResult();
+        app.Run();
     }
     catch (const std::exception& exp)
     {
