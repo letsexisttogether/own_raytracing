@@ -20,6 +20,9 @@ void ImageRenderHandler::Handle(const std::vector<std::vector<Vector3d>>& colors
 
     m_Image.Width = colors[0].size();
 
+    m_Image.Data.reserve(m_Image.Height * m_Image.Width * 3); //added
+    m_Image.Data.resize(m_Image.Height * m_Image.Width * 3);
+
     for (std::int32_t i = 0; i < m_Image.Height; ++i)
     {
         for (std::int32_t j = 0; j < m_Image.Width; ++j)
@@ -27,6 +30,8 @@ void ImageRenderHandler::Handle(const std::vector<std::vector<Vector3d>>& colors
             HandlePixel(i, j, colors[i][j]);
         }
     }
+
+    
 }
 
 void ImageRenderHandler::HandlePixel(const Screen::Resolution i, const Screen::Resolution j, const Vector3d& color) noexcept(false)

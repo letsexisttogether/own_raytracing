@@ -11,9 +11,11 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
     const Screen::Resolution width = screen.GetWidth();
 
     m_Pixels.reserve(height);
+    m_Pixels.resize(height, std::vector<Vector3d>());
     for (auto& vec : m_Pixels)
     {
         vec.reserve(width);
+        vec.resize(width, Vector3d(0.f));
     }
 
     for (Screen::Resolution i = 0; i < height; i++)
@@ -57,8 +59,10 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
                     blendedColor.Clamp(0.f, 255.f);
                 }
 
-                m_Pixels[i][j]= blendedColor;
+                //m_Pixels[i][j]= blendedColor;
+                m_Pixels[i].push_back(blendedColor);
             }
+            else m_Pixels[i].push_back({ 0.f });
         }
     }
 }

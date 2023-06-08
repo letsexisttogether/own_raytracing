@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-Scene::Scene(Scene&& scene)
-	: m_Screen{ std::move(m_Screen) },
+Scene::Scene(Scene&& scene) noexcept
+	: m_Screen{ std::move(scene.m_Screen) },
 		m_Lights{ std::move(scene.m_Lights) }, m_Figures{ std::move(scene.m_Figures) }
 {}
 

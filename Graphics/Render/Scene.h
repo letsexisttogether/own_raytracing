@@ -11,7 +11,7 @@ class Scene
 public:
 	Scene() = delete;
 	Scene(const Scene&) = default;
-	Scene(Scene&& scene);
+	Scene(Scene&& scene) noexcept;
 
 	Scene(const Screen& screen, std::vector<Light*>&& lights);
 
