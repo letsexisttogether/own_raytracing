@@ -58,11 +58,9 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
                     blendedColor /= static_cast<float>(scene.GetLights().size());
                     blendedColor.Clamp(0.f, 255.f);
                 }
-
-                //m_Pixels[i][j]= blendedColor;
-                m_Pixels[i].push_back(blendedColor);
+                
             }
-            else m_Pixels[i].push_back({ 0.f });
+            m_Pixels[i][j] = blendedColor;
         }
     }
 }
