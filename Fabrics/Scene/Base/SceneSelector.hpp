@@ -7,6 +7,7 @@
 class SceneSelector : public SceneFabric
 {
 public:
+	using ScenesMapPair = std::pair<std::string, SceneFabric*>;
 	using ScenesMap = std::unordered_map<std::string, SceneFabric*>;
 
 public:

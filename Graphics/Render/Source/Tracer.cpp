@@ -40,27 +40,20 @@ void RayTracer::Trace(const Scene& scene) noexcept(false)
             {
                 const Vector3d normal{ intersection.value().Normal.Normalize() };
 
-
-                if (intersection.has_value())
+                for (const auto light : scene.GetLights())
                 {
-                    auto& value = intersection.value();
-
-                    value.Normal = value.Normal.Normalize();
-
-                    for (const auto light : scene.GetLights())
+                    if (!light->IsInShadow(intersection.value(), scene))
                     {
-                        if (!light->IsInShadow(value, scene))
-                        {
-                            blendedColor += light->HandleLight(intersection.value());
-                        }
+                        blendedColor += light->HandleLight(intersection.value());
                     }
-
-                    blendedColor /= static_cast<float>(scene.GetLights().size());
-                    blendedColor.Clamp(0.f, 255.f);
                 }
-                
+
+                blendedColor /= static_cast<float>(scene.GetLights().size());
+                blendedColor.Clamp(0.f, 255.f);
             }
+
             m_Pixels[i][j] = blendedColor;
         }
     }
+
 }
